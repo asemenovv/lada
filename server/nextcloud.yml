@@ -1,0 +1,37 @@
+version: "3"
+
+volumes:
+  nextcloud-db:
+    name: nextcloud-db
+
+services:
+  nextcloud-app:
+    image: nextcloud
+    container_name: nextcloud
+    hostname: nextcloud.asemenov.local
+    restart: always
+    volumes:
+      - /media/drive/nextcloud:/var/www/html
+    environment:
+      - MYSQL_PASSWORD=IliKeSu5hi&pilaf
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=main-node.asemenov.net:3306
+    ports:
+      - 8081:80
+
+  nextcloud-db:
+    image: mariadb
+    container_name: nextcloud-db
+    hostname: nextcloud-db.asemenov.local
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=IliKeSu5hi&pilaf
+      - MYSQL_PASSWORD=IliKeSu5hi&pilaf
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    ports:
+      - 3306:3306

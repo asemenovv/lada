@@ -1,0 +1,18 @@
+version: "3.5"
+
+services:
+  ddns-route53:
+    image: acockburn/appdaemon:latest
+    container_name: appdaemon
+    ports:
+      - 5050:5050
+    volumes:
+      - /media/drive/appdaemon:/conf
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI3NzM1NDgyOWRkNGI0ZTAyYTJmNzU0YjM4ODRlZDRjZiIsImlhdCI6MTczNjkyMjA3MiwiZXhwIjoyMDUyMjgyMDcyfQ.7pInP0YB9mcM-ZfD31EM4rGc-FITnUUJN9aGX4_LRDw
+      HA_URL: http://192.168.68.51:8123
+      DASH_URL: http://192.168.68.50:5050
+      TZ: "America/New_York"
+    restart: always
