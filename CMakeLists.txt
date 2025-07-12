@@ -10,10 +10,7 @@ add_executable(LadaEngine
         src/Renderer.cpp
         src/Application.cpp
         src/VertexArray.cpp
-        src/VertexArray.h
-        src/VertexBufferLayout.h
         src/Shader.cpp
-        src/Shader.h
         src/vendor/stb_image/stb_image.cpp
         src/Texture.cpp
         src/vendor/imgui/imgui_impl_opengl3.cpp
@@ -22,6 +19,8 @@ add_executable(LadaEngine
         src/vendor/imgui/imgui_draw.cpp
         src/vendor/imgui/imgui_widgets.cpp
         src/vendor/imgui/imgui_tables.cpp
+        src/ApplicationBase.cpp
+        src/DemoApp.cpp
 )
 
 find_package(glfw3 3.4 REQUIRED)
