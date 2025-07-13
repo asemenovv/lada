@@ -1,16 +1,9 @@
 #pragma once
 
 #include <memory>
+#include <LADA.h>
 
-#include "app/ApplicationBase.h"
-#include "render/IndexBuffer.h"
-#include "render/Renderer.h"
-#include "render/Shader.h"
-#include "render/Texture.h"
-#include "render/VertexArray.h"
-#include "render/VertexBufferLayout.h"
-
-class DemoApp : public lada::app::ApplicationBase {
+class DemoApp final : public lada::app::Application {
     std::unique_ptr<lada::render::VertexArray> m_VertexArray;
     std::unique_ptr<lada::render::IndexBuffer> m_IndexBuffer;
     std::unique_ptr<lada::render::Shader> m_Shader;
@@ -21,13 +14,11 @@ class DemoApp : public lada::app::ApplicationBase {
     float m_R = 0.0f;
     float m_Increment = 0.001f;
 public:
-    DemoApp(): ApplicationBase("LADA Engine", 1280, 960) {}
-    ~DemoApp();
+    DemoApp(): Application("LADA Engine", 1280, 960) {}
 protected:
-    void Init();
-    void BeforeRender();
-    void OnRender();
-    void OnImGuiRender(float frameRate);
-    void AfterRender();
-    void CleanUp();
+    void Init() override;
+    void BeforeRender() override;
+    void OnRender() override;
+    void OnImGuiRender(float frameRate) override;
+    void AfterRender() override;
 };

@@ -1,15 +1,6 @@
+#include <LADA.h>
+
 #include "DemoApp.h"
-
-#include "render/Texture.h"
-#include "render/VertexBufferLayout.h"
-
-#include "vendor/glm/glm.hpp"
-#include "vendor/glm/gtc/matrix_transform.hpp"
-#include "vendor/imgui/imgui.h"
-
-DemoApp::~DemoApp() {
-}
-
 
 void DemoApp::Init() {
     constexpr float positions[] = {
@@ -55,7 +46,7 @@ void DemoApp::OnRender() {
     m_Renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
 }
 
-void DemoApp::OnImGuiRender(float frameRate) {
+void DemoApp::OnImGuiRender(const float frameRate) {
     ImGui::Begin("Lada::Debug");
     ImGui::SliderFloat("Rotation", &m_R, 0.0f, 1.0f);
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / frameRate, frameRate);
@@ -67,8 +58,4 @@ void DemoApp::AfterRender() {
         m_R = 0.0f;
     }
     m_R += m_Increment;
-}
-
-void DemoApp::CleanUp() {
-    ;
 }

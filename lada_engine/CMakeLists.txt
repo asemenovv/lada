@@ -21,8 +21,7 @@ set_target_properties(GLFW::GLFW PROPERTIES
 )
 
 add_library(lada_engine STATIC
-        src/lada.cpp
-        src/app/ApplicationBase.cpp
+        src/app/Application.cpp
         src/render/IndexBuffer.cpp
         src/render/Renderer.cpp
         src/render/Shader.cpp

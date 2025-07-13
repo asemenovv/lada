@@ -1,4 +1,4 @@
-#include "ApplicationBase.h"
+#include "Application.h"
 
 #include <iostream>
 #include "GL/glew.h"
@@ -9,13 +9,10 @@
 #include "../vendor/imgui/imgui_impl_opengl3.h"
 
 namespace lada::app {
-    ApplicationBase::ApplicationBase(const std::string& title, const unsigned int width, const unsigned int height)
+    Application::Application(const std::string& title, const int width, const int height)
         : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(title) {}
 
-    ApplicationBase::~ApplicationBase() {
-    }
-
-    void ApplicationBase::Run() {
+    void Application::Run() {
         if (!glfwInit())
             std::cerr << "Failed to initialize GLFW" << std::endl;
 
@@ -79,10 +76,10 @@ namespace lada::app {
         glfwTerminate();
     }
 
-    void ApplicationBase::Init() {}
-    void ApplicationBase::BeforeRender() {}
-    void ApplicationBase::OnRender() {}
-    void ApplicationBase::OnImGuiRender(float) {}
-    void ApplicationBase::AfterRender() {}
-    void ApplicationBase::CleanUp() {}
+    void Application::Init() {}
+    void Application::BeforeRender() {}
+    void Application::OnRender() {}
+    void Application::OnImGuiRender(float) {}
+    void Application::AfterRender() {}
+    void Application::CleanUp() {}
 }

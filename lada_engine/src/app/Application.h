@@ -1,16 +1,17 @@
+#pragma once
+
 #include <string>
 
 struct GLFWwindow;
 
 namespace lada::app {
-    class ApplicationBase {
-    private:
+    class Application {
         GLFWwindow* m_Window;
-        unsigned int m_Width, m_Height;
+        int m_Width, m_Height;
         std::string m_Title;
     public:
-        ApplicationBase(const std::string& title, unsigned int width, unsigned int height);
-        ~ApplicationBase();
+        virtual ~Application() = default;
+        Application(const std::string& title, int width, int height);
         void Run();
     protected:
         virtual void Init();
