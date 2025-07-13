@@ -36,6 +36,7 @@ add_library(lada_engine STATIC
         src/vendor/imgui/imgui_tables.cpp
         src/vendor/imgui/imgui_demo.cpp
         src/vendor/stb_image/stb_image.cpp
+        src/app/EntryPoint.cpp
 )
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

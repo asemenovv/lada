@@ -12,3 +12,6 @@
 #include "vendor/glm/glm.hpp"
 #include "vendor/glm/gtc/matrix_transform.hpp"
 #include "vendor/imgui/imgui.h"
+
+// ====== Entry Point ======
+#include "app/EntryPoint.h"

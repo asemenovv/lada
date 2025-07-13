@@ -1,5 +1,3 @@
-#include <LADA.h>
-
 #include "DemoApp.h"
 
 void DemoApp::Init() {

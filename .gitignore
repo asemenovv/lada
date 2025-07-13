@@ -4,3 +4,4 @@ cmake-build-sandbox/
 .idea/
 deps/glfw-3.4/
 deps/glfw-3.4.bin.MACOS/
+imgui.ini
