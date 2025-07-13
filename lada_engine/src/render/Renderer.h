@@ -2,7 +2,7 @@
 
 #include <csignal>
 
-#include "../vendor/GL/glew.h"
+#include "GL/glew.h"
 
 #include "IndexBuffer.h"
 #include "Shader.h"

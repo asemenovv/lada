@@ -103,7 +103,7 @@
 #endif
 
 // GLFW
-#include "../GL/glfw3.h"
+#include "GLFW/glfw3.h"
 
 #ifdef _WIN32
 #undef APIENTRY
@@ -116,7 +116,7 @@
 #ifndef GLFW_EXPOSE_NATIVE_COCOA
 #define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-#include "../GL/glfw3native.h"   // for glfwGetCocoaWindow()
+#include "GLFW/glfw3native.h"
 #endif
 #ifndef _WIN32
 #include <unistd.h>             // for usleep()

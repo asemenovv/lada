@@ -3,8 +3,26 @@ project(lada_engine)
 
 set(CMAKE_CXX_STANDARD 20)
 
+# OpenGL
+find_package(OpenGL REQUIRED)
+
+# GLEW
+add_library(GLEW::GLEW SHARED IMPORTED)
+set_target_properties(GLEW::GLEW PROPERTIES
+        IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../deps/glew/libGLEW.2.2.0.dylib"
+        INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/../deps/glew/include"
+)
+
+# GLFW
+add_library(GLFW::GLFW SHARED IMPORTED)
+set_target_properties(GLFW::GLFW PROPERTIES
+        IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../deps/glfw/libglfw.3.dylib"
+        INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/../deps/glfw/include"
+)
+
 add_library(lada_engine STATIC
         src/lada.cpp
+        src/app/ApplicationBase.cpp
         src/render/IndexBuffer.cpp
         src/render/Renderer.cpp
         src/render/Shader.cpp
@@ -18,13 +36,13 @@ add_library(lada_engine STATIC
         src/vendor/imgui/imgui_impl_opengl3.cpp
         src/vendor/imgui/imgui_tables.cpp
         src/vendor/imgui/imgui_demo.cpp
+        src/vendor/stb_image/stb_image.cpp
 )
 
-target_link_libraries(lada_engine ../deps/glfw/libglfw3.dylib)
-target_link_libraries(lada_engine ../deps/glew/libGLEW.dylib)
+target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-#find_package(glfw3 3.4 REQUIRED)
-#find_package(GLEW 2.2 REQUIRED)
-#include_directories(${GLEW_INCLUDE_DIRS})
-#link_libraries(${GLEW_LIBRARIES})
-#find_package(OpenGL REQUIRED)
+target_link_libraries(lada_engine
+        PUBLIC GLEW::GLEW
+        PUBLIC GLFW::GLFW
+        PUBLIC OpenGL::GL
+)

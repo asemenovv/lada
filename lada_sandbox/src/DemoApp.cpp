@@ -32,10 +32,10 @@ void DemoApp::Init() {
     m_VertexArray->AddBuffer(*m_VertexBuffer, *m_VertexBufferLayout);
     m_IndexBuffer = std::make_unique<lada::render::IndexBuffer>(indices, 6);
 
-    m_Shader = std::make_unique<lada::render::Shader>("./res/shaders/Basic.glsl");
+    m_Shader = std::make_unique<lada::render::Shader>("/Users/alexeysemenov/CLionProjects/LadaEngine/lada_sandbox/res/shaders/Basic.glsl");
     m_Shader->Bind();
 
-    m_Texture = std::make_unique<lada::render::Texture>("./res/textures/stone.png");
+    m_Texture = std::make_unique<lada::render::Texture>("/Users/alexeysemenov/CLionProjects/LadaEngine/lada_sandbox/res/textures/stone.png");
     m_Texture->Bind();
     m_Shader->SetUniform1i("u_Texture", 0);
 }

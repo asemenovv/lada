@@ -1,9 +1,8 @@
 #include "ApplicationBase.h"
 
 #include <iostream>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #include "../render/Renderer.h"
 #include "../vendor/imgui/imgui.h"
 #include "../vendor/imgui/imgui_impl_glfw.h"

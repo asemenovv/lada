@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "../vendor/GL/glew.h"
+#include "GL/glew.h"
 #include "Renderer.h"
 
 namespace lada::render {

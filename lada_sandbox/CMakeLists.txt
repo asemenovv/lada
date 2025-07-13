@@ -10,4 +10,4 @@ add_executable(lada_sandbox
 
 include_directories("${PROJECT_SOURCE_DIR}/../lada_engine/src")
 
-target_link_libraries(lada_sandbox "${PROJECT_SOURCE_DIR}/../cmake-build-lada_engine/liblada_engine.a")
+target_link_libraries(lada_sandbox PRIVATE lada_engine)
