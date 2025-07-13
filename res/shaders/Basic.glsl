@@ -29,4 +29,5 @@ void main()
 {
     vec4 texColor = texture(u_Texture, v_TextCoord);
     FragColor = vec4(0.3f * u_Color.rgb + 0.7f * texColor.rgb, texColor.a);
+//    FragColor = texColor;
 }

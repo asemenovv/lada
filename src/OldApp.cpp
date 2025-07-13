@@ -9,7 +9,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 #include "IndexBuffer.h"
-#include "VertexArray.h"
+#include "../lada_engine/src/render/VertexArray.h"
 #include "Shader.h"
 #include "Texture.h"
 
