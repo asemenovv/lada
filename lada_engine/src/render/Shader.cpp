@@ -1,11 +1,11 @@
 #include "Shader.h"
 
-#include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
 
 #include "Renderer.h"
+#include "app/Log.h"
 
 namespace lada::render {
     Shader::Shader(const std::string &filepath)
@@ -50,7 +50,7 @@ namespace lada::render {
 
         GL_CALL(const int location = glGetUniformLocation(m_RendererID, name.c_str()));
         if (location == -1) {
-            std::cout << "Warning: uniform '" << name << "' doesn't exist!" << std::endl;
+            LD_CORE_WARN("Uniform '{0}' doesn't exist!");
         }
         m_UniformLocationCache[name] = location;
         return location;
@@ -94,9 +94,7 @@ namespace lada::render {
             GL_CALL(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
             char* message = (char*)alloca(length * sizeof(char));
             GL_CALL(glGetShaderInfoLog(id, length, &length, message));
-            std::cout << "Failed to compile " <<
-                (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!" << std::endl;
-            std::cout << message << std::endl;
+            LD_CORE_ERROR("Failed to compile {0} shader!\n{1}", (type == GL_VERTEX_SHADER ? "vertex" : "fragment"), message);
             GL_CALL(glDeleteShader(id));
             return 0;
         }
@@ -120,8 +118,7 @@ namespace lada::render {
             GL_CALL(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length));
             char* message = static_cast<char *>(alloca(length * sizeof(char)));
             GL_CALL(glGetProgramInfoLog(program, length, &length, message));
-            std::cout << "Failed to link program±" << std::endl;
-            std::cout << message << std::endl;
+            LD_CORE_ERROR("Failed to link program.\n{0}", message);
             GL_CALL(glDeleteProgram(program));
             return 0;
         }

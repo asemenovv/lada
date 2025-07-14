@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include <iostream>
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "../render/Renderer.h"
@@ -15,7 +14,7 @@ namespace lada::app {
 
     void Application::Run() {
         if (!glfwInit())
-            std::cerr << "Failed to initialize GLFW" << std::endl;
+            LD_CORE_CRITICAL("Failed to initialize GLFW");
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -27,19 +26,19 @@ namespace lada::app {
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
 
         if (!m_Window) {
+            LD_CORE_CRITICAL("Failed to create GLFW window");
             glfwTerminate();
-            std::cerr << "Failed to create GLFW window" << std::endl;
         }
 
         glfwMakeContextCurrent(m_Window);
         glfwSwapInterval(1);
 
         if (glewInit() != GLEW_OK) {
-            std::cerr << "GLEW could not be initialized" << std::endl;
+            LD_CORE_CRITICAL("GLEW could not be initialized");
         }
 
         GL_CALL(const char* glVersion = (const char*)glGetString(GL_VERSION));
-        LD_INFO("OpenGL version is: {0}", glVersion);
+        LD_CORE_INFO("OpenGL version is: {0}", glVersion);
 
         Init();
 

@@ -1,9 +1,7 @@
 #include "Texture.h"
 
-#include <iostream>
-#include <ostream>
-
 #include "stb_image.h"
+#include "app/Log.h"
 
 namespace lada::render {
     Texture::Texture(const std::string& path)
@@ -11,7 +9,7 @@ namespace lada::render {
         stbi_set_flip_vertically_on_load(1);
         m_LocalBuffer = stbi_load(path.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 
-        std::cout << "Loading texture: '" << path << "' (" << m_Width << "x" << m_Height << ")" << std::endl;
+        LD_CORE_INFO("Loading texture: '{0}' ({1}x{2})", path, m_Width, m_Height);
 
         GL_CALL(glGenTextures(1, &m_RendererID));
         Bind();

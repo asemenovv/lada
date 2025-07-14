@@ -1,6 +1,19 @@
 #include "DemoApp.h"
 
+#include <filesystem>
+#include <string>
+
+std::string workingDir() {
+    const std::filesystem::path currentPath = std::filesystem::current_path()
+        .parent_path()
+        .parent_path();
+    std::string currentDirectory = currentPath.string();
+    return currentDirectory;
+}
+
 void DemoApp::Init() {
+    std::string workingDirectory = workingDir();
+    LD_INFO("Working directory is {0}", workingDirectory);
     constexpr float positions[] = {
         -0.5f, -0.5f, 0.0f, 0.0f,
         0.5f, -0.5f, 1.0f, 0.0f,
@@ -21,10 +34,10 @@ void DemoApp::Init() {
     m_VertexArray->AddBuffer(*m_VertexBuffer, *m_VertexBufferLayout);
     m_IndexBuffer = std::make_unique<lada::render::IndexBuffer>(indices, 6);
 
-    m_Shader = std::make_unique<lada::render::Shader>("/Users/alexeysemenov/CLionProjects/LadaEngine/lada_sandbox/res/shaders/Basic.glsl");
+    m_Shader = std::make_unique<lada::render::Shader>(workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl");
     m_Shader->Bind();
 
-    m_Texture = std::make_unique<lada::render::Texture>("/Users/alexeysemenov/CLionProjects/LadaEngine/lada_sandbox/res/textures/stone.png");
+    m_Texture = std::make_unique<lada::render::Texture>(workingDirectory + "/lada_sandbox/res/textures/stone.png");
     m_Texture->Bind();
     m_Shader->SetUniform1i("u_Texture", 0);
 }

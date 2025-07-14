@@ -14,7 +14,7 @@ class DemoApp final : public lada::app::Application {
     float m_R = 0.0f;
     float m_Increment = 0.001f;
 public:
-    DemoApp(): Application("LADA Engine", 1280, 960) {}
+    DemoApp(): Application("LADA Engine", 640, 480) {}
 protected:
     void Init() override;
     void BeforeRender() override;

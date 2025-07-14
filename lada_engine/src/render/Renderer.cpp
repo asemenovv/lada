@@ -1,5 +1,6 @@
 #include "Renderer.h"
-#include <iostream>
+
+#include "app/Log.h"
 
 namespace lada::log {
     void GLClearError() {
@@ -8,8 +9,7 @@ namespace lada::log {
 
     bool GLLogCall(const char* function, const char* file, const int line) {
         while (const GLenum error = glGetError()) {
-            std::cout << "[OpenGL Error] (" << error << "): " << function
-                << " " << file << ":" << line << std::endl;
+            LD_CORE_ERROR("[OpenGL Error] ({0}): {1} {2}:{3}", error, function, file, line);
             return false;
         }
         return true;
