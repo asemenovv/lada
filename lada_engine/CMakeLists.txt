@@ -28,13 +28,6 @@ add_library(lada_engine STATIC
         src/render/Texture.cpp
         src/render/VertexArray.cpp
         src/render/VertexBuffer.cpp
-        src/vendor/imgui/imgui.cpp
-        src/vendor/imgui/imgui_impl_glfw.cpp
-        src/vendor/imgui/imgui_draw.cpp
-        src/vendor/imgui/imgui_widgets.cpp
-        src/vendor/imgui/imgui_impl_opengl3.cpp
-        src/vendor/imgui/imgui_tables.cpp
-        src/vendor/imgui/imgui_demo.cpp
         src/vendor/stb_image/stb_image.cpp
         src/app/EntryPoint.cpp
         src/app/Log.cpp
@@ -48,4 +41,5 @@ target_link_libraries(lada_engine
         PUBLIC OpenGL::GL
         PUBLIC spdlog::spdlog
         PUBLIC glm::glm
+        PUBLIC imgui
 )

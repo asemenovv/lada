@@ -4,9 +4,9 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "../render/Renderer.h"
-#include "../vendor/imgui/imgui.h"
-#include "../vendor/imgui/imgui_impl_glfw.h"
-#include "../vendor/imgui/imgui_impl_opengl3.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 namespace lada::app {
     Application::Application(const std::string& title, const int width, const int height)

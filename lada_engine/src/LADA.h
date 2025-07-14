@@ -12,7 +12,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "vendor/imgui/imgui.h"
+#include "imgui.h"
 #include "spdlog/spdlog.h"
 
 // ====== Entry Point ======
