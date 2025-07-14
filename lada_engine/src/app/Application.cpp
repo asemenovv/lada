@@ -7,6 +7,7 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "Log.h"
 
 namespace lada::app {
     Application::Application(const std::string& title, const int width, const int height)
@@ -36,6 +37,9 @@ namespace lada::app {
         if (glewInit() != GLEW_OK) {
             std::cerr << "GLEW could not be initialized" << std::endl;
         }
+
+        GL_CALL(const char* glVersion = (const char*)glGetString(GL_VERSION));
+        LD_INFO("OpenGL version is: {0}", glVersion);
 
         Init();
 
