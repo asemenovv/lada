@@ -28,7 +28,6 @@ add_library(lada_engine STATIC
         src/render/Texture.cpp
         src/render/VertexArray.cpp
         src/render/VertexBuffer.cpp
-        src/vendor/stb_image/stb_image.cpp
         src/app/EntryPoint.cpp
         src/app/Log.cpp
 )
@@ -42,4 +41,5 @@ target_link_libraries(lada_engine
         PUBLIC spdlog::spdlog
         PUBLIC glm::glm
         PUBLIC imgui
+        PUBLIC stb_image
 )
