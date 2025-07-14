@@ -9,15 +9,15 @@ find_package(OpenGL REQUIRED)
 # GLEW
 add_library(GLEW::GLEW SHARED IMPORTED)
 set_target_properties(GLEW::GLEW PROPERTIES
-        IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../deps/glew/libGLEW.2.2.0.dylib"
-        INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/../deps/glew/include"
+        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glew/libGLEW.2.2.0.dylib"
+        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glew/include"
 )
 
 # GLFW
 add_library(GLFW::GLFW SHARED IMPORTED)
 set_target_properties(GLFW::GLFW PROPERTIES
-        IMPORTED_LOCATION "${PROJECT_SOURCE_DIR}/../deps/glfw/libglfw.3.dylib"
-        INTERFACE_INCLUDE_DIRECTORIES "${PROJECT_SOURCE_DIR}/../deps/glfw/include"
+        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glfw/libglfw.3.dylib"
+        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glfw/include"
 )
 
 add_library(lada_engine STATIC
@@ -37,6 +37,7 @@ add_library(lada_engine STATIC
         src/vendor/imgui/imgui_demo.cpp
         src/vendor/stb_image/stb_image.cpp
         src/app/EntryPoint.cpp
+        src/app/Log.cpp
 )
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -45,4 +46,5 @@ target_link_libraries(lada_engine
         PUBLIC GLEW::GLEW
         PUBLIC GLFW::GLFW
         PUBLIC OpenGL::GL
+        PUBLIC spdlog::spdlog
 )

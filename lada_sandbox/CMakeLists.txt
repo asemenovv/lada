@@ -8,6 +8,9 @@ add_executable(lada_sandbox
         src/DemoApp.cpp
 )
 
-include_directories("${PROJECT_SOURCE_DIR}/../lada_engine/src")
+include_directories("${ROOT_FOLDER}/lada_engine/src")
 
-target_link_libraries(lada_sandbox PRIVATE lada_engine)
+target_link_libraries(lada_sandbox
+        PRIVATE lada_engine
+        PRIVATE spdlog::spdlog
+)

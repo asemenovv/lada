@@ -1,6 +1,7 @@
 #pragma once
 
 #include "app/Application.h"
+#include "app/Log.h"
 
 #include "render/Texture.h"
 #include "render/VertexBufferLayout.h"
@@ -12,6 +13,7 @@
 #include "vendor/glm/glm.hpp"
 #include "vendor/glm/gtc/matrix_transform.hpp"
 #include "vendor/imgui/imgui.h"
+#include "spdlog/spdlog.h"
 
 // ====== Entry Point ======
 #include "app/EntryPoint.h"
