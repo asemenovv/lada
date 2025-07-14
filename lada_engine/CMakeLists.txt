@@ -47,4 +47,5 @@ target_link_libraries(lada_engine
         PUBLIC GLFW::GLFW
         PUBLIC OpenGL::GL
         PUBLIC spdlog::spdlog
+        PUBLIC glm::glm
 )

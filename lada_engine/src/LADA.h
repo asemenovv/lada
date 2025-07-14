@@ -10,8 +10,8 @@
 #include "render/Shader.h"
 #include "render/VertexArray.h"
 
-#include "vendor/glm/glm.hpp"
-#include "vendor/glm/gtc/matrix_transform.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 #include "vendor/imgui/imgui.h"
 #include "spdlog/spdlog.h"
 

@@ -13,4 +13,5 @@ include_directories("${ROOT_FOLDER}/lada_engine/src")
 target_link_libraries(lada_sandbox
         PRIVATE lada_engine
         PRIVATE spdlog::spdlog
+        PRIVATE glm::glm
 )
