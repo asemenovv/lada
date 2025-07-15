@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include <utility>
+
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 #include "../render/Renderer.h"
@@ -7,10 +9,23 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "Log.h"
+#include "events/ApplicationEvent.h"
 
 namespace lada::app {
-    Application::Application(const std::string& title, const int width, const int height)
-        : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(title) {}
+    Application::Application(std::string  title, const int width, const int height)
+        : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(std::move(title)) {
+        m_EventBus = new event::EventBus();
+    }
+
+    Application::~Application() {
+        delete m_EventBus;
+    }
+
+    void Application::WindowCloseCallback(GLFWwindow* window) const {
+        auto* event = new event::WindowCloseEvent();
+        GetEventBus()->HandleEvent(event);
+        delete event;
+    }
 
     void Application::Run() {
         if (!glfwInit())
@@ -24,6 +39,7 @@ namespace lada::app {
 #endif
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+        glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
 
         if (!m_Window) {
             LD_CORE_CRITICAL("Failed to create GLFW window");
