@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../events/EventBus.h"
+#include "events/EventManager.h"
 
 struct GLFWwindow;
 
@@ -19,13 +19,13 @@ namespace lada::app {
         virtual void OnImGuiRender(float frameRate);
         virtual void AfterRender();
         virtual void CleanUp();
-        [[nodiscard]] event::EventBus* GetEventBus() const { return m_EventBus; }
+        [[nodiscard]] event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
         GLFWwindow* m_Window;
         int m_Width, m_Height;
         std::string m_Title;
-        event::EventBus* m_EventBus;
+        event::EventManager* m_EventManager;
 
-        void WindowCloseCallback(GLFWwindow* window) const;
+        static void WindowCloseCallback(GLFWwindow* window);
     };
 }

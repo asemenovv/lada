@@ -4,7 +4,7 @@
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "../render/Renderer.h"
+#include "render/Renderer.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -14,17 +14,19 @@
 namespace lada::app {
     Application::Application(std::string  title, const int width, const int height)
         : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(std::move(title)) {
-        m_EventBus = new event::EventBus();
+        m_EventManager = new event::EventManager();
     }
 
     Application::~Application() {
-        delete m_EventBus;
+        delete m_EventManager;
     }
 
-    void Application::WindowCloseCallback(GLFWwindow* window) const {
-        auto* event = new event::WindowCloseEvent();
-        GetEventBus()->HandleEvent(event);
-        delete event;
+    void Application::WindowCloseCallback(GLFWwindow* window) {
+        const auto* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+        if (!application) return;
+
+        const event::WindowCloseEvent event;
+        application->GetEventManager()->HandleEvent(event);
     }
 
     void Application::Run() {
@@ -39,6 +41,7 @@ namespace lada::app {
 #endif
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+        glfwSetWindowUserPointer(m_Window, this);
         glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
 
         if (!m_Window) {
