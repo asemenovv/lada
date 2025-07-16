@@ -30,7 +30,6 @@ add_library(lada_engine STATIC
         src/render/VertexBuffer.cpp
         src/app/EntryPoint.cpp
         src/app/Log.cpp
-        src/events/EventBus.h
 )
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

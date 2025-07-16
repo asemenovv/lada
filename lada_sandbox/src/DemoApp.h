@@ -3,9 +3,7 @@
 #include <memory>
 #include <LADA.h>
 
-class DemoApp final :   public lada::app::Application,
-                        public lada::event::IEventListener<lada::event::WindowCloseEvent>,
-                        public lada::event::IEventListener<lada::event::WindowResizeEvent>{
+class DemoApp final :   public lada::app::Application {
     std::unique_ptr<lada::render::VertexArray> m_VertexArray;
     std::unique_ptr<lada::render::IndexBuffer> m_IndexBuffer;
     std::unique_ptr<lada::render::Shader> m_Shader;
@@ -23,7 +21,4 @@ protected:
     void OnRender() override;
     void OnImGuiRender(float frameRate) override;
     void AfterRender() override;
-private:
-    bool OnEvent(const lada::event::WindowCloseEvent& event) override;
-    bool OnEvent(const lada::event::WindowResizeEvent& event) override;
 };

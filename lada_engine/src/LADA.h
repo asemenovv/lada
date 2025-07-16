@@ -3,11 +3,10 @@
 #include "app/Application.h"
 #include "app/Log.h"
 
+#include "events/EventManager.h"
 #include "events/Event.h"
 #include "events/ApplicationEvent.h"
 #include "events/KeyEvent.h"
-#include "events/EventBus.h"
-#include "events/EventManager.h"
 
 #include "render/Texture.h"
 #include "render/VertexBufferLayout.h"

@@ -11,20 +11,20 @@ std::string workingDir() {
     return currentDirectory;
 }
 
-bool DemoApp::OnEvent(const lada::event::WindowCloseEvent& event) {
-    LD_INFO("WindowCloseEvent is fired");
-    return true;
-}
-
-bool DemoApp::OnEvent(const lada::event::WindowResizeEvent& event) {
-    LD_INFO("WindowResizeEvent is fired");
-    return true;
-}
-
 void DemoApp::Init() {
     std::string workingDirectory = workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
-    GetEventManager()->RegisterListener(this);
+    GetEventManager()->RegisterHandler<lada::event::WindowCloseEvent> (
+        [this](const lada::event::WindowCloseEvent& event) {
+            LD_INFO("WindowCloseEvent is fired {}", event.ToString());
+            return true;
+        }
+    );
+    GetEventManager()->RegisterHandler<lada::event::WindowResizeEvent> (
+        [this](const lada::event::WindowResizeEvent& event) {
+            LD_INFO("WindowResizeEvent is fired {}", event.ToString());
+            return true;
+        });
 
     constexpr float positions[] = {
         -0.5f, -0.5f, 0.0f, 0.0f,

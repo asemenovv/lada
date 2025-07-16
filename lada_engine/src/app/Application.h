@@ -27,5 +27,6 @@ namespace lada::app {
         event::EventManager* m_EventManager;
 
         static void WindowCloseCallback(GLFWwindow* window);
+        static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     };
 }

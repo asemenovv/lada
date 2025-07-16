@@ -29,6 +29,14 @@ namespace lada::app {
         application->GetEventManager()->HandleEvent(event);
     }
 
+    void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
+        const auto* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+        if (!application) return;
+
+        const event::WindowResizeEvent event(width, height);
+        application->GetEventManager()->HandleEvent(event);
+    }
+
     void Application::Run() {
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
@@ -43,6 +51,7 @@ namespace lada::app {
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
         glfwSetWindowUserPointer(m_Window, this);
         glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
+        glfwSetFramebufferSizeCallback(m_Window, FramebufferSizeCallback);
 
         if (!m_Window) {
             LD_CORE_CRITICAL("Failed to create GLFW window");

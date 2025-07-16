@@ -7,15 +7,15 @@
 namespace lada::event {
     class WindowResizeEvent final : public Event {
     public:
-        WindowResizeEvent(int width, int height): m_Width(width), m_Height(height) {
+        WindowResizeEvent(const int width, const int height): m_Width(width), m_Height(height) {
         }
 
-        unsigned int GetWidth() const { return m_Width; }
-        unsigned int GetHeight() const { return m_Height; }
+        [[nodiscard]] unsigned int GetWidth() const { return m_Width; }
+        [[nodiscard]] unsigned int GetHeight() const { return m_Height; }
 
-        int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
+        [[nodiscard]] int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
 
-        std::string ToString() const override {
+        [[nodiscard]] std::string ToString() const override {
             std::stringstream ss;
             ss << "WindowResizeEvent: " << m_Width << ", " << m_Height;
             return ss.str();
@@ -31,7 +31,7 @@ namespace lada::event {
     public:
         WindowCloseEvent() = default;
 
-        int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
+        [[nodiscard]] int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
         EVENT_CLASS_TYPE(WindowClose);
     };
 
@@ -39,14 +39,14 @@ namespace lada::event {
     public:
         AppTickEvent() = default;
 
-        int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
+        [[nodiscard]] int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
         EVENT_CLASS_TYPE(AppTick);
     };
 
     class AppUpdateEvent final : public Event {
     public:
         AppUpdateEvent() = default;
-        int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
+        [[nodiscard]] int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
 
         EVENT_CLASS_TYPE(AppUpdate);
     };
@@ -54,7 +54,7 @@ namespace lada::event {
     class AppRenderEvent final : public Event {
     public:
         AppRenderEvent() = default;
-        int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
+        [[nodiscard]] int GetCategoryFlags() const override { return static_cast<int>(EventCategory::EventCategoryApplication); }
 
         EVENT_CLASS_TYPE(AppRender);
     };
