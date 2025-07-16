@@ -1,16 +1,41 @@
 #include "Application.h"
 
+#include <utility>
+
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "../render/Renderer.h"
+#include "render/Renderer.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "Log.h"
+#include "events/ApplicationEvent.h"
 
 namespace lada::app {
-    Application::Application(const std::string& title, const int width, const int height)
-        : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(title) {}
+    Application::Application(std::string  title, const int width, const int height)
+        : m_Window(nullptr), m_Width(width), m_Height(height), m_Title(std::move(title)) {
+        m_EventManager = new event::EventManager();
+    }
+
+    Application::~Application() {
+        delete m_EventManager;
+    }
+
+    void Application::WindowCloseCallback(GLFWwindow* window) {
+        const auto* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+        if (!application) return;
+
+        const event::WindowCloseEvent event;
+        application->GetEventManager()->HandleEvent(event);
+    }
+
+    void Application::FramebufferSizeCallback(GLFWwindow* window, int width, int height) {
+        const auto* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+        if (!application) return;
+
+        const event::WindowResizeEvent event(width, height);
+        application->GetEventManager()->HandleEvent(event);
+    }
 
     void Application::Run() {
         if (!glfwInit())
@@ -24,6 +49,9 @@ namespace lada::app {
 #endif
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+        glfwSetWindowUserPointer(m_Window, this);
+        glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);
+        glfwSetFramebufferSizeCallback(m_Window, FramebufferSizeCallback);
 
         if (!m_Window) {
             LD_CORE_CRITICAL("Failed to create GLFW window");

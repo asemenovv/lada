@@ -3,7 +3,7 @@
 #include <memory>
 #include <LADA.h>
 
-class DemoApp final : public lada::app::Application {
+class DemoApp final :   public lada::app::Application {
     std::unique_ptr<lada::render::VertexArray> m_VertexArray;
     std::unique_ptr<lada::render::IndexBuffer> m_IndexBuffer;
     std::unique_ptr<lada::render::Shader> m_Shader;
