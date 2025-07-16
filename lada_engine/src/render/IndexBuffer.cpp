@@ -1,5 +1,5 @@
+#include "ldpch.h"
 #include "IndexBuffer.h"
-
 #include "Renderer.h"
 
 namespace lada::render {

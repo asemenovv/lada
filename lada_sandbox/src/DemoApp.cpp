@@ -16,13 +16,13 @@ void DemoApp::Init() {
     LD_INFO("Working directory is {0}", workingDirectory);
     GetEventManager()->RegisterHandler<lada::event::WindowCloseEvent> (
         [this](const lada::event::WindowCloseEvent& event) {
-            LD_INFO("WindowCloseEvent is fired {}", event.ToString());
+            LD_TRACE("WindowCloseEvent is fired {}", event.ToString());
             return true;
         }
     );
     GetEventManager()->RegisterHandler<lada::event::WindowResizeEvent> (
         [this](const lada::event::WindowResizeEvent& event) {
-            LD_INFO("WindowResizeEvent is fired {}", event.ToString());
+            LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
             return true;
         });
 

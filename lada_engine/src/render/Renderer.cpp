@@ -1,5 +1,5 @@
+#include "ldpch.h"
 #include "Renderer.h"
-
 #include "app/Log.h"
 
 namespace lada::log {

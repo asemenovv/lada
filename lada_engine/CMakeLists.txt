@@ -37,6 +37,8 @@ add_library(lada_engine STATIC
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
+target_precompile_headers(lada_engine PUBLIC src/ldpch.h)
+
 target_link_libraries(lada_engine
         PUBLIC GLEW::GLEW
         PUBLIC GLFW::GLFW

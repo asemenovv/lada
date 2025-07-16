@@ -2,7 +2,7 @@
 #include "Application.h"
 
 namespace lada {
-    extern lada::app::Application* CreateApplication();
+    extern app::Application* CreateApplication();
 }
 
 int main(int argc, char** argv);

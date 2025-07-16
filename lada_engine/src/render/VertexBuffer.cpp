@@ -1,5 +1,5 @@
+#include "ldpch.h"
 #include "VertexBuffer.h"
-
 #include "Renderer.h"
 
 namespace lada::render {

@@ -1,5 +1,5 @@
+#include "ldpch.h"
 #include "Window.h"
-
 #include "Log.h"
 #include "events/ApplicationEvent.h"
 #include "GLFW/glfw3.h"

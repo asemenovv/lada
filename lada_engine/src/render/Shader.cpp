@@ -1,9 +1,5 @@
+#include "ldpch.h"
 #include "Shader.h"
-
-#include <fstream>
-#include <string>
-#include <sstream>
-
 #include "Renderer.h"
 #include "app/Log.h"
 

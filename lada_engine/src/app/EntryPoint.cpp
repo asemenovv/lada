@@ -1,3 +1,4 @@
+#include "ldpch.h"
 #include "EntryPoint.h"
 
 #include "Log.h"

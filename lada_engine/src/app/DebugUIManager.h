@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Window.h"
-// #include "Application.h"
 
 namespace lada::app {
     class DebugUIManager {
