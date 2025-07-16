@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "GL/glew.h"
+#include "Window.h"
 #include "events/EventManager.h"
 
 struct GLFWwindow;
@@ -10,7 +12,7 @@ namespace lada::app {
     class Application {
     public:
         virtual ~Application();
-        Application(std::string  title, int width, int height);
+        Application(const std::string &title, int width, int height);
         void Run();
     protected:
         virtual void Init();
@@ -21,12 +23,7 @@ namespace lada::app {
         virtual void CleanUp();
         [[nodiscard]] event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
-        GLFWwindow* m_Window;
-        int m_Width, m_Height;
-        std::string m_Title;
+        Window* m_Window;
         event::EventManager* m_EventManager;
-
-        static void WindowCloseCallback(GLFWwindow* window);
-        static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
     };
 }
