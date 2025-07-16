@@ -3,11 +3,12 @@
 #include <string>
 
 #include "events/EventManager.h"
-#include "GLFW/glfw3.h"
+
+struct GLFWwindow;
 
 namespace lada::app {
     class Window {
-    friend class Application;
+    friend class DebugUIManager;
     public:
         Window(const std::string &title, int width, int height, event::EventManager* eventManager);
         ~Window();

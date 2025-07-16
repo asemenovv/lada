@@ -2,6 +2,8 @@
 
 #include "app/Application.h"
 #include "app/Log.h"
+#include "app/Window.h"
+#include "app/DebugUIManager.h"
 
 #include "events/EventManager.h"
 #include "events/Event.h"
@@ -17,7 +19,6 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "imgui.h"
 #include "spdlog/spdlog.h"
 
 // ====== Entry Point ======

@@ -19,6 +19,6 @@ protected:
     void Init() override;
     void BeforeRender() override;
     void OnRender() override;
-    void OnImGuiRender(float frameRate) override;
+    void OnDebugUIRender(lada::app::DebugUIManager* manager) override;
     void AfterRender() override;
 };

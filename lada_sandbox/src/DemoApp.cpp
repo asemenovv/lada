@@ -69,11 +69,10 @@ void DemoApp::OnRender() {
     m_Renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
 }
 
-void DemoApp::OnImGuiRender(const float frameRate) {
-    ImGui::Begin("Lada::Debug");
-    ImGui::SliderFloat("Rotation", &m_R, 0.0f, 1.0f);
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / frameRate, frameRate);
-    ImGui::End();
+void DemoApp::OnDebugUIRender(lada::app::DebugUIManager* manager) {
+    manager->Slider("Rotation", &m_R, 0.0f, 1.0f);
+    const float timePerFrame = 1000.0f / manager->FrameRate();
+    manager->Text("Application average %.3f ms/frame (%.1f FPS)", timePerFrame, manager->FrameRate());
 }
 
 void DemoApp::AfterRender() {

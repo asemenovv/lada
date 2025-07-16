@@ -2,6 +2,7 @@
 
 #include "Log.h"
 #include "events/ApplicationEvent.h"
+#include "GLFW/glfw3.h"
 
 namespace lada::app {
      Window::Window(const std::string& title, const int width, const int height, event::EventManager* eventManager)
@@ -27,6 +28,7 @@ namespace lada::app {
          glfwSetFramebufferSizeCallback(m_Window, FramebufferSizeCallback);
 
          glfwMakeContextCurrent(m_Window);
+         glfwSwapInterval(1);
     }
 
     Window::~Window() {

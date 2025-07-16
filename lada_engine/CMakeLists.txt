@@ -31,6 +31,8 @@ add_library(lada_engine STATIC
         src/app/EntryPoint.cpp
         src/app/Log.cpp
         src/app/Window.cpp
+        src/app/DebugUIManager.cpp
+        src/app/DebugUIManager.h
 )
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
