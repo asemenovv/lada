@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <string>
 
+#include "events/MouseEvent.h"
+
 std::string workingDir() {
     const std::filesystem::path currentPath = std::filesystem::current_path()
         .parent_path()
@@ -14,16 +16,13 @@ std::string workingDir() {
 void DemoApp::Init() {
     std::string workingDirectory = workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
-    GetEventManager()->RegisterHandler<lada::event::WindowCloseEvent> (
-        [this](const lada::event::WindowCloseEvent& event) {
-            LD_TRACE("WindowCloseEvent is fired {}", event.ToString());
-            return true;
-        }
-    );
-    GetEventManager()->RegisterHandler<lada::event::WindowResizeEvent> (
-        [this](const lada::event::WindowResizeEvent& event) {
-            LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
-            return true;
+    GetEventManager()->REGISTER_HANDLER(lada::event::WindowCloseEvent, {
+        LD_TRACE("WindowCloseEvent is fired {}", event.ToString());
+        return true;
+        });
+    GetEventManager()->REGISTER_HANDLER(lada::event::WindowResizeEvent, {
+        LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
+        return true;
         });
 
     constexpr float positions[] = {

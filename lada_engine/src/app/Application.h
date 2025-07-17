@@ -12,6 +12,7 @@ namespace lada::app {
         virtual ~Application();
         Application(const std::string &title, int width, int height);
         void Run();
+        void Shutdown();
     protected:
         virtual void Init();
         virtual void BeforeRender();
@@ -21,6 +22,7 @@ namespace lada::app {
         virtual void CleanUp();
         [[nodiscard]] event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
+        bool m_Running = true;
         Window* m_Window;
         event::EventManager* m_EventManager;
         DebugUIManager* m_DebugUIManager;

@@ -5,6 +5,7 @@
 #include "DebugUIManager.h"
 #include "Log.h"
 #include "events/ApplicationEvent.h"
+#include "GLFW/glfw3.h"
 
 namespace lada::app {
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
@@ -22,6 +23,10 @@ namespace lada::app {
         GL_CALL(glEnable(GL_BLEND));
 
         m_DebugUIManager = new DebugUIManager(m_Window);
+        m_EventManager->REGISTER_HANDLER(event::WindowCloseEvent, {
+            this->Shutdown();
+            return true;
+        });
     }
 
     Application::~Application() {
@@ -33,7 +38,7 @@ namespace lada::app {
 
     void Application::Run() {
         Init();
-        while (!m_Window->ShouldClose()) {
+        while (m_Running) {
             BeforeRender();
             m_DebugUIManager->BeforeRender();
 
@@ -44,8 +49,13 @@ namespace lada::app {
 
             m_DebugUIManager->AfterRender();
             AfterRender();
-            m_Window->SwapBuffers();
+            m_Window->Update();
         }
+    }
+
+    void Application::Shutdown() {
+        m_Window->Close();
+        m_Running = false;
     }
 
     void Application::Init() {}
