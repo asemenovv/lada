@@ -14,11 +14,11 @@ set_target_properties(GLEW::GLEW PROPERTIES
 )
 
 # GLFW
-add_library(GLFW::GLFW SHARED IMPORTED)
-set_target_properties(GLFW::GLFW PROPERTIES
-        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glfw/libglfw.3.dylib"
-        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glfw/include"
-)
+#add_library(GLFW::GLFW SHARED IMPORTED)
+#set_target_properties(GLFW::GLFW PROPERTIES
+#        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glfw/libglfw.3.dylib"
+#        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glfw/include"
+#)
 
 add_library(lada_engine STATIC
         src/app/Application.cpp
@@ -41,7 +41,7 @@ target_precompile_headers(lada_engine PUBLIC src/ldpch.h)
 
 target_link_libraries(lada_engine
         PUBLIC GLEW::GLEW
-        PUBLIC GLFW::GLFW
+        PUBLIC glfw
         PUBLIC OpenGL::GL
         PUBLIC spdlog::spdlog
         PUBLIC glm::glm
