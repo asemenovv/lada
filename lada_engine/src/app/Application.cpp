@@ -3,13 +3,13 @@
 
 #include "render/Renderer.h"
 #include "DebugUIManager.h"
-#include "Log.h"
+#include "Logger.h"
 #include "events/ApplicationEvent.h"
 #include "GLFW/glfw3.h"
 
-namespace lada::app {
+namespace Lada::App {
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
-        m_EventManager = new event::EventManager();
+        m_EventManager = new Event::EventManager();
         m_Window = new Window(title, width, height, m_EventManager);
 
         if (glewInit() != GLEW_OK) {
@@ -23,7 +23,7 @@ namespace lada::app {
         GL_CALL(glEnable(GL_BLEND));
 
         m_DebugUIManager = new DebugUIManager(m_Window);
-        m_EventManager->REGISTER_HANDLER(event::WindowCloseEvent, {
+        m_EventManager->REGISTER_HANDLER(Event::WindowCloseEvent, {
             this->Shutdown();
             return true;
         });

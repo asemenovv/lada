@@ -2,7 +2,7 @@
 
 #include "Window.h"
 
-namespace lada::app {
+namespace Lada::App {
     class DebugUIManager {
     friend class Application;
     public:

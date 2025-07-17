@@ -5,7 +5,7 @@
 
 #include "glm/glm.hpp"
 
-namespace lada::render {
+namespace Lada::Render {
     struct ShaderProgramSource {
         std::string VertexSource;
         std::string FragmentSource;

@@ -6,7 +6,7 @@
 #include "events/EventManager.h"
 #include "Window.h"
 
-namespace lada::app {
+namespace Lada::App {
     class Application {
     public:
         virtual ~Application();
@@ -17,14 +17,14 @@ namespace lada::app {
         virtual void Init();
         virtual void BeforeRender();
         virtual void OnRender() = 0;
-        virtual void OnDebugUIRender(lada::app::DebugUIManager* manager) = 0;
+        virtual void OnDebugUIRender(Lada::App::DebugUIManager* manager) = 0;
         virtual void AfterRender();
         virtual void CleanUp();
-        [[nodiscard]] event::EventManager* GetEventManager() const { return m_EventManager; }
+        [[nodiscard]] Event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
         bool m_Running = true;
         Window* m_Window;
-        event::EventManager* m_EventManager;
+        Event::EventManager* m_EventManager;
         DebugUIManager* m_DebugUIManager;
     };
 }

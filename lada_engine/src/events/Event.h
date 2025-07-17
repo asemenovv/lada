@@ -3,7 +3,7 @@
 
 #include "Core.h"
 
-namespace lada::event {
+namespace Lada::Event {
     enum class EventType {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,

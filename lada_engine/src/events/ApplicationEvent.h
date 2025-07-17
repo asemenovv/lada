@@ -4,7 +4,7 @@
 
 #include "Event.h"
 
-namespace lada::event {
+namespace Lada::Event {
     class WindowResizeEvent final : public Event {
     public:
         WindowResizeEvent(const int width, const int height): m_Width(width), m_Height(height) {

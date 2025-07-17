@@ -5,7 +5,7 @@
 #include "Event.h"
 #include "util/KeyCodes.h"
 
-namespace lada::event {
+namespace Lada::Event {
     class KeyEvent : public Event {
     public:
         [[nodiscard]] int GetKeyCode() const { return m_KeyCode; }

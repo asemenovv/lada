@@ -1,9 +1,9 @@
 #include "ldpch.h"
 #include "Shader.h"
 #include "Renderer.h"
-#include "app/Log.h"
+#include "app/Logger.h"
 
-namespace lada::render {
+namespace Lada::Render {
     Shader::Shader(const std::string &filepath)
         : m_RendererID(0), m_FilePath(filepath) {
         ShaderProgramSource source = ParseShader(filepath);

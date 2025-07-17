@@ -2,8 +2,8 @@
 
 #include "DemoApp.h"
 
-namespace lada {
-    app::Application* CreateApplication() {
+namespace Lada {
+    App::Application* CreateApplication() {
         return new DemoApp();
     }
 }

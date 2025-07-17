@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lada {
+namespace Lada {
 	using KeyCode = uint16_t;
 	
 	namespace Key {

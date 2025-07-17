@@ -2,7 +2,7 @@
 #include "VertexBuffer.h"
 #include "Renderer.h"
 
-namespace lada::render {
+namespace Lada::Render {
     VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
         GL_CALL(glGenBuffers(1, &m_RendererID));
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));

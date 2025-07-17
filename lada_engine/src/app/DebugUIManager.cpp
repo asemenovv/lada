@@ -5,7 +5,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-namespace lada::app {
+namespace Lada::App {
     DebugUIManager::DebugUIManager(const Window* window) {
         ImGui::CreateContext();
         ImGui_ImplGlfw_InitForOpenGL(window->m_Window, true);

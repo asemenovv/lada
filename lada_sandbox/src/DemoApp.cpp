@@ -16,11 +16,11 @@ std::string workingDir() {
 void DemoApp::Init() {
     std::string workingDirectory = workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
-    GetEventManager()->REGISTER_HANDLER(lada::event::WindowCloseEvent, {
+    GetEventManager()->REGISTER_HANDLER(Lada::Event::WindowCloseEvent, {
         LD_TRACE("WindowCloseEvent is fired {}", event.ToString());
         return true;
         });
-    GetEventManager()->REGISTER_HANDLER(lada::event::WindowResizeEvent, {
+    GetEventManager()->REGISTER_HANDLER(Lada::Event::WindowResizeEvent, {
         LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
         return true;
         });
@@ -36,19 +36,19 @@ void DemoApp::Init() {
         2, 3, 0
     };
 
-    m_VertexArray = std::make_unique<lada::render::VertexArray>();
-    m_VertexBuffer = std::make_unique<lada::render::VertexBuffer>(positions, 4 * 4 * sizeof(float));
+    m_VertexArray = std::make_unique<Lada::Render::VertexArray>();
+    m_VertexBuffer = std::make_unique<Lada::Render::VertexBuffer>(positions, 4 * 4 * sizeof(float));
 
-    m_VertexBufferLayout = std::make_unique<lada::render::VertexBufferLayout>();
+    m_VertexBufferLayout = std::make_unique<Lada::Render::VertexBufferLayout>();
     m_VertexBufferLayout->Push<float>(2);
     m_VertexBufferLayout->Push<float>(2);
     m_VertexArray->AddBuffer(*m_VertexBuffer, *m_VertexBufferLayout);
-    m_IndexBuffer = std::make_unique<lada::render::IndexBuffer>(indices, 6);
+    m_IndexBuffer = std::make_unique<Lada::Render::IndexBuffer>(indices, 6);
 
-    m_Shader = std::make_unique<lada::render::Shader>(workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl");
+    m_Shader = std::make_unique<Lada::Render::Shader>(workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl");
     m_Shader->Bind();
 
-    m_Texture = std::make_unique<lada::render::Texture>(workingDirectory + "/lada_sandbox/res/textures/stone.png");
+    m_Texture = std::make_unique<Lada::Render::Texture>(workingDirectory + "/lada_sandbox/res/textures/stone.png");
     m_Texture->Bind();
     m_Shader->SetUniform1i("u_Texture", 0);
 }
@@ -68,7 +68,7 @@ void DemoApp::OnRender() {
     m_Renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
 }
 
-void DemoApp::OnDebugUIRender(lada::app::DebugUIManager* manager) {
+void DemoApp::OnDebugUIRender(Lada::App::DebugUIManager* manager) {
     manager->Slider("Rotation", &m_R, 0.0f, 1.0f);
     const float timePerFrame = 1000.0f / manager->FrameRate();
     manager->Text("Application average %.3f ms/frame (%.1f FPS)", timePerFrame, manager->FrameRate());

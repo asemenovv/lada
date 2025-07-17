@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "VertexBufferLayout.h"
 
-namespace lada::render {
+namespace Lada::Render {
     VertexArray::VertexArray() {
         GL_CALL(glGenVertexArrays(1, &m_RendererID));
         Bind();

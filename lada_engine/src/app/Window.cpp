@@ -1,13 +1,13 @@
 #include "ldpch.h"
 #include "Window.h"
-#include "Log.h"
+#include "Logger.h"
 #include "events/ApplicationEvent.h"
 #include "events/KeyEvent.h"
 #include "events/MouseEvent.h"
 #include "GLFW/glfw3.h"
 
-namespace lada::app {
-    Window::Window(const std::string &title, const int width, const int height, event::EventManager* eventManager):
+namespace Lada::App {
+    Window::Window(const std::string &title, const int width, const int height, Event::EventManager* eventManager):
         m_EventManager(eventManager) {
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
@@ -66,7 +66,7 @@ namespace lada::app {
             return;
         }
 
-        const event::WindowCloseEvent event;
+        const Event::WindowCloseEvent event;
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -77,7 +77,7 @@ namespace lada::app {
             return;
         }
 
-        const event::WindowResizeEvent event(width, height);
+        const Event::WindowResizeEvent event(width, height);
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -90,17 +90,17 @@ namespace lada::app {
 
         switch (action) {
             case GLFW_PRESS: {
-                const event::KeyPressedEvent event(key, 0);
+                const Event::KeyPressedEvent event(key, 0);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
-                const event::KeyReleasedEvent event(key);
+                const Event::KeyReleasedEvent event(key);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_REPEAT: {
-                const event::KeyPressedEvent event(key, true);
+                const Event::KeyPressedEvent event(key, true);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
@@ -116,7 +116,7 @@ namespace lada::app {
             return;
         }
 
-        event::KeyTypedEvent event(keycode);
+        Event::KeyTypedEvent event(keycode);
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -129,12 +129,12 @@ namespace lada::app {
 
         switch (action) {
             case GLFW_PRESS: {
-                const event::MouseButtonPressedEvent event(button);
+                const Event::MouseButtonPressedEvent event(button);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
-                const event::MouseButtonReleasedEvent event(button);
+                const Event::MouseButtonReleasedEvent event(button);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
@@ -150,7 +150,7 @@ namespace lada::app {
             return;
         }
 
-        event::MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
+        Event::MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -161,7 +161,7 @@ namespace lada::app {
             return;
         }
 
-        const event::MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
+        const Event::MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
         window->m_EventManager->HandleEvent(event);
     }
 }

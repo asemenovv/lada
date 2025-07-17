@@ -5,7 +5,7 @@
 #include <typeindex>
 #include <unordered_map>
 
-namespace lada::event {
+namespace Lada::Event {
     class EventManager {
     public:
         template<typename T>

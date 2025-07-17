@@ -3,14 +3,14 @@
 #include <memory>
 #include <LADA.h>
 
-class DemoApp final :   public lada::app::Application {
-    std::unique_ptr<lada::render::VertexArray> m_VertexArray;
-    std::unique_ptr<lada::render::IndexBuffer> m_IndexBuffer;
-    std::unique_ptr<lada::render::Shader> m_Shader;
-    std::unique_ptr<lada::render::Texture> m_Texture;
-    std::unique_ptr<lada::render::VertexBuffer> m_VertexBuffer;
-    std::unique_ptr<lada::render::VertexBufferLayout> m_VertexBufferLayout;
-    lada::render::Renderer m_Renderer;
+class DemoApp final :   public Lada::App::Application {
+    std::unique_ptr<Lada::Render::VertexArray> m_VertexArray;
+    std::unique_ptr<Lada::Render::IndexBuffer> m_IndexBuffer;
+    std::unique_ptr<Lada::Render::Shader> m_Shader;
+    std::unique_ptr<Lada::Render::Texture> m_Texture;
+    std::unique_ptr<Lada::Render::VertexBuffer> m_VertexBuffer;
+    std::unique_ptr<Lada::Render::VertexBufferLayout> m_VertexBufferLayout;
+    Lada::Render::Renderer m_Renderer;
     float m_R = 0.0f;
     float m_Increment = 0.001f;
 public:
@@ -19,6 +19,6 @@ protected:
     void Init() override;
     void BeforeRender() override;
     void OnRender() override;
-    void OnDebugUIRender(lada::app::DebugUIManager* manager) override;
+    void OnDebugUIRender(Lada::App::DebugUIManager* manager) override;
     void AfterRender() override;
 };

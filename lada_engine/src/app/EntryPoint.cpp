@@ -1,11 +1,11 @@
 #include "ldpch.h"
 #include "EntryPoint.h"
 
-#include "Log.h"
+#include "Logger.h"
 
 int main(int argc, char** argv) {
-    lada::log::Log::Init();
-    const auto app = lada::CreateApplication();
+    Lada::Log::Logger::Init();
+    const auto app = Lada::CreateApplication();
     app->Run();
     delete app;
 }

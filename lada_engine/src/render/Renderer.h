@@ -9,16 +9,16 @@
 #include "VertexArray.h"
 
 #define ASSERT(x) if(!(x)) raise(SIGTRAP);
-#define GL_CALL(x) log::GLClearError();\
+#define GL_CALL(x) Logger::GLClearError();\
 x;\
-ASSERT(log::GLLogCall(#x, __FILE__, __LINE__))
+ASSERT(Logger::GLLogCall(#x, __FILE__, __LINE__))
 
-namespace lada::log {
+namespace Lada::Logger {
     void GLClearError();
     bool GLLogCall(const char* function, const char* file, const int line);
 }
 
-namespace lada::render {
+namespace Lada::Render {
     class Renderer {
     public:
         void Clear() const;

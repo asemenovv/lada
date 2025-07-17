@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lada::render {
+namespace Lada::Render {
     class VertexBuffer {
         unsigned int m_RendererID;
     public:

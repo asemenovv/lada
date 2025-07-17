@@ -2,7 +2,7 @@
 #include "IndexBuffer.h"
 #include "Renderer.h"
 
-namespace lada::render {
+namespace Lada::Render {
     IndexBuffer::IndexBuffer(const unsigned int* data, const unsigned int count)
         : m_Count(count) {
         GL_CALL(glGenBuffers(1, &m_RendererID));

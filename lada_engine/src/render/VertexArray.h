@@ -2,7 +2,7 @@
 
 #include "VertexBuffer.h"
 
-namespace lada::render {
+namespace Lada::Render {
     class VertexBufferLayout;
 
     class VertexArray {

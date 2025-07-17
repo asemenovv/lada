@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 
-namespace lada::render {
+namespace Lada::Render {
     class Texture {
         unsigned int m_RendererID;
         std::string m_FilePath;

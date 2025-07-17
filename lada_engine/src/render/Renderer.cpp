@@ -1,8 +1,8 @@
 #include "ldpch.h"
 #include "Renderer.h"
-#include "app/Log.h"
+#include "app/Logger.h"
 
-namespace lada::log {
+namespace Lada::Logger {
     void GLClearError() {
         while (glGetError() != GL_NO_ERROR);
     }
@@ -16,7 +16,7 @@ namespace lada::log {
     }
 }
 
-namespace lada::render {
+namespace Lada::Render {
     void Renderer::Clear() const {
         GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
     }

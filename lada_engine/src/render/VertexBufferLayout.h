@@ -5,7 +5,7 @@
 #include "GL/glew.h"
 #include "Renderer.h"
 
-namespace lada::render {
+namespace Lada::Render {
     struct VertexBufferLayoutElement {
         unsigned int type;
         unsigned int count;

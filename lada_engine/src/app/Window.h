@@ -7,13 +7,13 @@
 
 struct GLFWwindow;
 
-namespace lada::app {
+namespace Lada::App {
     class Window {
     friend class DebugUIManager;
     public:
-        using WindowEventCallbackFn = std::function<void(const event::Event&)>;
+        using WindowEventCallbackFn = std::function<void(const Event::Event&)>;
 
-        Window(const std::string &title, int width, int height, event::EventManager* eventManager);
+        Window(const std::string &title, int width, int height, Event::EventManager* eventManager);
         ~Window() = default;
 
         void Update() const;
@@ -21,7 +21,7 @@ namespace lada::app {
         void Close() const;
     private:
         GLFWwindow* m_Window;
-        event::EventManager* m_EventManager;
+        Event::EventManager* m_EventManager;
 
         static void WindowCloseCallback(GLFWwindow* glfwWindow);
         static void FramebufferSizeCallback(GLFWwindow* glfwWindow, int width, int height);

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace lada::render {
+namespace Lada::Render {
     class IndexBuffer {
         unsigned int m_RendererID;
         unsigned int m_Count;

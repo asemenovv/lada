@@ -29,7 +29,7 @@ add_library(lada_engine STATIC
         src/render/VertexArray.cpp
         src/render/VertexBuffer.cpp
         src/app/EntryPoint.cpp
-        src/app/Log.cpp
+        src/app/Logger.cpp
         src/app/Window.cpp
         src/app/DebugUIManager.cpp
         src/app/DebugUIManager.h
