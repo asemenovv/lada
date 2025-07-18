@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(lada_sandbox
         src/main.cpp
         src/DemoApp.cpp
+        src/RenderingLayer.cpp
+        src/RenderingLayer.h
 )
 
 include_directories("${ROOT_FOLDER}/lada_engine/src")

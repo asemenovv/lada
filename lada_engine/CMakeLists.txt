@@ -26,6 +26,8 @@ target_include_directories(lada_engine
 
 target_precompile_headers(lada_engine PUBLIC src/ldpch.h)
 
+target_compile_definitions(lada_engine PUBLIC GLFW_INCLUDE_NONE)
+
 target_link_libraries(lada_engine
         PUBLIC GLAD
         PUBLIC glfw

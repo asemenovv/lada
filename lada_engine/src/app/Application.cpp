@@ -32,19 +32,15 @@ namespace Lada::App {
         delete m_DebugUIManager;
         delete m_EventManager;
         delete m_Window;
-        Application::CleanUp();
     }
 
     void Application::Run() {
-        Init();
         while (m_Running) {
             for (Layer *layer : m_LayerStack) {
                 layer->OnUpdate();
             }
             BeforeRender();
             m_DebugUIManager->BeforeRender();
-
-            OnRender();
 
             for (Layer* layer : m_LayerStack) {
                 layer->OnRender();
@@ -55,7 +51,6 @@ namespace Lada::App {
             m_DebugUIManager->End();
 
             m_DebugUIManager->AfterRender();
-            AfterRender();
             m_Window->OnUpdate();
         }
     }

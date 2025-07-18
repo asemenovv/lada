@@ -23,8 +23,7 @@ namespace Lada::Event {
     };
 
 #define REGISTER_HANDLER(e, x) RegisterHandler<e>([this](const e& event) x)
-#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
-virtual EventType GetEventType() const override { return GetStaticType(); }\
+#define EVENT_CLASS_TYPE(type) virtual EventType GetEventType() const override { return EventType::type; }\
 virtual const char* GetName() const override { return #type; }
 
     class Event {
@@ -43,22 +42,6 @@ virtual const char* GetName() const override { return #type; }
         void Handled() { m_Handled = true; }
     protected:
         bool m_Handled = false;
-    };
-
-    class EventDispatcher {
-    public:
-        explicit EventDispatcher(Event& event) : m_Event(event) {}
-
-        template<typename T, typename F>
-        bool Dispatch(const F& func) {
-            if (m_Event.GetEventType() == T::GetStaticType()) {
-                m_Event.m_Handled |= func(static_cast<T&>(m_Event));
-                return true;
-            }
-            return false;
-        }
-    private:
-        Event& m_Event;
     };
 
     inline std::ostream& operator<<(std::ostream& os, const Event& e) {

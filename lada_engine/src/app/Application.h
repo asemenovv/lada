@@ -15,12 +15,8 @@ namespace Lada::App {
         void Run();
         void Shutdown();
     protected:
-        virtual void Init() {};
         virtual void BeforeRender() {};
-        virtual void OnRender() = 0;
         virtual void OnDebugUIRender(DebugUIManager* manager) = 0;
-        virtual void AfterRender() {};
-        virtual void CleanUp() {};
         void PushLayer(Layer *layer);
         void PopLayer(const Layer *layer);
         [[nodiscard]] Event::EventManager* GetEventManager() const { return m_EventManager; }
