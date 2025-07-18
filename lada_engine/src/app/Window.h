@@ -19,6 +19,8 @@ namespace Lada::App {
         void OnUpdate() const;
         void SetVSync(bool enabled);
         void Close() const;
+
+        [[nodiscard]] GLFWwindow* GetNativeWindow() const { return m_Window; }
     private:
         GLFWwindow* m_Window;
         Event::EventManager* m_EventManager;

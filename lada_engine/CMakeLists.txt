@@ -17,6 +17,7 @@ add_library(lada_engine STATIC
         src/app/DebugUIManager.cpp
         src/app/layer/Layer.cpp
         src/app/layer/LayerStack.cpp
+        src/imgui/ImGuiLayer.cpp
 )
 
 target_include_directories(lada_engine

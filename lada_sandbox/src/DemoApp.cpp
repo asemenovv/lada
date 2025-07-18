@@ -20,6 +20,4 @@ DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
 
 void DemoApp::OnDebugUIRender(Lada::App::DebugUIManager* manager) {
     manager->Slider("Rotation", &m_R, 0.0f, 1.0f);
-    const float timePerFrame = 1000.0f / manager->FrameRate();
-    manager->Text("Application average %.3f ms/frame (%.1f FPS)", timePerFrame, manager->FrameRate());
 }

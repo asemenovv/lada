@@ -6,7 +6,10 @@
 #include "events/ApplicationEvent.h"
 
 namespace Lada::App {
+    Application* Application::s_Instance = nullptr;
+
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+        s_Instance = this;
         m_EventManager = new Event::EventManager();
         m_Window = new Window(title, width, height, m_EventManager);
 
@@ -20,12 +23,15 @@ namespace Lada::App {
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GL_CALL(glEnable(GL_BLEND));
 
-        m_DebugUIManager = new DebugUIManager(m_Window);
+        // m_DebugUIManager = new DebugUIManager(m_Window);
         m_EventManager->REGISTER_HANDLER(Event::WindowCloseEvent, {
             this->Shutdown();
             return true;
         });
         SubscribeLayersOnEvents();
+
+        m_ImGuiLayer = new Render::ImGuiLayer();
+        PushLayer(m_ImGuiLayer);
     }
 
     Application::~Application() {
@@ -39,18 +45,9 @@ namespace Lada::App {
             for (Layer *layer : m_LayerStack) {
                 layer->OnUpdate();
             }
-            BeforeRender();
-            m_DebugUIManager->BeforeRender();
-
             for (Layer* layer : m_LayerStack) {
                 layer->OnRender();
             }
-
-            m_DebugUIManager->Begin();
-            OnDebugUIRender(m_DebugUIManager);
-            m_DebugUIManager->End();
-
-            m_DebugUIManager->AfterRender();
             m_Window->OnUpdate();
         }
     }
