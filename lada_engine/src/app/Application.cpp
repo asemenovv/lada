@@ -9,6 +9,10 @@ namespace Lada::App {
     Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+        if (s_Instance != nullptr) {
+            LD_CORE_CRITICAL("Application already initialized!");
+            return;
+        }
         s_Instance = this;
         m_EventManager = new Event::EventManager();
         m_Window = new Window(title, width, height, m_EventManager);
@@ -35,7 +39,6 @@ namespace Lada::App {
     }
 
     Application::~Application() {
-        delete m_DebugUIManager;
         delete m_EventManager;
         delete m_Window;
     }

@@ -15,6 +15,8 @@ namespace Lada::Render {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.BackendFlags |= ImGuiBackendFlags_HasMouseCursors;
+        io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
