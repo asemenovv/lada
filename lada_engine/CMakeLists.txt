@@ -32,7 +32,8 @@ add_library(lada_engine STATIC
         src/app/Logger.cpp
         src/app/Window.cpp
         src/app/DebugUIManager.cpp
-        src/app/DebugUIManager.h
+        src/app/layer/Layer.cpp
+        src/app/layer/LayerStack.cpp
 )
 
 target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

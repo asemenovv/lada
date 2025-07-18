@@ -3,6 +3,32 @@
 #include <memory>
 #include <LADA.h>
 
+class ExampleLayer final : public Lada::App::Layer {
+public:
+    ExampleLayer(): Layer("ExampleLayer") {
+    }
+
+    void OnAttach() override {
+        LD_INFO("OnAttach");
+    }
+
+    void OnUpdate() override {
+        LD_INFO("OnUpdate");
+    }
+
+    void OnRender() override {
+        LD_INFO("OnRender");
+    }
+
+    void OnDetach() override {
+        LD_INFO("OnDetach");
+    }
+
+    void OnEvent(const Lada::Event::Event &event) override {
+        LD_INFO("OnEvent {}", event.ToString());
+    }
+};
+
 class DemoApp final :   public Lada::App::Application {
     std::unique_ptr<Lada::Render::VertexArray> m_VertexArray;
     std::unique_ptr<Lada::Render::IndexBuffer> m_IndexBuffer;

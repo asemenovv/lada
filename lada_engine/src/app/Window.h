@@ -16,7 +16,7 @@ namespace Lada::App {
         Window(const std::string &title, int width, int height, Event::EventManager* eventManager);
         ~Window() = default;
 
-        void Update() const;
+        void OnUpdate() const;
         void SetVSync(bool enabled);
         void Close() const;
     private:

@@ -27,6 +27,7 @@ namespace Lada::App {
             this->Shutdown();
             return true;
         });
+        SubscribeLayersOnEvents();
     }
 
     Application::~Application() {
@@ -39,17 +40,25 @@ namespace Lada::App {
     void Application::Run() {
         Init();
         while (m_Running) {
+            for (Layer *layer : m_LayerStack) {
+                layer->OnUpdate();
+            }
             BeforeRender();
             m_DebugUIManager->BeforeRender();
 
             OnRender();
+
+            for (Layer* layer : m_LayerStack) {
+                layer->OnRender();
+            }
+
             m_DebugUIManager->Begin();
             OnDebugUIRender(m_DebugUIManager);
             m_DebugUIManager->End();
 
             m_DebugUIManager->AfterRender();
             AfterRender();
-            m_Window->Update();
+            m_Window->OnUpdate();
         }
     }
 
@@ -58,8 +67,22 @@ namespace Lada::App {
         m_Running = false;
     }
 
-    void Application::Init() {}
-    void Application::BeforeRender() {}
-    void Application::AfterRender() {}
-    void Application::CleanUp() {}
+    void Application::PushLayer(Layer *layer) {
+        m_LayerStack.PushLayer(layer);
+    }
+
+    void Application::PopLayer(const Layer *layer) {
+        m_LayerStack.PopLayer(layer);
+    }
+
+    void Application::SubscribeLayersOnEvents() {
+        m_EventManager->RegisterGlobalHandler([this](const Event::Event& event) {
+            for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+                (*--it)->OnEvent(event);
+                if (event.IsHandled())
+                    break;
+            }
+            return true;
+        });
+    }
 }

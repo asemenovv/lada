@@ -30,7 +30,7 @@ namespace Lada::App {
         glfwMakeContextCurrent(m_Window);
     }
 
-    void Window::Update() const {
+    void Window::OnUpdate() const {
         glfwPollEvents();
         glfwSwapBuffers(m_Window);
     }

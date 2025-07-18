@@ -1,6 +1,7 @@
 #pragma once
 
 #include "app/Application.h"
+#include "app/layer/Layer.h"
 #include "app/Logger.h"
 #include "app/Window.h"
 #include "app/DebugUIManager.h"

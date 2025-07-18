@@ -14,6 +14,8 @@ std::string workingDir() {
 }
 
 void DemoApp::Init() {
+    PushLayer(new ExampleLayer());
+
     std::string workingDirectory = workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
     GetEventManager()->REGISTER_HANDLER(Lada::Event::WindowCloseEvent, {

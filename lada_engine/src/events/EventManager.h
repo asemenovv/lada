@@ -8,10 +8,16 @@
 namespace Lada::Event {
     class EventManager {
     public:
+        using GlobalEventHandler = std::function<bool(const Event&)>;
+
         template<typename T>
         void RegisterHandler(std::function<bool(const T&)> handler) {
             auto& handlers = GetHandlerList<T>();
             handlers.handlers.push_back(std::move(handler));
+        }
+
+        void RegisterGlobalHandler(GlobalEventHandler handler) {
+            m_GlobalHandlers.emplace_back(std::move(handler));
         }
 
         template<typename T>
@@ -25,6 +31,11 @@ namespace Lada::Event {
                     if (handler(event)) {
                         isHandled = true;
                     }
+                }
+            }
+            for (auto& handler : m_GlobalHandlers) {
+                if (handler(event)) {
+                    isHandled = true;
                 }
             }
             return isHandled;
@@ -53,5 +64,6 @@ namespace Lada::Event {
         }
 
         std::unordered_map<std::type_index, std::unique_ptr<IHandlerList>> m_Handlers;
+        std::vector<GlobalEventHandler> m_GlobalHandlers;
     };
 }

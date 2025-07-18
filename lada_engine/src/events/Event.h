@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Core.h"
+#include "spdlog/fmt/bundled/base.h"
 
 namespace Lada::Event {
     enum class EventType {
@@ -38,6 +39,8 @@ virtual const char* GetName() const override { return #type; }
         [[nodiscard]] bool IsInCategory(EventCategory category) const {
             return GetCategoryFlags() & static_cast<int>(category);
         }
+        [[nodiscard]] bool IsHandled() const { return m_Handled; }
+        void Handled() { m_Handled = true; }
     protected:
         bool m_Handled = false;
     };
