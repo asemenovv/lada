@@ -4,6 +4,7 @@
 #include "events/ApplicationEvent.h"
 #include "events/KeyEvent.h"
 #include "events/MouseEvent.h"
+#include <glad/glad.h>
 #include "GLFW/glfw3.h"
 
 namespace Lada::App {

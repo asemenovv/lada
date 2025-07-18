@@ -3,23 +3,6 @@ project(lada_engine)
 
 set(CMAKE_CXX_STANDARD 20)
 
-# OpenGL
-find_package(OpenGL REQUIRED)
-
-# GLEW
-add_library(GLEW::GLEW SHARED IMPORTED)
-set_target_properties(GLEW::GLEW PROPERTIES
-        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glew/libGLEW.2.2.0.dylib"
-        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glew/include"
-)
-
-# GLFW
-#add_library(GLFW::GLFW SHARED IMPORTED)
-#set_target_properties(GLFW::GLFW PROPERTIES
-#        IMPORTED_LOCATION "${ROOT_FOLDER}/deps/glfw/libglfw.3.dylib"
-#        INTERFACE_INCLUDE_DIRECTORIES "${ROOT_FOLDER}/deps/glfw/include"
-#)
-
 add_library(lada_engine STATIC
         src/app/Application.cpp
         src/render/IndexBuffer.cpp
@@ -36,14 +19,16 @@ add_library(lada_engine STATIC
         src/app/layer/LayerStack.cpp
 )
 
-target_include_directories(lada_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(lada_engine
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+        PUBLIC ${CMAKE_SOURCE_DIR}/deps/GLAD/include
+)
 
 target_precompile_headers(lada_engine PUBLIC src/ldpch.h)
 
 target_link_libraries(lada_engine
-        PUBLIC GLEW::GLEW
+        PUBLIC GLAD
         PUBLIC glfw
-        PUBLIC OpenGL::GL
         PUBLIC spdlog::spdlog
         PUBLIC glm::glm
         PUBLIC imgui

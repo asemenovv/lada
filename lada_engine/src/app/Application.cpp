@@ -1,19 +1,17 @@
 #include "ldpch.h"
 #include "Application.h"
-
 #include "render/Renderer.h"
 #include "DebugUIManager.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
-#include "GLFW/glfw3.h"
 
 namespace Lada::App {
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
         m_EventManager = new Event::EventManager();
         m_Window = new Window(title, width, height, m_EventManager);
 
-        if (glewInit() != GLEW_OK) {
-            LD_CORE_CRITICAL("GLEW could not be initialized");
+        if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
+            LD_CORE_CRITICAL("GLAD could not be initialized");
         }
 
         GL_CALL(const char* glVersion = (const char*)glGetString(GL_VERSION));
