@@ -9,7 +9,7 @@
 
 namespace Lada::App {
     Window::Window(const std::string &title, const int width, const int height, Event::EventManager* eventManager):
-        m_EventManager(eventManager) {
+        m_EventManager(eventManager), m_Width(width), m_Height(height) {
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
 
@@ -29,6 +29,11 @@ namespace Lada::App {
         SubscribeToEvents();
 
         glfwMakeContextCurrent(m_Window);
+        eventManager->REGISTER_HANDLER(Lada::Event::WindowResizeEvent, {
+            m_Width = event.GetWidth();
+            m_Height = event.GetHeight();
+            return true;
+        });
     }
 
     void Window::OnUpdate() const {

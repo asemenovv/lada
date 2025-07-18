@@ -19,9 +19,12 @@ namespace Lada::App {
         void OnUpdate() const;
         void SetVSync(bool enabled);
         void Close() const;
+        [[nodiscard]] int GetWidth() const { return m_Width; }
+        [[nodiscard]] int GetHeight() const { return m_Height; }
 
         [[nodiscard]] GLFWwindow* GetNativeWindow() const { return m_Window; }
     private:
+        int m_Width, m_Height;
         GLFWwindow* m_Window;
         Event::EventManager* m_EventManager;
 
