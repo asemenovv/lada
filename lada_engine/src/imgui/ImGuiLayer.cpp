@@ -2,17 +2,19 @@
 #include "ImGuiLayer.h"
 
 #include <imgui.h>
-#include <imgui_internal.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
 #include "app/Application.h"
+#include "events/MouseEvent.h"
 
 namespace Lada::Render {
     ImGuiLayer::ImGuiLayer(): Layer("ImGuiLayer") {
     }
 
     void ImGuiLayer::OnAttach() {
+        const std::string workingDirectory = workingDir();
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
@@ -24,10 +26,10 @@ namespace Lada::Render {
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable; // Enable Multi-Viewport / Platform Windows
 
         constexpr float fontSize = 18.0f;
-        io.Fonts->AddFontFromFileTTF("/Users/463536/CLionProjects/lada/assets/fonts/opensans/OpenSans-Bold.ttf",
+        io.Fonts->AddFontFromFileTTF((workingDirectory + "/assets/fonts/opensans/OpenSans-Bold.ttf").c_str(),
                                      fontSize);
         io.FontDefault = io.Fonts->AddFontFromFileTTF(
-            "/Users/463536/CLionProjects/lada/assets/fonts/opensans/OpenSans-Regular.ttf", fontSize);
+            (workingDirectory + "/assets/fonts/opensans/OpenSans-Regular.ttf").c_str(), fontSize);
 
         ImGui::StyleColorsDark();
         ImGuiStyle &style = ImGui::GetStyle();
@@ -41,6 +43,8 @@ namespace Lada::Render {
         GLFWwindow *window = app.GetWindow().GetNativeWindow();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
+        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
+                                static_cast<float>(app.GetWindow().GetHeight()));
     }
 
     void ImGuiLayer::OnDetach() {
@@ -58,20 +62,20 @@ namespace Lada::Render {
     void ImGuiLayer::OnRender() {
         ImGui::Begin("Lada::Debug");
         ImGuiIO &io = ImGui::GetIO();
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+        RenderElements(io);
         ImGui::End();
-
-        App::Application &app = App::Application::Get();
-        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
-                                static_cast<float>(app.GetWindow().GetHeight()));
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         ImGui::UpdatePlatformWindows();
     }
 
-    void ImGuiLayer::OnEvent(const Event::Event &event) {
+    void ImGuiLayer::OnEvent(Event::Event &event) {
         Layer::OnEvent(event);
+    }
+
+    void ImGuiLayer::RenderElements(const ImGuiIO& io) {
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
     }
 
     void ImGuiLayer::SetDarkThemeColors() {

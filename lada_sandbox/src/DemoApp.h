@@ -7,6 +7,6 @@ class DemoApp final :   public Lada::App::Application {
     float m_Increment = 0.001f;
 public:
     DemoApp();
-protected:
-    void OnDebugUIRender(Lada::App::DebugUIManager* manager) override;
+private:
+    Lada::Render::ImGuiLayer* m_ImGuiLayer;
 };

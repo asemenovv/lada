@@ -5,13 +5,15 @@
 #include <typeindex>
 #include <unordered_map>
 
+#include "events/Event.h"
+
 namespace Lada::Event {
     class EventManager {
     public:
-        using GlobalEventHandler = std::function<bool(const Event&)>;
+        using GlobalEventHandler = std::function<bool(Event&)>;
 
         template<typename T>
-        void RegisterHandler(std::function<bool(const T&)> handler) {
+        void RegisterHandler(std::function<bool(T&)> handler) {
             auto& handlers = GetHandlerList<T>();
             handlers.handlers.push_back(std::move(handler));
         }
@@ -21,7 +23,7 @@ namespace Lada::Event {
         }
 
         template<typename T>
-        bool HandleEvent(const T& event) {
+        bool HandleEvent(T& event) {
             const auto it = m_Handlers.find(std::type_index(typeid(T)));
             bool isHandled = false;
             if (it != m_Handlers.end()) {
@@ -47,7 +49,7 @@ namespace Lada::Event {
 
         template<typename T>
         struct HandlerList final : IHandlerList {
-            std::vector<std::function<bool(const T&)>> handlers;
+            std::vector<std::function<bool(T&)>> handlers;
         };
 
         template<typename T>

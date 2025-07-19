@@ -1,7 +1,6 @@
 #include "ldpch.h"
 #include "Application.h"
 #include "render/Renderer.h"
-#include "DebugUIManager.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
 
@@ -27,15 +26,20 @@ namespace Lada::App {
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GL_CALL(glEnable(GL_BLEND));
 
-        // m_DebugUIManager = new DebugUIManager(m_Window);
-        m_EventManager->REGISTER_HANDLER(Event::WindowCloseEvent, {
-            this->Shutdown();
-            return true;
-        });
+        m_EventManager->BIND_HANDLER(Event::WindowCloseEvent, Application::OnWindowCloseEvent);
         SubscribeLayersOnEvents();
 
-        m_ImGuiLayer = new Render::ImGuiLayer();
-        PushLayer(m_ImGuiLayer);
+        m_EventManager->BIND_HANDLER(Event::WindowResizeEvent, Application::OnWindowResizeEvent);
+    }
+
+    bool Application::OnWindowCloseEvent(const Event::WindowCloseEvent& event) {
+        this->Shutdown();
+        return true;
+    }
+
+    bool Application::OnWindowResizeEvent(const Event::WindowResizeEvent &event) {
+        glViewport(0, 0, event.GetWidth(), event.GetHeight());
+        return true;
     }
 
     Application::~Application() {
@@ -69,7 +73,7 @@ namespace Lada::App {
     }
 
     void Application::SubscribeLayersOnEvents() {
-        m_EventManager->RegisterGlobalHandler([this](const Event::Event& event) {
+        m_EventManager->RegisterGlobalHandler([this](Event::Event& event) {
             for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
                 (*--it)->OnEvent(event);
                 if (event.IsHandled())

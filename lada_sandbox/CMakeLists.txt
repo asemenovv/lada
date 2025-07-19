@@ -8,6 +8,8 @@ add_executable(lada_sandbox
         src/DemoApp.cpp
         src/RenderingLayer.cpp
         src/RenderingLayer.h
+        src/DemoImGuiLayer.cpp
+        src/DemoImGuiLayer.h
 )
 
 include_directories("${ROOT_FOLDER}/lada_engine/src")

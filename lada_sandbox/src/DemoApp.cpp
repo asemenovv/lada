@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "DemoImGuiLayer.h"
 #include "RenderingLayer.h"
 #include "events/MouseEvent.h"
 
@@ -15,9 +16,7 @@ DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
         LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
         return true;
         });
+    m_ImGuiLayer = new DemoImGuiLayer();
     PushLayer(new RenderingLayer());
-}
-
-void DemoApp::OnDebugUIRender(Lada::App::DebugUIManager* manager) {
-    manager->Slider("Rotation", &m_R, 0.0f, 1.0f);
+    PushLayer(m_ImGuiLayer);
 }

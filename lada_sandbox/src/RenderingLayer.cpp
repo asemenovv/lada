@@ -1,16 +1,8 @@
 #include "ldpch.h"
 #include "RenderingLayer.h"
 
-std::string workingDir() {
-    const std::filesystem::path currentPath = std::filesystem::current_path()
-        .parent_path()
-        .parent_path();
-    std::string currentDirectory = currentPath.string();
-    return currentDirectory;
-}
-
 void RenderingLayer::OnAttach() {
-    std::string workingDirectory = workingDir();
+    std::string workingDirectory = Lada::workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
 
     constexpr float positions[] = {

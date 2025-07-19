@@ -72,7 +72,7 @@ namespace Lada::App {
             return;
         }
 
-        const Event::WindowCloseEvent event;
+        Event::WindowCloseEvent event;
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -83,7 +83,7 @@ namespace Lada::App {
             return;
         }
 
-        const Event::WindowResizeEvent event(width, height);
+        Event::WindowResizeEvent event(width, height);
         window->m_EventManager->HandleEvent(event);
     }
 
@@ -96,17 +96,17 @@ namespace Lada::App {
 
         switch (action) {
             case GLFW_PRESS: {
-                const Event::KeyPressedEvent event(key, 0);
+                Event::KeyPressedEvent event(key, 0);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
-                const Event::KeyReleasedEvent event(key);
+                Event::KeyReleasedEvent event(key);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_REPEAT: {
-                const Event::KeyPressedEvent event(key, true);
+                Event::KeyPressedEvent event(key, true);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
@@ -135,12 +135,12 @@ namespace Lada::App {
 
         switch (action) {
             case GLFW_PRESS: {
-                const Event::MouseButtonPressedEvent event(button);
+                Event::MouseButtonPressedEvent event(button);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
-                const Event::MouseButtonReleasedEvent event(button);
+                Event::MouseButtonReleasedEvent event(button);
                 window->m_EventManager->HandleEvent(event);
                 break;
             }
@@ -167,7 +167,7 @@ namespace Lada::App {
             return;
         }
 
-        const Event::MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
+        Event::MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
         window->m_EventManager->HandleEvent(event);
     }
 }
