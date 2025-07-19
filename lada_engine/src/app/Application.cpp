@@ -5,9 +5,11 @@
 #include "events/ApplicationEvent.h"
 
 namespace Lada::App {
-    Application* Application::s_Instance = nullptr;
+    template<typename T>
+    Application<T>* Application<T>::s_Instance = nullptr;
 
-    Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+    template<typename T>
+    Application<T>::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
         if (s_Instance != nullptr) {
             LD_CORE_CRITICAL("Application already initialized!");
             return;
@@ -32,47 +34,60 @@ namespace Lada::App {
         m_EventManager->BIND_HANDLER(Event::WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
-    bool Application::OnWindowCloseEvent(const Event::WindowCloseEvent& event) {
+    template<typename T>
+    void Application<T>::Run() {
+        Run(CreateContext());
+    }
+
+    template<typename T>
+    bool Application<T>::OnWindowCloseEvent(const Event::WindowCloseEvent& event) {
         this->Shutdown();
         return true;
     }
 
-    bool Application::OnWindowResizeEvent(const Event::WindowResizeEvent &event) {
+    template<typename T>
+    bool Application<T>::OnWindowResizeEvent(const Event::WindowResizeEvent &event) {
         glViewport(0, 0, event.GetWidth(), event.GetHeight());
         return true;
     }
 
-    Application::~Application() {
+    template<typename T>
+    Application<T>::~Application() {
         delete m_EventManager;
         delete m_Window;
     }
 
-    void Application::Run() {
+    template<typename T>
+    void Application<T>::Run(T& context) {
         while (m_Running) {
-            for (Layer *layer : m_LayerStack) {
-                layer->OnUpdate();
+            for (Layer<T> *layer : m_LayerStack) {
+                layer->OnUpdate(context);
             }
-            for (Layer* layer : m_LayerStack) {
-                layer->OnRender();
+            for (Layer<T>* layer : m_LayerStack) {
+                layer->OnRender(context);
             }
             m_Window->OnUpdate();
         }
     }
 
-    void Application::Shutdown() {
+    template<typename T>
+    void Application<T>::Shutdown() {
         m_Window->Close();
         m_Running = false;
     }
 
-    void Application::PushLayer(Layer *layer) {
+    template<typename T>
+    void Application<T>::PushLayer(Layer<T> *layer) {
         m_LayerStack.PushLayer(layer);
     }
 
-    void Application::PopLayer(const Layer *layer) {
+    template<typename T>
+    void Application<T>::PopLayer(const Layer<T> *layer) {
         m_LayerStack.PopLayer(layer);
     }
 
-    void Application::SubscribeLayersOnEvents() {
+    template<typename T>
+    void Application<T>::SubscribeLayersOnEvents() {
         m_EventManager->RegisterGlobalHandler([this](Event::Event& event) {
             for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
                 (*--it)->OnEvent(event);

@@ -1,7 +1,7 @@
 #include "ldpch.h"
 #include "RenderingLayer.h"
 
-void RenderingLayer::OnAttach() {
+void RenderingLayer::OnAttach(Context& context) {
     std::string workingDirectory = Lada::workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
 
@@ -33,11 +33,11 @@ void RenderingLayer::OnAttach() {
     m_Shader->SetUniform1i("u_Texture", 0);
 }
 
-void RenderingLayer::OnDetach() {
-    Layer::OnDetach();
+void RenderingLayer::OnDetach(Context& context) {
+    Layer::OnDetach(context);
 }
 
-void RenderingLayer::OnUpdate() {
+void RenderingLayer::OnUpdate(Context& context) {
     // const glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, 0.1f, 100.0f);
     const glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 960.0f, 0.1f, 100.0f);
     constexpr glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
@@ -53,7 +53,7 @@ void RenderingLayer::OnUpdate() {
     m_R += m_Increment;
 }
 
-void RenderingLayer::OnRender() {
+void RenderingLayer::OnRender(Context& context) {
     m_Renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
 }
 

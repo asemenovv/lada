@@ -5,21 +5,22 @@
 
 
 namespace Lada::Render {
-    class ImGuiLayer : public App::Layer {
+    template<typename T>
+    class ImGuiLayer : public App::Layer<T> {
     public:
         ImGuiLayer();
 
-        void OnAttach() override;
+        void OnAttach(T& context) override;
 
-        void OnDetach() override;
+        void OnDetach(T& context) override;
 
-        void OnUpdate() override;
+        void OnUpdate(T& context) override;
 
-        void OnRender() override;
+        void OnRender(T& context) override;
 
-        void OnEvent(Event::Event &event) override;
+        void OnEvent(Event::Event &event, T& context) override;
 
-        virtual void RenderElements(const ImGuiIO& io);
+        virtual void RenderElements(const ImGuiIO& io, T& context);
     private:
         void SetDarkThemeColors();
     };

@@ -4,20 +4,21 @@
 #include "Layer.h"
 
 namespace Lada::App {
+    template<typename T>
     class LayerStack {
     public:
         LayerStack();
         ~LayerStack();
 
-        void PushLayer(Layer *layer);
-        void PushOverlay(Layer *layer);
-        void PopLayer(const Layer *layer);
-        void PopOverlay(const Layer *layer);
+        void PushLayer(Layer<T> *layer);
+        void PushOverlay(Layer<T> *layer);
+        void PopLayer(const Layer<T> *layer);
+        void PopOverlay(const Layer<T> *layer);
 
-        std::vector<Layer*>::iterator begin() { return m_Layers.begin(); }
-        std::vector<Layer*>::iterator end() { return m_Layers.end(); }
+        std::vector<Layer<T>*>::iterator begin() { return m_Layers.begin(); }
+        std::vector<Layer<T>*>::iterator end() { return m_Layers.end(); }
     private:
-        std::vector<Layer*> m_Layers;
-        std::vector<Layer*>::iterator m_LayerInsert;
+        std::vector<Layer<T>*> m_Layers;
+        std::vector<Layer<T>*>::iterator m_LayerInsert;
     };
 }

@@ -2,7 +2,8 @@
 #include "Application.h"
 
 namespace Lada {
-    extern App::Application* CreateApplication();
+    template<typename T>
+    extern App::Application<T>* CreateApplication();
 }
 
 int main(int argc, char** argv);

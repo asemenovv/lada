@@ -2,27 +2,32 @@
 #include "LayerStack.h"
 
 namespace Lada::App {
-    LayerStack::LayerStack() {
+    template<typename T>
+    LayerStack<T>::LayerStack() {
         m_LayerInsert = m_Layers.begin();
     }
 
-    LayerStack::~LayerStack() {
-        for (const Layer *layer : m_Layers) {
+    template<typename T>
+    LayerStack<T>::~LayerStack() {
+        for (const Layer<T> *layer : m_Layers) {
             delete layer;
         }
     }
 
-    void LayerStack::PushLayer(Layer *layer) {
+    template<typename T>
+    void LayerStack<T>::PushLayer(Layer<T> *layer) {
         m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
         layer->OnAttach();
     }
 
-    void LayerStack::PushOverlay(Layer *layer) {
+    template<typename T>
+    void LayerStack<T>::PushOverlay(Layer<T> *layer) {
         m_Layers.emplace_back(layer);
         layer->OnAttach();
     }
 
-    void LayerStack::PopLayer(const Layer *layer) {
+    template<typename T>
+    void LayerStack<T>::PopLayer(const Layer<T> *layer) {
         const auto it = std::ranges::find(m_Layers, layer);
         if (it != m_Layers.end()) {
             (*it)->OnDetach();
@@ -31,7 +36,8 @@ namespace Lada::App {
         }
     }
 
-    void LayerStack::PopOverlay(const Layer *layer) {
+    template<typename T>
+    void LayerStack<T>::PopOverlay(const Layer<T> *layer) {
         const auto it = std::ranges::find(m_Layers, layer);
         if (it != m_Layers.end()) {
             (*it)->OnDetach();

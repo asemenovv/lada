@@ -1,13 +1,14 @@
 #pragma once
+#include "DemoContext.h"
 #include "LADA.h"
 
-class RenderingLayer final : public Lada::App::Layer {
+class RenderingLayer final : public Lada::App::Layer<Context> {
 public:
     RenderingLayer() = default;
-    void OnAttach() override;
-    void OnDetach() override;
-    void OnUpdate() override;
-    void OnRender() override;
+    void OnAttach(Context& context) override;
+    void OnDetach(Context& context) override;
+    void OnUpdate(Context& context) override;
+    void OnRender(Context& context) override;
 private:
     std::unique_ptr<Lada::Render::VertexArray> m_VertexArray;
     std::unique_ptr<Lada::Render::IndexBuffer> m_IndexBuffer;

@@ -9,24 +9,27 @@
 #include "layer/LayerStack.h"
 
 namespace Lada::App {
+    template<typename T>
     class Application {
     public:
         virtual ~Application();
         Application(const std::string &title, int width, int height);
         void Run();
+        void Run(T& context);
         void Shutdown();
         Window& GetWindow() { return *m_Window; }
 
         static Application& Get() { return *s_Instance; }
     protected:
-        void PushLayer(Layer *layer);
-        void PopLayer(const Layer *layer);
+        virtual T& CreateContext() = 0;
+        void PushLayer(Layer<T> *layer);
+        void PopLayer(const Layer<T> *layer);
         [[nodiscard]] Event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
         bool m_Running = true;
         Window* m_Window;
         Event::EventManager* m_EventManager;
-        LayerStack m_LayerStack;
+        LayerStack<T> m_LayerStack;
 
         static Application* s_Instance;
 

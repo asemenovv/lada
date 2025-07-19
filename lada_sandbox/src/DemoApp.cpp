@@ -16,7 +16,16 @@ DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
         LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
         return true;
         });
+    m_Context = new Context();
     m_ImGuiLayer = new DemoImGuiLayer();
     PushLayer(new RenderingLayer());
     PushLayer(m_ImGuiLayer);
+}
+
+DemoApp::~DemoApp() {
+    delete m_Context;
+}
+
+Context& DemoApp::CreateContext() {
+    return *m_Context;
 }
