@@ -9,12 +9,10 @@
 #include "events/MouseEvent.h"
 
 namespace Lada::Render {
-    template<typename T>
-    ImGuiLayer<T>::ImGuiLayer(): App::Layer<T>("ImGuiLayer") {
+    ImGuiLayer::ImGuiLayer(): App::Layer("ImGuiLayer") {
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::OnAttach(T& context) {
+    void ImGuiLayer::OnAttach(App::LayerContext* context) {
         const std::string workingDirectory = workingDir();
 
         IMGUI_CHECKVERSION();
@@ -41,7 +39,7 @@ namespace Lada::Render {
         }
         SetDarkThemeColors();
 
-        App::Application<T> &app = App::Application<T>::Get();
+        App::Application &app = App::Application::Get();
         GLFWwindow *window = app.GetWindow().GetNativeWindow();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
@@ -49,25 +47,22 @@ namespace Lada::Render {
                                 static_cast<float>(app.GetWindow().GetHeight()));
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::OnDetach(T& context) {
+    void ImGuiLayer::OnDetach(App::LayerContext* context) {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::OnUpdate(T& context) {
+    void ImGuiLayer::OnUpdate(App::LayerContext* context) {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::OnRender(T& context) {
+    void ImGuiLayer::OnRender(App::LayerContext* context) {
         ImGui::Begin("Lada::Debug");
         ImGuiIO &io = ImGui::GetIO();
-        RenderElements(io);
+        RenderElements(io, context);
         ImGui::End();
 
         ImGui::Render();
@@ -75,17 +70,14 @@ namespace Lada::Render {
         ImGui::UpdatePlatformWindows();
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::OnEvent(Event::Event &event, T& context) {
+    void ImGuiLayer::OnEvent(Event::Event &event, App::LayerContext* context) {
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::RenderElements(const ImGuiIO& io, T& context) {
+    void ImGuiLayer::RenderElements(const ImGuiIO& io, App::LayerContext* context) {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
     }
 
-    template<typename T>
-    void ImGuiLayer<T>::SetDarkThemeColors() {
+    void ImGuiLayer::SetDarkThemeColors() {
         auto &colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_WindowBg] = ImVec4{0.1f, 0.105f, 0.11f, 1.0f};
 

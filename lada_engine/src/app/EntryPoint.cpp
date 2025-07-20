@@ -2,11 +2,10 @@
 #include "EntryPoint.h"
 
 #include "Logger.h"
-#include "../../../lada_sandbox/src/DemoContext.h"
 
 int main(int argc, char** argv) {
     Lada::Log::Logger::Init();
-    const auto app = Lada::CreateApplication<Context>();
+    const auto app = Lada::CreateApplication();
     app->Run();
     delete app;
 }

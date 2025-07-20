@@ -3,7 +3,7 @@
 #include "DemoApp.h"
 
 namespace Lada {
-    App::Application<Context>* CreateApplication() {
+    App::Application* CreateApplication() {
         return new DemoApp();
     }
 }

@@ -6,30 +6,29 @@
 #include "Window.h"
 #include "events/ApplicationEvent.h"
 #include "imgui/ImGuiLayer.h"
+#include "layer/LayerContext.h"
 #include "layer/LayerStack.h"
 
 namespace Lada::App {
-    template<typename T>
     class Application {
     public:
-        virtual ~Application();
         Application(const std::string &title, int width, int height);
+        virtual ~Application();
         void Run();
-        void Run(T& context);
         void Shutdown();
         Window& GetWindow() { return *m_Window; }
 
         static Application& Get() { return *s_Instance; }
     protected:
-        virtual T& CreateContext() = 0;
-        void PushLayer(Layer<T> *layer);
-        void PopLayer(const Layer<T> *layer);
+        void PushLayer(Layer *layer);
+        void PopLayer(const Layer *layer);
         [[nodiscard]] Event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
         bool m_Running = true;
         Window* m_Window;
         Event::EventManager* m_EventManager;
-        LayerStack<T> m_LayerStack;
+        LayerStack* m_LayerStack;
+        LayerContext* m_LayerContext;
 
         static Application* s_Instance;
 

@@ -1,7 +1,8 @@
 #include "DemoImGuiLayer.h"
 
-void DemoImGuiLayer::RenderElements(const ImGuiIO &io, Context& context) {
-    float r = 0.0;
+#include "ContextVars.h"
+
+void DemoImGuiLayer::RenderElements(const ImGuiIO &io, Lada::App::LayerContext* context) {
     ImGuiLayer::RenderElements(io, context);
-    ImGui::SliderFloat("Rotation", &r, 0.0f, 1.0f);
+    ImGui::SliderFloat("Rotation", context->GetF(SQUARE_ROTATION), 0.0f, 1.0f);
 }
