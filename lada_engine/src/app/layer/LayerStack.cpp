@@ -2,7 +2,7 @@
 #include "LayerStack.h"
 
 namespace Lada::App {
-    LayerStack::LayerStack() {
+    LayerStack::LayerStack(LayerContext* context): m_LayerContext(context) {
         m_LayerInsert = m_Layers.begin();
     }
 
@@ -14,18 +14,18 @@ namespace Lada::App {
 
     void LayerStack::PushLayer(Layer *layer) {
         m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
-        layer->OnAttach();
+        layer->OnAttach(m_LayerContext);
     }
 
     void LayerStack::PushOverlay(Layer *layer) {
         m_Layers.emplace_back(layer);
-        layer->OnAttach();
+        layer->OnAttach(m_LayerContext);
     }
 
     void LayerStack::PopLayer(const Layer *layer) {
         const auto it = std::ranges::find(m_Layers, layer);
         if (it != m_Layers.end()) {
-            (*it)->OnDetach();
+            (*it)->OnDetach(m_LayerContext);
             m_Layers.erase(it);
             --m_LayerInsert;
         }
@@ -34,7 +34,7 @@ namespace Lada::App {
     void LayerStack::PopOverlay(const Layer *layer) {
         const auto it = std::ranges::find(m_Layers, layer);
         if (it != m_Layers.end()) {
-            (*it)->OnDetach();
+            (*it)->OnDetach(m_LayerContext);
             m_Layers.erase(it);
         }
     }

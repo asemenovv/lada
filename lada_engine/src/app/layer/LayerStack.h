@@ -6,7 +6,7 @@
 namespace Lada::App {
     class LayerStack {
     public:
-        LayerStack();
+        LayerStack(LayerContext* context);
         ~LayerStack();
 
         void PushLayer(Layer *layer);
@@ -19,5 +19,6 @@ namespace Lada::App {
     private:
         std::vector<Layer*> m_Layers;
         std::vector<Layer*>::iterator m_LayerInsert;
+        LayerContext* m_LayerContext;
     };
 }

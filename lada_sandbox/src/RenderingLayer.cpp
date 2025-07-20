@@ -1,7 +1,9 @@
 #include "ldpch.h"
 #include "RenderingLayer.h"
 
-void RenderingLayer::OnAttach() {
+#include "ContextVars.h"
+
+void RenderingLayer::OnAttach(Lada::App::LayerContext* context) {
     std::string workingDirectory = Lada::workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
 
@@ -31,29 +33,34 @@ void RenderingLayer::OnAttach() {
     m_Texture = std::make_unique<Lada::Render::Texture>(workingDirectory + "/lada_sandbox/res/textures/stone.png");
     m_Texture->Bind();
     m_Shader->SetUniform1i("u_Texture", 0);
+
+    context->SetF(SQUARE_ROTATION, 0.0f);
+    context->SetF(SQUARE_ROTATION_INCREMENT, 0.001f);
 }
 
-void RenderingLayer::OnDetach() {
-    Layer::OnDetach();
+void RenderingLayer::OnDetach(Lada::App::LayerContext* context) {
+    Layer::OnDetach(context);
 }
 
-void RenderingLayer::OnUpdate() {
+void RenderingLayer::OnUpdate(Lada::App::LayerContext* context) {
+    const auto rotation = context->GetF(SQUARE_ROTATION);
+    const auto rotationIncrement = context->GetF(SQUARE_ROTATION_INCREMENT);
     // const glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, 0.1f, 100.0f);
     const glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 960.0f, 0.1f, 100.0f);
     constexpr glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.0f));
-    const glm::mat4 model = glm::rotate(glm::mat4(1.0f), glm::radians(360.0f * m_R), glm::vec3(0.0f, 1.0f, 0.0f));
+    const glm::mat4 model = glm::rotate(glm::mat4(1.0f), glm::radians(360.0f * (*rotation)), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 mvp = proj * view * model;
     m_Shader->SetUniformMat4f("u_MVP", mvp);
-    m_Shader->SetUniform4f("u_Color", m_R, 0.3f, 0.8f, 1.0f);
+    m_Shader->SetUniform4f("u_Color", *rotation, 0.3f, 0.8f, 1.0f);
     m_Renderer.Clear();
 
-    if (m_R > 1.0f) {
-        m_R = 0.0f;
+    if (*rotation > 1.0f) {
+        context->SetF(SQUARE_ROTATION, 0.0f);
     }
-    m_R += m_Increment;
+    context->SetF(SQUARE_ROTATION, (*rotation) + (*rotationIncrement));
 }
 
-void RenderingLayer::OnRender() {
+void RenderingLayer::OnRender(Lada::App::LayerContext* context) {
     m_Renderer.Draw(*m_VertexArray, *m_IndexBuffer, *m_Shader);
 }
 

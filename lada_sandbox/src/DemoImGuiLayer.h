@@ -4,5 +4,5 @@
 
 class DemoImGuiLayer final : public Lada::Render::ImGuiLayer {
 public:
-    void RenderElements(const ImGuiIO& io) override;
+    void RenderElements(const ImGuiIO& io, Lada::App::LayerContext* context) override;
 };

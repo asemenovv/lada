@@ -14,7 +14,6 @@ add_library(lada_engine STATIC
         src/app/EntryPoint.cpp
         src/app/Logger.cpp
         src/app/Window.cpp
-        src/app/layer/Layer.cpp
         src/app/layer/LayerStack.cpp
         src/imgui/ImGuiLayer.cpp
         src/Core.cpp

@@ -8,6 +8,8 @@ namespace Lada::App {
     Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+        m_LayerContext = new LayerContext();
+        m_LayerStack = new LayerStack(m_LayerContext);
         if (s_Instance != nullptr) {
             LD_CORE_CRITICAL("Application already initialized!");
             return;
@@ -32,6 +34,13 @@ namespace Lada::App {
         m_EventManager->BIND_HANDLER(Event::WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
+    Application::~Application() {
+        delete m_LayerStack;
+        delete m_LayerContext;
+        delete m_EventManager;
+        delete m_Window;
+    }
+
     bool Application::OnWindowCloseEvent(const Event::WindowCloseEvent& event) {
         this->Shutdown();
         return true;
@@ -42,18 +51,13 @@ namespace Lada::App {
         return true;
     }
 
-    Application::~Application() {
-        delete m_EventManager;
-        delete m_Window;
-    }
-
     void Application::Run() {
         while (m_Running) {
-            for (Layer *layer : m_LayerStack) {
-                layer->OnUpdate();
+            for (Layer *layer : *m_LayerStack) {
+                layer->OnUpdate(m_LayerContext);
             }
-            for (Layer* layer : m_LayerStack) {
-                layer->OnRender();
+            for (Layer* layer : *m_LayerStack) {
+                layer->OnRender(m_LayerContext);
             }
             m_Window->OnUpdate();
         }
@@ -65,17 +69,17 @@ namespace Lada::App {
     }
 
     void Application::PushLayer(Layer *layer) {
-        m_LayerStack.PushLayer(layer);
+        m_LayerStack->PushLayer(layer);
     }
 
     void Application::PopLayer(const Layer *layer) {
-        m_LayerStack.PopLayer(layer);
+        m_LayerStack->PopLayer(layer);
     }
 
     void Application::SubscribeLayersOnEvents() {
         m_EventManager->RegisterGlobalHandler([this](Event::Event& event) {
-            for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-                (*--it)->OnEvent(event);
+            for (auto it = m_LayerStack->end(); it != m_LayerStack->begin();) {
+                (*--it)->OnEvent(event, m_LayerContext);
                 if (event.IsHandled())
                     break;
             }

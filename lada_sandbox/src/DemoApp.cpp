@@ -6,7 +6,6 @@
 #include "RenderingLayer.h"
 #include "events/MouseEvent.h"
 
-
 DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
     GetEventManager()->REGISTER_HANDLER(Lada::Event::WindowCloseEvent, {
         LD_TRACE("WindowCloseEvent is fired {}", event.ToString());

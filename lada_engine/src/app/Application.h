@@ -6,13 +6,14 @@
 #include "Window.h"
 #include "events/ApplicationEvent.h"
 #include "imgui/ImGuiLayer.h"
+#include "layer/LayerContext.h"
 #include "layer/LayerStack.h"
 
 namespace Lada::App {
     class Application {
     public:
-        virtual ~Application();
         Application(const std::string &title, int width, int height);
+        virtual ~Application();
         void Run();
         void Shutdown();
         Window& GetWindow() { return *m_Window; }
@@ -26,7 +27,8 @@ namespace Lada::App {
         bool m_Running = true;
         Window* m_Window;
         Event::EventManager* m_EventManager;
-        LayerStack m_LayerStack;
+        LayerStack* m_LayerStack;
+        LayerContext* m_LayerContext;
 
         static Application* s_Instance;
 
