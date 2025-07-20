@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Lada {
+namespace Lada::Input {
 	using KeyCode = uint16_t;
 	
 	namespace Key {

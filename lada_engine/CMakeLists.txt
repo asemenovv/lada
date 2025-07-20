@@ -18,6 +18,7 @@ add_library(lada_engine STATIC
         src/imgui/ImGuiLayer.cpp
         src/Core.cpp
         src/app/layer/LayerContext.cpp
+        src/app/input/GLFWInput.cpp
 )
 
 target_include_directories(lada_engine

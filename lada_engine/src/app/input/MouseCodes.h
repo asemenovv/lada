@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Lada {
+namespace Lada::Input {
 	using MouseCode = uint16_t;
 
 	namespace Mouse {

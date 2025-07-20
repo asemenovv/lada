@@ -16,8 +16,7 @@ namespace Lada::App {
         virtual ~Application();
         void Run();
         void Shutdown();
-        Window& GetWindow() { return *m_Window; }
-
+        Window& GetWindow() const { return *m_Window; }
         static Application& Get() { return *s_Instance; }
     protected:
         void PushLayer(Layer *layer);

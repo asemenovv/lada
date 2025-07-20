@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include "Event.h"
-#include "util/KeyCodes.h"
+#include "app/input/KeyCodes.h"
 
 namespace Lada::Event {
     class KeyEvent : public Event {
@@ -13,7 +13,7 @@ namespace Lada::Event {
         [[nodiscard]] int GetCategoryFlags() const override {
             return static_cast<int>(EventCategory::EventCategoryKeyboard)
             | static_cast<int>(EventCategory::EventCategoryInput);
-        };
+        }
 
     protected:
         explicit KeyEvent(const int keycode) : m_KeyCode(keycode) {
@@ -57,10 +57,10 @@ namespace Lada::Event {
 
     class KeyTypedEvent final : public KeyEvent {
     public:
-        explicit KeyTypedEvent(const KeyCode keycode)
+        explicit KeyTypedEvent(const Input::KeyCode keycode)
             : KeyEvent(keycode) {}
 
-        std::string ToString() const override {
+        [[nodiscard]] std::string ToString() const override {
             std::stringstream ss;
             ss << "KeyTypedEvent: " << m_KeyCode;
             return ss.str();
