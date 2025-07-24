@@ -60,10 +60,8 @@ namespace Lada::Render {
     }
 
     void ImGuiLayer::OnRender(App::LayerContext* context) {
-        ImGui::Begin("Lada::Debug");
         ImGuiIO &io = ImGui::GetIO();
         RenderElements(io, context);
-        ImGui::End();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
