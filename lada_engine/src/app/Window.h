@@ -17,6 +17,7 @@ namespace Lada::App {
         ~Window() = default;
 
         void OnUpdate() const;
+        void SwapBuffers() const;
         void SetVSync(bool enabled);
         void Close() const;
         [[nodiscard]] int GetWidth() const { return m_Width; }

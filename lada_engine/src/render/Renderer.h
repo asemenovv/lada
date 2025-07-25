@@ -4,9 +4,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "IndexBuffer.h"
-#include "Shader.h"
-#include "VertexArray.h"
+#include "../renderer/buffers/IndexBuffer.h"
+#include "../renderer/material/Shader.h"
+#include "../renderer/buffers/VertexArray.h"
 
 #define ASSERT(x) if(!(x)) raise(SIGTRAP);
 #define GL_CALL(x) Logger::GLClearError();\

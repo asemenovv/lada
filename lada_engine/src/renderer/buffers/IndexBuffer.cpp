@@ -1,6 +1,6 @@
 #include "ldpch.h"
 #include "IndexBuffer.h"
-#include "Renderer.h"
+#include "../../render/Renderer.h"
 
 namespace Lada::Render {
     IndexBuffer::IndexBuffer(const unsigned int* data, const unsigned int count)

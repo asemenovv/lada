@@ -4,6 +4,10 @@
 #include "ContextVars.h"
 
 void RenderingLayer::OnAttach(Lada::App::LayerContext* context) {
+
+}
+
+void RenderingLayer::OnAttach(Lada::App::LayerContext* context) {
     std::string workingDirectory = Lada::workingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
 

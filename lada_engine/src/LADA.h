@@ -12,12 +12,12 @@
 #include "events/ApplicationEvent.h"
 #include "events/KeyEvent.h"
 
-#include "render/Texture.h"
+#include "renderer/material/Texture.h"
 #include "render/VertexBufferLayout.h"
-#include "render/IndexBuffer.h"
+#include "renderer/buffers/IndexBuffer.h"
 #include "render/Renderer.h"
-#include "render/Shader.h"
-#include "render/VertexArray.h"
+#include "renderer/material/Shader.h"
+#include "renderer/buffers/VertexArray.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
