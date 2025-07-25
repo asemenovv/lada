@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(lada_engine STATIC
         src/app/Application.cpp
-        src/render/IndexBuffer.cpp
+        src/renderer/buffers/IndexBuffer.cpp
         src/render/Renderer.cpp
-        src/render/Shader.cpp
-        src/render/Texture.cpp
-        src/render/VertexArray.cpp
-        src/render/VertexBuffer.cpp
+        src/renderer/material/Shader.cpp
+        src/renderer/material/Texture.cpp
+        src/renderer/buffers/VertexArray.cpp
+        src/renderer/buffers/VertexBuffer.cpp
         src/app/EntryPoint.cpp
         src/app/Logger.cpp
         src/app/Window.cpp
@@ -19,6 +19,9 @@ add_library(lada_engine STATIC
         src/Core.cpp
         src/app/layer/LayerContext.cpp
         src/app/input/GLFWInput.cpp
+        src/renderer/Renderer.cpp
+        src/renderer/Mesh.cpp
+        src/renderer/material/Material.cpp
 )
 
 target_include_directories(lada_engine

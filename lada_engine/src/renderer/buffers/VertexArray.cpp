@@ -1,6 +1,6 @@
 #include "ldpch.h"
 #include "VertexArray.h"
-#include "Renderer.h"
+#include "../../render/Renderer.h"
 #include "VertexBufferLayout.h"
 
 namespace Lada::Render {
