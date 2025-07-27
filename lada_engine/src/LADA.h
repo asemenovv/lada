@@ -13,8 +13,11 @@
 #include "events/KeyEvent.h"
 
 #include "renderer/material/Texture.h"
-#include "render/VertexBufferLayout.h"
+#include "renderer/material/Material.h"
+#include "renderer/material/Shader.h"
+#include "renderer/buffers//VertexBufferLayout.h"
 #include "renderer/buffers/IndexBuffer.h"
+#include "renderer/Mesh.h"
 #include "render/Renderer.h"
 #include "renderer/material/Shader.h"
 #include "renderer/buffers/VertexArray.h"

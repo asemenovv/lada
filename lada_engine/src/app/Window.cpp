@@ -38,6 +38,7 @@ namespace Lada::App {
 
     void Window::OnUpdate() const {
         glfwPollEvents();
+        SwapBuffers();
     }
 
     void Window::SwapBuffers() const {

@@ -19,7 +19,7 @@ namespace Lada::Logger {
 }
 
 namespace Lada::Render {
-    class Renderer {
+    class Renderer1 {
     public:
         void Clear() const;
         void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
