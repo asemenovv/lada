@@ -8,7 +8,7 @@ namespace Lada::Render {
     }
 
     void Renderer::Init() {
-        glClearColor(m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a);
+        GL_CALL(glClearColor(m_ClearColor.r, m_ClearColor.g, m_ClearColor.b, m_ClearColor.a));
     }
 
     void Renderer::Shutdown() {

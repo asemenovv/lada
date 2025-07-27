@@ -20,12 +20,10 @@ void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
         2, 3, 0
     };
 
-    const auto shader = std::make_shared<Lada::Render::Shader>(
-        workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl");
-    const auto texture = std::make_shared<Lada::Render::Texture>(
-        workingDirectory + "/lada_sandbox/res/textures/stone.png");
-    m_Material = std::make_shared<Lada::Render::Material>(shader);
-    m_Material->SetTexture("u_Texture", texture);
+    m_Material = Lada::Render::MaterialBuilder(workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl")
+    .WithTexture("u_Texture", workingDirectory + "/lada_sandbox/res/textures/stone.png")
+    .WithVector4("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))
+    .Build();
 
     m_Square = Lada::Render::MeshBuilder(positions, 4 * 4 * sizeof(float))
     .PushToLayout<float>(2)
