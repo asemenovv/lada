@@ -1,5 +1,5 @@
 #include "ldpch.h"
-#include "../../render/Texture.h"
+#include "Texture.h"
 #include "stb_image.h"
 #include "app/Logger.h"
 

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "DemoImGuiLayer.h"
-#include "RenderingLayer.h"
+#include "RendererLayer.h"
 #include "events/MouseEvent.h"
 
 DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
@@ -16,6 +16,6 @@ DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
         return true;
         });
     m_ImGuiLayer = new DemoImGuiLayer();
-    PushLayer(new RenderingLayer());
+    PushLayer(new RendererLayer());
     PushLayer(m_ImGuiLayer);
 }

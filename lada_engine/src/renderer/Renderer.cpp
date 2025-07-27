@@ -4,7 +4,7 @@
 #include "imgui_impl_opengl3_loader.h"
 
 namespace Lada::Render {
-    Renderer::Renderer(App::Window* window): m_Window(window) {
+    Renderer::Renderer(const App::Window& window): m_Window(window) {
     }
 
     void Renderer::Init() {
@@ -14,11 +14,21 @@ namespace Lada::Render {
     void Renderer::Shutdown() {
     }
 
+    void Renderer::SubmitMesh(const std::shared_ptr<Mesh>& mesh) {
+        m_Meshes.push_back(mesh);
+    }
+
+    void Renderer::Draw() const {
+        for (const auto& mesh : m_Meshes) {
+            mesh->Draw();
+        }
+    }
+
     void Renderer::BeginFrame() {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
     void Renderer::EndFrame() {
-        m_Window->SwapBuffers();
+
     }
 }
