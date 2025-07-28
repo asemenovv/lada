@@ -18,11 +18,13 @@ namespace Lada::Render {
             m_Shader->SetUniform4f(name, vec4.x, vec4.y, vec4.z, vec4.w);
         }
 
-        // const glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, 0.1f, 100.0f);
-        const glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 960.0f, 0.1f, 100.0f);
+        const glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, 0.1f, 100.0f);
+        // const glm::mat4 proj = glm::perspective(glm::radians(45.0f), 1280.0f / 960.0f, 0.1f, 100.0f);
         const glm::mat4 view = glm::mat4(1.0f);
-        const glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.02f, 0.0f))
-        * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+        const glm::mat4 model = glm::mat4(1.0f)
+            // glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f))
+        // * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.4f, 0.4f))
+        ;
         glm::mat4 mvp = proj * view * model;
         m_Shader->SetUniformMat4f("u_MVP", mvp);
     }

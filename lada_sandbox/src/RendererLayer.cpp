@@ -27,7 +27,7 @@ void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
     .Build();
 
     Lada::Render::ModelLoader loader;
-    m_Square = loader.LoadModel("/Users/alexeysemenov/CLionProjects/lada/assets/gltf_sample_models/2.0/BoomBox/glTF/BoomBox.gltf");
+    m_Square = loader.LoadModel(workingDirectory + "/assets/gltf_sample_models/2.0/BoxTextured/glTF/BoxTextured.gltf");
     m_Square->SetMaterial(m_Material);
 
     /*m_Square = Lada::Render::MeshBuilder(positions, 4 * 4 * sizeof(float))
