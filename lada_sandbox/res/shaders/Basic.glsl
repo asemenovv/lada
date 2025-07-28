@@ -2,7 +2,7 @@
 #version 330 core
 
 layout (location = 0) in vec4 position;
-layout (location = 1) in vec2 texCoord;
+layout (location = 2) in vec2 texCoord;
 
 out vec2 v_TextCoord;
 
@@ -28,7 +28,7 @@ uniform sampler2D u_Texture;
 void main()
 {
     vec4 texColor = texture(u_Texture, v_TextCoord);
-//    FragColor = vec4(0.3f * u_Color.rgb + 0.7f * texColor.rgb, texColor.a);
-    FragColor = u_Color;
+    FragColor = vec4(0.3f * u_Color.rgb + 0.7f * texColor.rgb, texColor.a);
+//    FragColor = u_Color;
 //    FragColor = texColor;
 }
