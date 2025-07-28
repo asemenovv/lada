@@ -22,6 +22,7 @@ add_library(lada_engine STATIC
         src/renderer/Renderer.cpp
         src/renderer/Mesh.cpp
         src/renderer/material/Material.cpp
+        src/renderer/model/ModelLoader.cpp
 )
 
 target_include_directories(lada_engine
@@ -40,4 +41,5 @@ target_link_libraries(lada_engine
         PUBLIC glm::glm
         PUBLIC imgui
         PUBLIC stb_image
+        PUBLIC assimp
 )

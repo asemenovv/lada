@@ -2,6 +2,7 @@
 #include "RendererLayer.h"
 
 #include "ContextVars.h"
+#include "renderer/model/ModelLoader.h"
 
 void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
     m_Renderer = std::make_shared<Lada::Render::Renderer>(Lada::App::Application::Get().GetWindow());
@@ -25,13 +26,17 @@ void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
     .WithVector4("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))
     .Build();
 
-    m_Square = Lada::Render::MeshBuilder(positions, 4 * 4 * sizeof(float))
+    Lada::Render::ModelLoader loader;
+    m_Square = loader.LoadModel("/Users/alexeysemenov/CLionProjects/lada/assets/gltf_sample_models/2.0/BoomBox/glTF/BoomBox.gltf");
+    m_Square->SetMaterial(m_Material);
+
+    /*m_Square = Lada::Render::MeshBuilder(positions, 4 * 4 * sizeof(float))
     .PushToLayout<float>(2)
     .PushToLayout<float>(2)
     .FinalizeBuffer()
     .Indices(indices, 6)
     .WithMaterial(m_Material)
-    .Build();
+    .Build();*/
 
     m_Renderer->SubmitMesh(m_Square);
 }

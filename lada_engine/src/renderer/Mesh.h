@@ -15,6 +15,8 @@ namespace Lada::Render {
 
         void Draw() const;
 
+        void SetMaterial(const std::shared_ptr<Material> &material) {m_Material = material; }
+
     private:
         std::shared_ptr<VertexBuffer> m_VertexBuffer;
         std::shared_ptr<VertexArray> m_VertexArray;
@@ -31,8 +33,11 @@ namespace Lada::Render {
         template<typename T>
         MeshBuilder& PushToLayout(const unsigned int count) {}
 
+        template<typename T>
+        MeshBuilder& PushToLayoutIf(bool condition, const unsigned int count) {}
+
         template<>
-        MeshBuilder& PushToLayout<float>(unsigned int count);
+        MeshBuilder& PushToLayoutIf<float>(bool condition, unsigned int count);
 
         MeshBuilder& FinalizeBuffer();
 
