@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../render/Renderer.h"
+#include "../../app/GlCall.h"
 
 namespace Lada::Render {
     class Texture {

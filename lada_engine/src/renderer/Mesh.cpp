@@ -2,19 +2,17 @@
 #include  "Mesh.h"
 
 #include "material/Material.h"
-#include "render/Renderer.h"
+#include "../app/GlCall.h"
 
 namespace Lada::Render {
     Mesh::Mesh(const std::shared_ptr<VertexBuffer> vertexBuffer,
                const std::shared_ptr<VertexArray> &vertexArray,
-               const std::shared_ptr<IndexBuffer> &indexBuffer,
-               const std::shared_ptr<Material> &material)
+               const std::shared_ptr<IndexBuffer> &indexBuffer)
         : m_VertexBuffer(vertexBuffer), m_VertexArray(vertexArray),
-          m_IndexBuffer(indexBuffer), m_Material(material) {
+          m_IndexBuffer(indexBuffer) {
     }
 
     void Mesh::Draw() const {
-        m_Material->Bind();
         m_VertexArray->Bind();
         m_IndexBuffer->Bind();
 
@@ -51,13 +49,8 @@ namespace Lada::Render {
         return *this;
     }
 
-    MeshBuilder & MeshBuilder::WithMaterial(std::shared_ptr<Render::Material> material) {
-        m_Material = material;
-        return *this;
-    }
-
     std::shared_ptr<Mesh> MeshBuilder::Build() {
-        auto mesh = std::make_shared<Mesh>(m_VertexBuffer, m_VertexArray, m_IndexBuffer, m_Material);
+        auto mesh = std::make_shared<Mesh>(m_VertexBuffer, m_VertexArray, m_IndexBuffer);
         return mesh;
     }
 }

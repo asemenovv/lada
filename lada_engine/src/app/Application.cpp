@@ -1,6 +1,7 @@
 #include "ldpch.h"
 #include "Application.h"
-#include "render/Renderer.h"
+#include "GlCall.h"
+#include "renderer/Renderer.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
 
@@ -17,6 +18,7 @@ namespace Lada::App {
         s_Instance = this;
         m_EventManager = new Event::EventManager();
         m_Window = new Window(title, width, height, m_EventManager);
+        m_Renderer = std::make_shared<Lada::Render::Renderer>(*m_Window);
 
         if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
             LD_CORE_CRITICAL("GLAD could not be initialized");
@@ -56,9 +58,11 @@ namespace Lada::App {
             for (Layer *layer : *m_LayerStack) {
                 layer->OnUpdate(m_LayerContext);
             }
+            m_Renderer->BeginFrame();
             for (Layer* layer : *m_LayerStack) {
-                layer->OnRender(m_LayerContext);
+                layer->OnRender(m_LayerContext, m_Renderer);
             }
+            m_Renderer->EndFrame();
             m_Window->OnUpdate();
         }
     }
@@ -72,8 +76,16 @@ namespace Lada::App {
         m_LayerStack->PushLayer(layer);
     }
 
+    void Application::PushOverlay(Layer *layer) {
+        m_LayerStack->PushOverlay(layer);
+    }
+
     void Application::PopLayer(const Layer *layer) {
         m_LayerStack->PopLayer(layer);
+    }
+
+    void Application::PopOverlay(Layer *layer) {
+        m_LayerStack->PopOverlay(layer);
     }
 
     void Application::SubscribeLayersOnEvents() {

@@ -1,6 +1,7 @@
 #include "ldpch.h"
 #include "Shader.h"
-#include "render/Renderer.h"
+#include "app/GlCall.h"
+#include "renderer/Renderer.h"
 #include "app/Logger.h"
 
 namespace Lada::Render {

@@ -26,7 +26,7 @@ namespace Lada::Render {
         // * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f, 0.4f, 0.4f))
         ;
         glm::mat4 mvp = proj * view * model;
-        m_Shader->SetUniformMat4f("u_MVP", mvp);
+        // m_Shader->SetUniformMat4f("u_MVP", mvp);
     }
 
     void Material::SetTexture(const std::string &uniformName, const std::shared_ptr<Texture> &texture) {

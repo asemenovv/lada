@@ -2,6 +2,8 @@
 #include "Texture.h"
 #include "stb_image.h"
 #include "app/Logger.h"
+#include "app/GlCall.h"
+#include "renderer/Renderer.h"
 
 namespace Lada::Render {
     Texture::Texture(const std::string& path)

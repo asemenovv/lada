@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(lada_engine STATIC
         src/app/Application.cpp
         src/renderer/buffers/IndexBuffer.cpp
-        src/render/Renderer.cpp
+        src/app/GlCall.cpp
         src/renderer/material/Shader.cpp
         src/renderer/material/Texture.cpp
         src/renderer/buffers/VertexArray.cpp
@@ -23,6 +23,7 @@ add_library(lada_engine STATIC
         src/renderer/Mesh.cpp
         src/renderer/material/Material.cpp
         src/renderer/model/ModelLoader.cpp
+        src/renderer/model/Model.cpp
 )
 
 target_include_directories(lada_engine
