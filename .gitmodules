@@ -14,3 +14,9 @@
 [submodule "deps/GLFW"]
 	path = deps/GLFW
 	url = https://github.com/glfw/glfw.git
+[submodule "deps/assimp"]
+	path = deps/assimp
+	url = https://github.com/assimp/assimp.git
+[submodule "assets/gltf_sample_models"]
+	path = assets/gltf_sample_models
+	url = https://github.com/KhronosGroup/glTF-Sample-Models.git

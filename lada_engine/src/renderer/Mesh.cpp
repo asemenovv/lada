@@ -33,6 +33,14 @@ namespace Lada::Render {
         return *this;
     }
 
+    template<>
+    MeshBuilder &MeshBuilder::PushToLayoutIf<float>(const bool condition, const unsigned int count) {
+        if (condition) {
+            PushToLayout<float>(count);
+        }
+        return *this;
+    }
+
     MeshBuilder& MeshBuilder::FinalizeBuffer() {
         m_VertexArray->AddBuffer(*m_VertexBuffer, *m_VertexBufferLayout);
         return *this;
