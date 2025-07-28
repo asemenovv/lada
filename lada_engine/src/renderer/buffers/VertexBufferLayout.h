@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../../render/Renderer.h"
+#include "app/GlCall.h"
+#include "renderer/Renderer.h"
 
 namespace Lada::Render {
     struct VertexBufferLayoutElement {

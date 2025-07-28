@@ -1,6 +1,7 @@
 #include "ldpch.h"
 #include "VertexBuffer.h"
-#include "render/Renderer.h"
+#include "app/GlCall.h"
+#include "renderer/Renderer.h"
 
 namespace Lada::Render {
     VertexBuffer::VertexBuffer(const void *data, unsigned int size) {

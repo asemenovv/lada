@@ -61,5 +61,6 @@ namespace Lada::Render {
             .FinalizeBuffer()
             .Build();
         }
+        return nullptr;
     }
 }

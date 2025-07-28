@@ -5,9 +5,9 @@
 #include "events/EventManager.h"
 #include "Window.h"
 #include "events/ApplicationEvent.h"
-#include "imgui/ImGuiLayer.h"
 #include "layer/LayerContext.h"
 #include "layer/LayerStack.h"
+#include "renderer/Renderer.h"
 
 namespace Lada::App {
     class Application {
@@ -20,7 +20,9 @@ namespace Lada::App {
         static Application& Get() { return *s_Instance; }
     protected:
         void PushLayer(Layer *layer);
+        void PushOverlay(Layer *layer);
         void PopLayer(const Layer *layer);
+        void PopOverlay(Layer *layer);
         [[nodiscard]] Event::EventManager* GetEventManager() const { return m_EventManager; }
     private:
         bool m_Running = true;
@@ -28,6 +30,7 @@ namespace Lada::App {
         Event::EventManager* m_EventManager;
         LayerStack* m_LayerStack;
         LayerContext* m_LayerContext;
+        std::shared_ptr<Render::Renderer> m_Renderer;
 
         static Application* s_Instance;
 
