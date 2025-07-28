@@ -15,6 +15,8 @@ namespace Lada::Render {
 
         void SetVector4(const std::string &name, glm::vec4 value);
 
+        void Bind(const glm::mat4 &mvp);
+
     private:
         std::shared_ptr<Shader> m_Shader;
         std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;

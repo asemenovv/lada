@@ -24,6 +24,7 @@ add_library(lada_engine STATIC
         src/renderer/material/Material.cpp
         src/renderer/model/ModelLoader.cpp
         src/renderer/model/Model.cpp
+        src/renderer/Camera.cpp
 )
 
 target_include_directories(lada_engine
