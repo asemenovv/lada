@@ -2,7 +2,7 @@
 
 #include "../../app/GlCall.h"
 
-namespace Lada::Render {
+namespace Lada {
     class Texture {
         unsigned int m_RendererID;
         std::string m_FilePath;

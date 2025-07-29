@@ -4,7 +4,7 @@
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
-namespace Lada::Render {
+namespace Lada {
     Material::Material(const std::shared_ptr<Shader> &shader): m_Shader(shader) {
     }
 

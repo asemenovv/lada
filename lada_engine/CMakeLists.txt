@@ -25,6 +25,7 @@ add_library(lada_engine STATIC
         src/renderer/model/ModelLoader.cpp
         src/renderer/model/Model.cpp
         src/renderer/Camera.cpp
+        src/assets/AssetManager.cpp
 )
 
 target_include_directories(lada_engine
@@ -44,4 +45,5 @@ target_link_libraries(lada_engine
         PUBLIC imgui
         PUBLIC stb_image
         PUBLIC assimp
+        PUBLIC yaml-cpp
 )
