@@ -1,0 +1,15 @@
+name: Stone Textured Material
+program:
+  vertex:
+    uri: ../shaders/basic.vert
+  fragment:
+    uri: ../shaders/basic.frag
+textures:
+  - name: Main texture
+    variable: u_Texture
+    uri: ../textures/stone.png
+uniforms:
+  - name: Base color
+    variable: u_Color
+    type: COLOR
+    value: (1.0f, 0.0f, 0.0f, 1.0f)

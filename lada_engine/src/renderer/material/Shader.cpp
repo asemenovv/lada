@@ -4,7 +4,7 @@
 #include "renderer/Renderer.h"
 #include "app/Logger.h"
 
-namespace Lada::Render {
+namespace Lada {
     Shader::Shader(const std::string &filepath)
         : m_RendererID(0), m_FilePath(filepath) {
         ShaderProgramSource source = ParseShader(filepath);

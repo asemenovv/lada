@@ -3,9 +3,10 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include "assets/IAsset.h"
 
-namespace Lada::Render {
-    class Material {
+namespace Lada {
+    class Material : public IAsset {
     public:
         explicit Material(const std::shared_ptr<Shader>& shader);
 
@@ -15,9 +16,14 @@ namespace Lada::Render {
 
         void SetVector4(const std::string &name, glm::vec4 value);
 
-        void Bind(const glm::mat4 &mvp);
+        void Bind(const glm::mat4& mvp);
+
+        void SetName(const std::string& name) const { m_Name = name; }
+
+        std::string& GetName() const { return m_Name; }
 
     private:
+        std::string& m_Name;
         std::shared_ptr<Shader> m_Shader;
         std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;
         std::unordered_map<std::string, glm::vec4> m_Vec4Uniforms;
