@@ -5,10 +5,8 @@
 #include "app/Logger.h"
 
 namespace Lada {
-    Shader::Shader(const std::string &filepath)
-        : m_RendererID(0), m_FilePath(filepath) {
-        ShaderProgramSource source = ParseShader(filepath);
-        m_RendererID = CreateShader(source);
+    Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource): m_RendererID(0) {
+        m_RendererID = CreateShader(vertexSource, fragmentSource);
     }
 
     Shader::~Shader() {
@@ -53,31 +51,6 @@ namespace Lada {
         return location;
     }
 
-    ShaderProgramSource Shader::ParseShader(const std::string& filepath) {
-        std::ifstream stream(filepath);
-
-        enum class ShaderType {
-            NONE = -1, VERTEX = 0, FRAGMENT = 1
-        };
-
-        std::string line;
-        std::stringstream ss[2];
-        ShaderType type = ShaderType::NONE;
-        while (std::getline(stream, line)) {
-            if (line.find("//shader") != std::string::npos) {
-                if (line.find("vertex") != std::string::npos) {
-                    type = ShaderType::VERTEX;
-                } else if (line.find("fragment") != std::string::npos) {
-                    type = ShaderType::FRAGMENT;
-                }
-            } else {
-                ss[static_cast<int>(type)] << line << std::endl;
-            }
-        }
-        stream.close();
-        return { ss[0].str(), ss[1].str() };
-    }
-
     unsigned int Shader::CompileShader(const unsigned int type, const std::string& source) {
         GL_CALL(const unsigned int id = glCreateShader(type));
         const char* src = source.c_str();
@@ -99,10 +72,10 @@ namespace Lada {
         return id;
     }
 
-    unsigned int Shader::CreateShader(ShaderProgramSource& source) {
+    unsigned int Shader::CreateShader(const std::string& vertexSource, const std::string& fragmentSource) {
         GL_CALL(unsigned int program = glCreateProgram());
-        unsigned int vs = CompileShader(GL_VERTEX_SHADER, source.VertexSource);
-        unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, source.FragmentSource);
+        const unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexSource);
+        const unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentSource);
         GL_CALL(glAttachShader(program, vs));
         GL_CALL(glAttachShader(program, fs));
         GL_CALL(glLinkProgram(program));

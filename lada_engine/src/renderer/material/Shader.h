@@ -3,20 +3,16 @@
 #include <string>
 #include <unordered_map>
 
+#include "assets/IAsset.h"
 #include "glm/glm.hpp"
 
 namespace Lada {
-    struct ShaderProgramSource {
-        std::string VertexSource;
-        std::string FragmentSource;
-    };
-
-    class Shader {
+    class Shader : public IAsset {
         unsigned int m_RendererID;
         std::string m_FilePath;
         std::unordered_map<std::string, int> m_UniformLocationCache;
     public:
-        explicit Shader(const std::string& filepath);
+        explicit Shader(const std::string& vertexSource, const std::string& fragmentSource);
         ~Shader();
 
         void Bind() const;
@@ -28,9 +24,8 @@ namespace Lada {
         void SetUniformMat4f(const std::string& name, const glm::mat4& matrix);
 
     private:
-        ShaderProgramSource ParseShader(const std::string& filepath);
         unsigned int CompileShader(unsigned int type, const std::string& source);
-        unsigned int CreateShader(ShaderProgramSource& source);
+        unsigned int CreateShader(const std::string& vertexSource, const std::string& fragmentSource);
         int GetUniformLocation(const std::string& name);
     };
 }

@@ -18,12 +18,12 @@ namespace Lada {
 
         void Bind(const glm::mat4& mvp);
 
-        void SetName(const std::string& name) const { m_Name = name; }
+        void SetName(const std::string& name) { m_Name = name; }
 
-        std::string& GetName() const { return m_Name; }
+        std::string GetName() const { return m_Name; }
 
     private:
-        std::string& m_Name;
+        std::string m_Name;
         std::shared_ptr<Shader> m_Shader;
         std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;
         std::unordered_map<std::string, glm::vec4> m_Vec4Uniforms;
@@ -33,11 +33,9 @@ namespace Lada {
     public:
         explicit MaterialBuilder(const std::shared_ptr<Shader>& shader);
 
-        explicit MaterialBuilder(const std::string& shaderFilePath);
+        MaterialBuilder& Name(const std::string& name);
 
         MaterialBuilder& WithTexture(const std::string& uniformName, const std::shared_ptr<Texture>& texture);
-
-        MaterialBuilder& WithTexture(const std::string& uniformName, const std::string& filePath);
 
         MaterialBuilder& WithVector4(const std::string& name, glm::vec4 value);
 

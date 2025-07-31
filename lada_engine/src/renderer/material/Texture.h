@@ -1,21 +1,21 @@
 #pragma once
 
-#include "../../app/GlCall.h"
+#include "app/GlCall.h"
+#include "assets/IAsset.h"
+#include "yaml-cpp/node/iterator.h"
 
 namespace Lada {
-    class Texture {
+    class Texture : public IAsset {
         unsigned int m_RendererID;
-        std::string m_FilePath;
-        unsigned char* m_LocalBuffer;
-        int m_Width, m_Height, m_BPP;
+        std::string m_Name;
     public:
-        Texture(const std::string& path);
+        Texture(const unsigned char* data, int width, int height, int BPP);
         ~Texture();
 
         void Bind(unsigned int slot = 0) const;
         void Unbind() const;
 
-        inline unsigned int GetWidth() { return m_Width; }
-        inline unsigned int GetHeight() { return m_Height; }
+        void SetName(const std::string& name) { m_Name = name; }
+        std::string GetName() { return m_Name; }
     };
 }

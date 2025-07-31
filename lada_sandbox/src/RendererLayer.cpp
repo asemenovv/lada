@@ -2,11 +2,15 @@
 #include "RendererLayer.h"
 
 #include "ContextVars.h"
+#include "assets/AssetManager.h"
 #include "renderer/model/ModelLoader.h"
 
 void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
-    std::string workingDirectory = Lada::workingDir();
+    std::string workingDirectory = Lada::AssetManager::WorkingDir();
     LD_INFO("Working directory is {0}", workingDirectory);
+
+    context->SetF(SQUARE_ROTATION, 0.0f);
+    context->SetF(SQUARE_ROTATION_INCREMENT, 0.005f);
 
     constexpr float positions[] = {
         -0.5f, -0.5f, 2.0, 0.0f, 0.0f,
@@ -19,11 +23,7 @@ void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
         2, 3, 0
     };
 
-    std::shared_ptr<Lada::Render::Material> material = Lada::Render::MaterialBuilder(
-                workingDirectory + "/lada_sandbox/res/shaders/Basic.glsl")
-            .WithTexture("u_Texture", workingDirectory + "/lada_sandbox/res/textures/stone.png")
-            .WithVector4("u_Color", glm::vec4(1.0f, 0.0f, 0.0f, 1.0f))
-            .Build();
+    auto material = Lada::AssetManager::Load<Lada::Material>("lada_sandbox/res/materials/basic.material.yaml");
 
     // Lada::Render::ModelLoader loader;
     // m_Square = loader.LoadModel(workingDirectory + "/assets/gltf_sample_models/2.0/BoxTextured/glTF/BoxTextured.gltf");
