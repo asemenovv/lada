@@ -16,7 +16,6 @@ add_library(lada_engine STATIC
         src/app/Window.cpp
         src/app/layer/LayerStack.cpp
         src/imgui/ImGuiLayer.cpp
-        src/Core.cpp
         src/app/layer/LayerContext.cpp
         src/app/input/GLFWInput.cpp
         src/renderer/Renderer.cpp

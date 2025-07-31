@@ -1,11 +1,12 @@
 #include "ldpch.h"
 #include "Material.h"
 
+#include "assets/AssetManager.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 
 namespace Lada {
-    Material::Material(const std::shared_ptr<Shader> &shader): m_Shader(shader) {
+    Material::Material(const std::shared_ptr<Shader> &shader): m_Name("Unnamed Material"), m_Shader(shader) {
     }
 
     void Material::Bind() {
@@ -27,7 +28,7 @@ namespace Lada {
         m_Vec4Uniforms[name] = value;
     }
 
-    void Material::Bind(const glm::mat4& mvp) {
+    void Material::Bind(const glm::mat4 &mvp) {
         m_Shader->Bind();
         m_Shader->SetUniformMat4f("u_MVP", mvp);
         Bind();
@@ -37,24 +38,18 @@ namespace Lada {
         m_Material = std::make_shared<Material>(shader);
     }
 
-    MaterialBuilder::MaterialBuilder(const std::string &shaderFilePath) {
-        const auto shader = std::make_shared<Shader>(shaderFilePath);
-        m_Material = std::make_shared<Material>(shader);
+    MaterialBuilder & MaterialBuilder::Name(const std::string &name) {
+        m_Material->SetName(name);
+        return *this;
     }
 
-    MaterialBuilder & MaterialBuilder::WithTexture(const std::string &uniformName,
-                                                   const std::shared_ptr<Texture> &texture) {
+    MaterialBuilder &MaterialBuilder::WithTexture(const std::string &uniformName,
+                                                  const std::shared_ptr<Texture> &texture) {
         m_Material->SetTexture(uniformName, texture);
         return *this;
     }
 
-    MaterialBuilder & MaterialBuilder::WithTexture(const std::string &uniformName, const std::string &filePath) {
-        const auto texture = std::make_shared<Texture>(filePath);
-        m_Material->SetTexture(uniformName, texture);
-        return *this;
-    }
-
-    MaterialBuilder & MaterialBuilder::WithVector4(const std::string &name, glm::vec4 value) {
+    MaterialBuilder &MaterialBuilder::WithVector4(const std::string &name, glm::vec4 value) {
         m_Material->SetVector4(name, value);
         return *this;
     }

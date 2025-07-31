@@ -6,6 +6,7 @@
 #include <imgui_impl_opengl3.h>
 
 #include "app/Application.h"
+#include "assets/AssetManager.h"
 #include "events/MouseEvent.h"
 
 namespace Lada::Render {
@@ -13,7 +14,7 @@ namespace Lada::Render {
     }
 
     void ImGuiLayer::OnAttach(App::LayerContext* context) {
-        const std::string workingDirectory = workingDir();
+        const std::string workingDirectory = AssetManager::WorkingDir();
 
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();

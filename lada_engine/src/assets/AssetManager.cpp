@@ -1,19 +1,37 @@
 #include "ldpch.h"
 #include "AssetManager.h"
 
-#include <yaml-cpp/node/convert.h>
-
-#include "renderer/material/Material.h"
-#include "yaml-cpp/node/parse.h"
 
 namespace Lada {
-    template<typename T>
-    std::shared_ptr<T> AssetManager::Load(const std::string& path) {
+    ShaderProgramSource AssetManager::ParseShader(const std::string& filepath) {
+        std::ifstream stream(filepath);
 
+        enum class ShaderType {
+            NONE = -1, VERTEX = 0, FRAGMENT = 1
+        };
+
+        std::string line;
+        std::stringstream ss[2];
+        auto type = ShaderType::NONE;
+        while (std::getline(stream, line)) {
+            if (line.find("//shader") != std::string::npos) {
+                if (line.find("vertex") != std::string::npos) {
+                    type = ShaderType::VERTEX;
+                } else if (line.find("fragment") != std::string::npos) {
+                    type = ShaderType::FRAGMENT;
+                }
+            } else {
+                ss[static_cast<int>(type)] << line << std::endl;
+            }
+        }
+        stream.close();
+        return { ss[0].str(), ss[1].str() };
     }
 
-    template<>
-    std::shared_ptr<Material> AssetManager::LoadInternal<Material>(const std::string& path) {
-        YAML::Node node = YAML::LoadFile(path);
+    std::string AssetManager::WorkingDir() {
+        const std::filesystem::path currentPath = std::filesystem::current_path()
+            .parent_path()
+            .parent_path();
+        return currentPath.string() + '/';
     }
 }

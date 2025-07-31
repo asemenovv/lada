@@ -7,6 +7,4 @@ public:
     void OnAttach(Lada::App::LayerContext *context) override;
 
     void RenderElements(const ImGuiIO& io, Lada::App::LayerContext* context) override;
-private:
-    bool m_WindowPositionIsSet = false;
 };

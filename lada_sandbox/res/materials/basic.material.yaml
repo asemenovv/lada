@@ -1,15 +1,12 @@
 name: Stone Textured Material
 program:
-  vertex:
-    uri: ../shaders/basic.vert
-  fragment:
-    uri: ../shaders/basic.frag
+  uri: lada_sandbox/res/shaders/Basic.glsl
 textures:
   - name: Main texture
     variable: u_Texture
-    uri: ../textures/stone.png
+    uri: lada_sandbox/res/textures/stone.png
 uniforms:
   - name: Base color
     variable: u_Color
     type: COLOR
-    value: (1.0f, 0.0f, 0.0f, 1.0f)
+    value: [0.0, 1.0, 0.0, 0.3]
