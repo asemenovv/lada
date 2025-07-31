@@ -4,9 +4,10 @@ program:
 textures:
   - name: Main texture
     variable: u_Texture
-    uri: lada_sandbox/res/textures/stone.png
+    uri: lada_sandbox/res/textures/box.png
+#    uri: lada_sandbox/res/textures/stone.png
 uniforms:
   - name: Base color
     variable: u_Color
     type: COLOR
-    value: [0.0, 1.0, 0.0, 0.3]
+    value: [0.0, 0.0, 1.0, 0.3]
