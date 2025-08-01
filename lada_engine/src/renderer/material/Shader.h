@@ -9,7 +9,6 @@
 namespace Lada {
     class Shader : public IAsset {
         unsigned int m_RendererID;
-        std::string m_FilePath;
         std::unordered_map<std::string, int> m_UniformLocationCache;
     public:
         explicit Shader(const std::string& vertexSource, const std::string& fragmentSource);
