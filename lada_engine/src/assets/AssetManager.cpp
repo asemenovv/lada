@@ -32,6 +32,12 @@ namespace Lada {
         const std::filesystem::path currentPath = std::filesystem::current_path()
             .parent_path()
             .parent_path();
-        return currentPath.string() + '/';
+        auto directory = currentPath.string() + '/';
+        static bool isDirectoryLogged = false;
+        if (isDirectoryLogged == false) {
+            isDirectoryLogged = true;
+            LD_CORE_INFO("Working directory is {0}", directory);
+        }
+        return directory;
     }
 }

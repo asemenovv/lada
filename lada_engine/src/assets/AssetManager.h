@@ -42,7 +42,7 @@ namespace Lada {
 
     template<>
     inline std::shared_ptr<Shader> AssetManager::LoadInternal<Shader>(const std::string &path) {
-        LD_CORE_INFO("Loading shader: '{0}'", path);
+        LD_INFO("Loading shader: '{0}'", path);
         auto [vertexSource, fragmentSource] = ParseShader(WorkingDir() + path);
         return std::make_shared<Shader>(vertexSource, fragmentSource);
     }
@@ -54,7 +54,7 @@ namespace Lada {
         stbi_set_flip_vertically_on_load(1);
         const std::string absolutePath = WorkingDir() + path;
         localBuffer = stbi_load(absolutePath.c_str(), &width, &height, &BPP, 4);
-        LD_CORE_INFO("Loading texture: '{0}' ({1}x{2})", path, width, height);
+        LD_INFO("Loading texture: '{0}' ({1}x{2})", path, width, height);
         auto texture = std::make_shared<Texture>(localBuffer, width, height, BPP);
         if (localBuffer) {
             stbi_image_free(localBuffer);
@@ -64,7 +64,7 @@ namespace Lada {
 
     template<>
     inline std::shared_ptr<Material> AssetManager::LoadInternal<Material>(const std::string &path) {
-        LD_CORE_INFO("Loading material: '{0}'", path);
+        LD_INFO("Loading material: '{0}'", path);
         YAML::Node root = YAML::LoadFile(WorkingDir() + path);
         const auto shaderUri = root["program"]["uri"].as<std::string>();
         const auto shader = Load<Shader>(shaderUri);

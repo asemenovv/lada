@@ -34,6 +34,6 @@ namespace Lada::Render {
     }
 
     void Renderer::EndFrame() {
-        m_Window.SwapBuffers();
+        m_Window.GetGraphicsContext()->SwapBuffers();
     }
 }
