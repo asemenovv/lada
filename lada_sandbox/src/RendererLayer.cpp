@@ -7,7 +7,6 @@
 
 void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
     std::string workingDirectory = Lada::AssetManager::WorkingDir();
-    LD_INFO("Working directory is {0}", workingDirectory);
 
     context->SetF(SQUARE_ROTATION, 0.0f);
     context->SetF(SQUARE_ROTATION_INCREMENT, 0.005f);

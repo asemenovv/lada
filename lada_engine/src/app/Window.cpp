@@ -25,10 +25,11 @@ namespace Lada::App {
             LD_CORE_CRITICAL("Failed to create GLFW window");
             glfwTerminate();
         }
+        m_GraphicsContext = GraphicsContext::Create(m_Window);
 
         SubscribeToEvents();
 
-        glfwMakeContextCurrent(m_Window);
+        m_GraphicsContext->Init();
         eventManager->REGISTER_HANDLER(Lada::Event::WindowResizeEvent, {
             m_Width = event.GetWidth();
             m_Height = event.GetHeight();
@@ -38,10 +39,6 @@ namespace Lada::App {
 
     void Window::OnUpdate() const {
         glfwPollEvents();
-    }
-
-    void Window::SwapBuffers() const {
-        glfwSwapBuffers(m_Window);
     }
 
     void Window::SetVSync(bool enabled) {

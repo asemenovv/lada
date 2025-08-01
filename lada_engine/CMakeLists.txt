@@ -25,6 +25,8 @@ add_library(lada_engine STATIC
         src/renderer/model/Model.cpp
         src/renderer/Camera.cpp
         src/assets/AssetManager.cpp
+        src/renderer/GraphicsContext.cpp
+        src/renderer/opengl/OpenGLContext.cpp
 )
 
 target_include_directories(lada_engine

@@ -24,9 +24,6 @@ namespace Lada::App {
             LD_CORE_CRITICAL("GLAD could not be initialized");
         }
 
-        GL_CALL(const char* glVersion = (const char*)glGetString(GL_VERSION));
-        LD_CORE_INFO("OpenGL version is: {0}", glVersion);
-
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GL_CALL(glEnable(GL_BLEND));
 
