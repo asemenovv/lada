@@ -1,0 +1,59 @@
+@startuml
+
+interface IAsset {
+}
+
+class Model {
+    + Model()
+    + Model(Mesh* mesh, Material* material)
+    + void PushMesh(Mesh* mesh, Material* material)
+    - Vector<SubMesh> m_SubMeshes
+    - glm::mat4 m_ModelMatrix
+}
+
+struct SubMesh {
+    + Mesh mesh
+    + Material material
+}
+
+class Mesh {
+    + void Draw()
+}
+
+class Material {
+    + Material(Shader* shader);
+    + void Bind()
+    + void Bind(const glm::mat4& mvp)
+    + void SetTexture(String& uniformName, Texture* texture);
+    + void SetVector4(String& name, glm::vec4 value);
+    - Shader* m_Shader
+    - Map<String, Texture*> m_Textures;
+    - Map<String, glm::vec4> m_Vec4Uniforms;
+}
+
+class Shader {
+    + Shader(String vertexSource, String fragmentSource)
+    + void Bind()
+    + void Unbind()
+    + void SetUniform1i(String name, int value)
+    + void SetUniform1f(String name, float value)
+    + void SetUniform4f(String name, float v0, float v1, float v2, float v3)
+    + void SetUniformMat4f(String name, const glm::mat4 matrix)
+}
+
+class Texture {
+    + void Bind(unsigned int slot = 0)
+    + void Unbind()
+}
+
+Material --> Shader
+Material --o Texture
+Model --o SubMesh
+SubMesh --> Mesh
+SubMesh --> Material
+
+Material ..|> IAsset
+Shader ..|> IAsset
+Texture ..|> IAsset
+
+@enduml
