@@ -37,6 +37,11 @@ target_include_directories(lada_engine
 )
 
 target_precompile_headers(lada_engine PUBLIC src/ldpch.h)
+set_source_files_properties(
+        src/app/MetalTest.mm
+        PROPERTIES
+        SKIP_PRECOMPILE_HEADERS ON
+)
 
 target_compile_definitions(lada_engine PUBLIC GLFW_INCLUDE_NONE)
 
