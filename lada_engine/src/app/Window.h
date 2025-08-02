@@ -1,44 +1,24 @@
 #pragma once
-
-#include <string>
-
-#include "events/Event.h"
 #include "events/EventManager.h"
 #include "renderer/GraphicsContext.h"
 
-struct GLFWwindow;
-
-namespace Lada::App {
+namespace Lada {
     class Window {
-    friend class DebugUIManager;
     public:
-        using WindowEventCallbackFn = std::function<void(const Event::Event&)>;
-
-        Window(const std::string &title, int width, int height, Event::EventManager* eventManager);
-        ~Window() = default;
-
-        void OnUpdate() const;
-        void SetVSync(bool enabled);
-        void Close() const;
-        [[nodiscard]] int GetWidth() const { return m_Width; }
+        Window(int width, int height, std::shared_ptr<EventManager>& eventManager);
+        virtual ~Window() = default;
+        virtual void OnUpdate() const = 0;
+        virtual void SetVSync(bool enabled) = 0;
+        virtual void Close() const = 0;
+        [[nodiscard]] virtual int GetWidth() const { return m_Width; }
         [[nodiscard]] int GetHeight() const { return m_Height; }
-
-        [[nodiscard]] GLFWwindow* GetNativeWindow() const { return m_Window; }
-        std::shared_ptr<GraphicsContext> GetGraphicsContext() const { return m_GraphicsContext; }
-    private:
+        virtual void* GetNativeWindow() = 0;
+        std::shared_ptr<GraphicsContext> GetGraphicsContext() const;
+        static std::shared_ptr<Window> Create(std::string title, int width, int height, std::shared_ptr<EventManager>& eventManager);
+    protected:
         int m_Width, m_Height;
-        GLFWwindow* m_Window;
-        Event::EventManager* m_EventManager;
         std::shared_ptr<GraphicsContext> m_GraphicsContext;
-
-        static void WindowCloseCallback(GLFWwindow* glfwWindow);
-        static void FramebufferSizeCallback(GLFWwindow* glfwWindow, int width, int height);
-        static void KeyCallback(GLFWwindow* glfwWindow, int key, int scancode, int action, int mods);
-        static void CharCallback(GLFWwindow* glfwWindow, unsigned int keycode);
-        static void MouseButtonCallback(GLFWwindow* glfwWindow, int button, int action, int mods);
-        static void ScrollCallback(GLFWwindow* glfwWindow, double xOffset, double yOffset);
-        static void CursorPosCallback(GLFWwindow* glfwWindow, double xPos, double yPos);
-
-        void SubscribeToEvents();
+        std::shared_ptr<EventManager> m_EventManager;
     };
+
 }

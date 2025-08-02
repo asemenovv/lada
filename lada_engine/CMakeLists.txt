@@ -13,7 +13,7 @@ add_library(lada_engine STATIC
         src/renderer/buffers/VertexBuffer.cpp
         src/app/EntryPoint.cpp
         src/app/Logger.cpp
-        src/app/Window.cpp
+        src/platform/glfw/GlfwWindow.cpp
         src/app/layer/LayerStack.cpp
         src/imgui/ImGuiLayer.cpp
         src/app/layer/LayerContext.cpp
@@ -26,9 +26,11 @@ add_library(lada_engine STATIC
         src/renderer/Camera.cpp
         src/assets/AssetManager.cpp
         src/renderer/GraphicsContext.cpp
-        src/renderer/opengl/OpenGLContext.cpp
+        src/platform/opengl/OpenGLContext.cpp
 
         src/app/MetalTest.mm
+        src/app/Window.cpp
+        src/app/Window.h
 )
 
 target_include_directories(lada_engine

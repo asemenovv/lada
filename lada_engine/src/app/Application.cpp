@@ -16,9 +16,9 @@ namespace Lada::App {
             return;
         }
         s_Instance = this;
-        m_EventManager = new Event::EventManager();
-        m_Window = new Window(title, width, height, m_EventManager);
-        m_Renderer = std::make_shared<Lada::Render::Renderer>(*m_Window);
+        m_EventManager = std::make_shared<EventManager>();
+        m_Window = Window::Create(title, width, height, m_EventManager);
+        m_Renderer = std::make_shared<Lada::Render::Renderer>(m_Window);
 
         if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
             LD_CORE_CRITICAL("GLAD could not be initialized");
@@ -27,25 +27,23 @@ namespace Lada::App {
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GL_CALL(glEnable(GL_BLEND));
 
-        m_EventManager->BIND_HANDLER(Event::WindowCloseEvent, Application::OnWindowCloseEvent);
+        m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::OnWindowCloseEvent);
         SubscribeLayersOnEvents();
 
-        m_EventManager->BIND_HANDLER(Event::WindowResizeEvent, Application::OnWindowResizeEvent);
+        m_EventManager->BIND_HANDLER(WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
     Application::~Application() {
         delete m_LayerStack;
         delete m_LayerContext;
-        delete m_EventManager;
-        delete m_Window;
     }
 
-    bool Application::OnWindowCloseEvent(const Event::WindowCloseEvent& event) {
+    bool Application::OnWindowCloseEvent(const WindowCloseEvent& event) {
         this->Shutdown();
         return true;
     }
 
-    bool Application::OnWindowResizeEvent(const Event::WindowResizeEvent &event) {
+    bool Application::OnWindowResizeEvent(const WindowResizeEvent &event) {
         glViewport(0, 0, event.GetWidth(), event.GetHeight());
         return true;
     }
@@ -86,7 +84,7 @@ namespace Lada::App {
     }
 
     void Application::SubscribeLayersOnEvents() {
-        m_EventManager->RegisterGlobalHandler([this](Event::Event& event) {
+        m_EventManager->RegisterGlobalHandler([this](Event& event) {
             for (auto it = m_LayerStack->end(); it != m_LayerStack->begin();) {
                 (*--it)->OnEvent(event, m_LayerContext);
                 if (event.IsHandled())

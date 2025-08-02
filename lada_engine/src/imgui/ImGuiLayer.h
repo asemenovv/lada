@@ -17,7 +17,7 @@ namespace Lada::Render {
 
         void OnRender(App::LayerContext* context, const std::shared_ptr<Renderer> &renderer) override;
 
-        void OnEvent(Event::Event &event, App::LayerContext* context) override;
+        void OnEvent(Event &event, App::LayerContext* context) override;
 
         virtual void RenderElements(const ImGuiIO& io, App::LayerContext* context);
     private:

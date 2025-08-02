@@ -7,7 +7,7 @@
 
 #include "events/Event.h"
 
-namespace Lada::Event {
+namespace Lada {
     class EventManager {
     public:
         using GlobalEventHandler = std::function<bool(Event&)>;

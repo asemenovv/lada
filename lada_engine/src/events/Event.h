@@ -4,7 +4,7 @@
 #include "Core.h"
 #include "spdlog/fmt/bundled/base.h"
 
-namespace Lada::Event {
+namespace Lada {
     enum class EventType {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,

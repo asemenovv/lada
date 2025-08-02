@@ -1,8 +1,8 @@
 #include "ldpch.h"
 #include "GraphicsContext.h"
 
-#include "app/Window.h"
-#include "opengl/OpenGLContext.h"
+#include "../platform/glfw/GlfwWindow.h"
+#include "platform/opengl/OpenGLContext.h"
 
 namespace Lada {
     std::shared_ptr<GraphicsContext> GraphicsContext::Create(void* window) {

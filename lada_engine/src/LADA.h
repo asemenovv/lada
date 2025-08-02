@@ -2,7 +2,7 @@
 
 #include "app/Application.h"
 #include "app/Logger.h"
-#include "app/Window.h"
+#include "platform/glfw/GlfwWindow.h"
 
 #include "app/layer/Layer.h"
 #include "imgui/ImGuiLayer.h"

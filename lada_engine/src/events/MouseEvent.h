@@ -5,7 +5,7 @@
 #include "Event.h"
 #include "app/input/MouseCodes.h"
 
-namespace Lada::Event {
+namespace Lada {
     class MouseMovedEvent final : public Event {
     public:
         MouseMovedEvent(const float x, const float y)

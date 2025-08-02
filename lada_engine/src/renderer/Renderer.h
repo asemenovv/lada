@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Camera.h"
-#include "app/Window.h"
+#include "platform/glfw/GlfwWindow.h"
 #include "glm/vec4.hpp"
 
 namespace Lada::Render {
@@ -12,7 +12,7 @@ namespace Lada::Render {
 
     class Renderer {
     public:
-        explicit Renderer(const App::Window& window);
+        explicit Renderer(std::shared_ptr<Window>& window);
 
         void Init();
 
@@ -30,7 +30,7 @@ namespace Lada::Render {
 
     private:
         glm::vec4 m_ClearColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        App::Window m_Window;
+        std::shared_ptr<Window> m_Window;
         std::shared_ptr<Camera> m_Camera;
     };
 }
