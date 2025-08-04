@@ -3,6 +3,70 @@
 interface IAsset {
 }
 
+class Application {
+    + void Run()
+    + void Shutdown()
+    + Window& GetWindow()
+    + {static} Application& Get()
+    # void PushLayer(Layer*)
+    # void PushOverlay(Layer*)
+    # void PopLayer(Layer*)
+    # void PopOverlay(Layer*)
+    # EventManager* GetEventManager()
+    - Renderer* m_Renderer
+    - Scene* m_Scene
+    - EventManager* m_EventManager
+    - LayerStack* m_LayerStack
+    - LayerContext* m_LayerContext
+}
+
+class LayerContext {
+    + float* GetF(String&)
+    + void SetF(String, float);
+}
+
+class Renderer {
+    - Window m_Window
+    - Camera* m_Camera
+    + Renderer(Window&)
+    + void Init()
+    + void Shutdown()
+    + void BeginFrame()
+    + void Submit(Model*)
+    + void EndFrame()
+    + void SetClearColor(vec4&)
+    + Camera GetCamera()
+}
+
+class Scene #Wheat {
+    - vector<Model> m_Models
+    + Update()
+    + Render(Renderer*)
+}
+
+class LayerStack {
+    + void PushLayer(Layer*)
+    + void PushOverlay(Layer*)
+    + void PopLayer(Layer*)
+    + void PopOverlay(Layer*)
+}
+
+class Layer {
+    + void OnAttach(LayerContext*)
+    + void OnDetach(LayerContext*)
+    + void OnUpdate(LayerContext*)
+    + void OnRender(LayerContext*, Renderer*)
+    + OnEvent(Event&, LayerContext*)
+}
+
+class Camera {
+    - mat4 m_View
+    - mat4 m_Projection
+    + mat4 GetViewMatrix()
+    + mat4 GetProjectionMatrix()
+    + mat4 GetViewProjectionMatrix()
+}
+
 class Model {
     + Model()
     + Model(Mesh* mesh, Material* material)
@@ -45,6 +109,15 @@ class Texture {
     + void Bind(unsigned int slot = 0)
     + void Unbind()
 }
+
+Application --> LayerContext
+Application --> LayerStack
+Application --> Scene
+Application --> Renderer
+Scene ..> Renderer
+Scene --o Model
+LayerStack --o Layer
+Renderer --> Camera
 
 Material --> Shader
 Material --o Texture
