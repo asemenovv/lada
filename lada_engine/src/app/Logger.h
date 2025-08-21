@@ -29,3 +29,9 @@ namespace Lada::Log {
 #define LD_WARN(...) Lada::Log::Logger::GetClientLogger()->warn(__VA_ARGS__)
 #define LD_ERROR(...) Lada::Log::Logger::GetClientLogger()->error(__VA_ARGS__)
 #define LD_CRITICAL(...) Lada::Log::Logger::GetClientLogger()->critical(__VA_ARGS__)
+
+#define LD_CORE_ASSERT_WITH_ERROR(condition, ...) \
+if (!(condition)) { \
+    LD_CORE_ERROR(__VA_ARGS__); \
+    std::abort(); \
+}

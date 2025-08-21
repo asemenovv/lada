@@ -27,10 +27,14 @@ add_library(lada_engine STATIC
         src/assets/AssetManager.cpp
         src/renderer/GraphicsContext.cpp
         src/platform/opengl/OpenGLContext.cpp
-
         src/app/MetalTest.mm
         src/app/Window.cpp
         src/app/Window.h
+        src/app/ecs/EntityManager.cpp
+        src/app/ecs/ComponentArray.cpp
+        src/app/ecs/ComponentManager.cpp
+        src/app/ecs/SystemManager.cpp
+        src/app/ecs/EcsCoordinator.cpp
 )
 
 target_include_directories(lada_engine
