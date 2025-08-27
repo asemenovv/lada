@@ -27,7 +27,6 @@ add_library(lada_engine STATIC
         src/assets/AssetManager.cpp
         src/renderer/GraphicsContext.cpp
         src/platform/opengl/OpenGLContext.cpp
-        src/app/MetalTest.mm
         src/app/Window.cpp
         src/app/Window.h
         src/app/ecs/EntityManager.cpp
@@ -60,5 +59,4 @@ target_link_libraries(lada_engine
         PUBLIC stb_image
         PUBLIC assimp
         PUBLIC yaml-cpp
-        "-framework Foundation"
 )

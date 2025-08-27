@@ -1,7 +1,6 @@
 #include "ldpch.h"
 #include "GlfwWindow.h"
 #include "app/Logger.h"
-#include "app/MetalTest.h"
 #include "events/ApplicationEvent.h"
 #include "events/KeyEvent.h"
 #include "events/MouseEvent.h"
@@ -11,10 +10,6 @@ namespace Lada {
     GlfwWindow::GlfwWindow(const std::string &title, const int width, const int height,
                            std::shared_ptr<EventManager>& eventManager)
     : Window(width, height, eventManager) {
-        const auto test = new MetalTest();
-        test->Hello();
-        delete test;
-
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
 
