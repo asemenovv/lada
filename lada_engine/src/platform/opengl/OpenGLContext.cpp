@@ -5,9 +5,12 @@
 #include "app/Logger.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
+#include "platform/vulkan/VulkanInstance.h"
 
 namespace Lada {
     OpenGLContext::OpenGLContext(GLFWwindow *window): m_WindowHandle(window) {
+        const auto instance = new VulkanInstance(true);
+        delete instance;
     }
 
     void OpenGLContext::Init() {

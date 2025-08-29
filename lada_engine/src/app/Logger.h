@@ -35,3 +35,9 @@ if (!(condition)) { \
     LD_CORE_ERROR(__VA_ARGS__); \
     std::abort(); \
 }
+
+#define LD_VK_ASSERT_SUCCESS(expr, ...) \
+if (expr != VK_SUCCESS) { \
+    LD_CORE_ERROR(__VA_ARGS__); \
+    std::abort(); \
+}

@@ -3,6 +3,8 @@ project(lada_engine)
 
 set(CMAKE_CXX_STANDARD 20)
 
+find_package(Vulkan REQUIRED)
+
 add_library(lada_engine STATIC
         src/app/Application.cpp
         src/renderer/buffers/IndexBuffer.cpp
@@ -34,6 +36,8 @@ add_library(lada_engine STATIC
         src/app/ecs/ComponentManager.cpp
         src/app/ecs/SystemManager.cpp
         src/app/ecs/EcsCoordinator.cpp
+        src/platform/vulkan/VulkanInstance.cpp
+        src/platform/vulkan/VulkanInstance.h
 )
 
 target_include_directories(lada_engine
@@ -51,6 +55,7 @@ set_source_files_properties(
 target_compile_definitions(lada_engine PUBLIC GLFW_INCLUDE_NONE)
 
 target_link_libraries(lada_engine
+        PUBLIC Vulkan::Vulkan
         PUBLIC GLAD
         PUBLIC glfw
         PUBLIC spdlog::spdlog
