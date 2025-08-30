@@ -4,10 +4,10 @@
 struct GLFWwindow;
 
 namespace Lada {
-    class OpenGLContext : public GraphicsContext {
+    class OpenGLContext final : public GraphicsContext {
     public:
-        OpenGLContext(GLFWwindow *window);
-        ~OpenGLContext() = default;
+        explicit OpenGLContext(GLFWwindow *window);
+        ~OpenGLContext() override = default;
 
         void Init() override;
         void SwapBuffers() override;

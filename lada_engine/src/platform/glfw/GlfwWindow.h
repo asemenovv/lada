@@ -13,7 +13,7 @@ namespace Lada {
     public:
         using WindowEventCallbackFn = std::function<void(const Event&)>;
 
-        GlfwWindow(const std::string &title, int width, int height,
+        GlfwWindow(GraphicAPI graphicApi, const std::string &title, int width, int height,
             std::shared_ptr<EventManager>& eventManager);
         ~GlfwWindow() override = default;
 

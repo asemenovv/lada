@@ -100,7 +100,7 @@ namespace Lada {
         createInfo.ppEnabledExtensionNames = extensions.c_strings.data();
         createInfo.flags = VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
 
-        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo;
+        VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
         if (m_EnableValidationLayers) {
             createInfo.enabledLayerCount = static_cast<uint32_t>(s_ValidationLayers.size());
             createInfo.ppEnabledLayerNames = s_ValidationLayers.data();

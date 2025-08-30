@@ -6,7 +6,8 @@
 #include <imgui_impl_opengl3_loader.h>
 
 namespace Lada::Render {
-    Renderer::Renderer(std::shared_ptr<Window>& window): m_Window(window), m_Camera(nullptr) {
+    Renderer::Renderer(const std::shared_ptr<Window>& window, const std::shared_ptr<GraphicsContext>& graphicsContext)
+    : m_GraphicsContext(graphicsContext), m_Camera(nullptr) {
         m_Camera = CameraBuilder()
                 .Screen(45.0, window->GetWidth() / window->GetHeight(), 1.0, 100.0)
                 .Position({0.0, 0.0, 0.0})
@@ -26,7 +27,7 @@ namespace Lada::Render {
         GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
     }
 
-    void Renderer::Submit(std::shared_ptr<Model> model) const {
+    void Renderer::Submit(const std::shared_ptr<Model>& model) const {
         for (Model::SubMesh subMesh : *model) {
             model->BindMaterial(subMesh.material, m_Camera->GetProjectionMatrix(), m_Camera->GetViewMatrix());
             subMesh.mesh->Draw();
@@ -34,6 +35,6 @@ namespace Lada::Render {
     }
 
     void Renderer::EndFrame() {
-        m_Window->GetGraphicsContext()->SwapBuffers();
+        m_GraphicsContext->SwapBuffers();
     }
 }

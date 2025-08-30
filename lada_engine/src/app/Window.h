@@ -5,20 +5,26 @@
 namespace Lada {
     class Window {
     public:
-        Window(int width, int height, std::shared_ptr<EventManager>& eventManager);
+        Window(int width, int height, std::shared_ptr<EventManager> &eventManager);
+
         virtual ~Window() = default;
+
         virtual void OnUpdate() const = 0;
+
         virtual void SetVSync(bool enabled) = 0;
+
         virtual void Close() const = 0;
+
         [[nodiscard]] virtual int GetWidth() const { return m_Width; }
         [[nodiscard]] int GetHeight() const { return m_Height; }
-        virtual void* GetNativeWindow() = 0;
-        std::shared_ptr<GraphicsContext> GetGraphicsContext() const;
-        static std::shared_ptr<Window> Create(std::string title, int width, int height, std::shared_ptr<EventManager>& eventManager);
+
+        virtual void *GetNativeWindow() = 0;
+
+        static std::shared_ptr<Window> Create(std::string title, int width, int height,
+                                              std::shared_ptr<EventManager> &eventManager, GraphicAPI api);
+
     protected:
         int m_Width, m_Height;
-        std::shared_ptr<GraphicsContext> m_GraphicsContext;
         std::shared_ptr<EventManager> m_EventManager;
     };
-
 }

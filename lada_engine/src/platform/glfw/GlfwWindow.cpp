@@ -7,29 +7,32 @@
 #include "GLFW/glfw3.h"
 
 namespace Lada {
-    GlfwWindow::GlfwWindow(const std::string &title, const int width, const int height,
+    GlfwWindow::GlfwWindow(const GraphicAPI graphicApi, const std::string &title, const int width, const int height,
                            std::shared_ptr<EventManager>& eventManager)
     : Window(width, height, eventManager) {
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        if (graphicApi == GraphicAPI::OPENGL) {
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+            glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+            glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #ifdef __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+            glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
 #endif
+        } else if (graphicApi == GraphicAPI::VULKAN) {
+            glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        }
 
         m_Window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
         if (!m_Window) {
             LD_CORE_CRITICAL("Failed to create GLFW window");
             glfwTerminate();
         }
-        m_GraphicsContext = GraphicsContext::Create(m_Window);
 
         SubscribeToEvents();
 
-        m_GraphicsContext->Init();
         eventManager->REGISTER_HANDLER(WindowResizeEvent, {
                                        m_Width = event.GetWidth();
                                        m_Height = event.GetHeight();

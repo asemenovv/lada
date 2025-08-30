@@ -12,7 +12,8 @@ namespace Lada::Render {
 
     class Renderer {
     public:
-        explicit Renderer(std::shared_ptr<Window>& window);
+        explicit Renderer(const std::shared_ptr<Window>& window,
+            const std::shared_ptr<GraphicsContext>& graphicsContext);
 
         void Init();
 
@@ -20,7 +21,7 @@ namespace Lada::Render {
 
         void BeginFrame();
 
-        void Submit(std::shared_ptr<Model> model) const;
+        void Submit(const std::shared_ptr<Model> &model) const;
 
         void EndFrame();
 
@@ -30,7 +31,7 @@ namespace Lada::Render {
 
     private:
         glm::vec4 m_ClearColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        std::shared_ptr<Window> m_Window;
+        std::shared_ptr<GraphicsContext> m_GraphicsContext;
         std::shared_ptr<Camera> m_Camera;
     };
 }

@@ -28,6 +28,7 @@ namespace Lada::App {
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<EventManager> m_EventManager;
+        std::shared_ptr<GraphicsContext> m_GraphicsContext;
         LayerStack* m_LayerStack;
         LayerContext* m_LayerContext;
         std::shared_ptr<Render::Renderer> m_Renderer;

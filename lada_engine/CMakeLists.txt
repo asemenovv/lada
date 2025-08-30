@@ -38,6 +38,10 @@ add_library(lada_engine STATIC
         src/app/ecs/EcsCoordinator.cpp
         src/platform/vulkan/VulkanInstance.cpp
         src/platform/vulkan/VulkanInstance.h
+        src/platform/vulkan/VulkanPhysicalDevice.cpp
+        src/platform/vulkan/VulkanPhysicalDevice.h
+        src/platform/vulkan/VulkanContext.cpp
+        src/platform/vulkan/VulkanContext.h
 )
 
 target_include_directories(lada_engine

@@ -9,8 +9,8 @@
 
 namespace Lada {
     OpenGLContext::OpenGLContext(GLFWwindow *window): m_WindowHandle(window) {
-        const auto instance = new VulkanInstance(true);
-        delete instance;
+        // const auto instance = new VulkanInstance(true);
+        // delete instance;
     }
 
     void OpenGLContext::Init() {
@@ -29,6 +29,10 @@ namespace Lada {
 
         if (GLVersion.major > 4 || (GLVersion.major == 4 && GLVersion.minor >= 5)) {
             LD_CORE_CRITICAL("Lada requires at least OpenGL version 4.5!");
+        }
+
+        if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
+            LD_CORE_CRITICAL("GLAD could not be initialized");
         }
     }
 

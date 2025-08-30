@@ -9,6 +9,7 @@ namespace Lada::App {
     Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+        constexpr auto graphicApi = GraphicAPI::OPENGL;
         m_LayerContext = new LayerContext();
         m_LayerStack = new LayerStack(m_LayerContext);
         if (s_Instance != nullptr) {
@@ -17,11 +18,13 @@ namespace Lada::App {
         }
         s_Instance = this;
         m_EventManager = std::make_shared<EventManager>();
-        m_Window = Window::Create(title, width, height, m_EventManager);
-        m_Renderer = std::make_shared<Lada::Render::Renderer>(m_Window);
+        m_Window = Window::Create(title, width, height, m_EventManager, graphicApi);
+        m_GraphicsContext = GraphicsContext::Create(m_Window->GetNativeWindow(), graphicApi);
+        m_GraphicsContext->Init();
+        m_Renderer = std::make_shared<Render::Renderer>(m_Window, m_GraphicsContext);
 
-        if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
-            LD_CORE_CRITICAL("GLAD could not be initialized");
+        if (graphicApi ==  GraphicAPI::VULKAN) {
+            std::abort();
         }
 
         GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
