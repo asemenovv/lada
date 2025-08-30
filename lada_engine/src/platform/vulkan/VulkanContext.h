@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VulkanInstance.h"
+#include "VulkanPhysicalDevice.h"
 #include "renderer/GraphicsContext.h"
 
 struct GLFWwindow;
@@ -16,5 +17,6 @@ namespace Lada {
     private:
         GLFWwindow* m_WindowHandle;
         std::unique_ptr<VulkanInstance> m_VulkanInstance;
+        std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
     };
 }

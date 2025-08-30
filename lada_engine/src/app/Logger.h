@@ -10,9 +10,11 @@ namespace Lada::Log {
 
         static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
         static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+        static std::shared_ptr<spdlog::logger>& GetVulkanLogger() { return s_VulkanLogger; }
     private:
         static std::shared_ptr<spdlog::logger> s_CoreLogger;
         static std::shared_ptr<spdlog::logger> s_ClientLogger;
+        static std::shared_ptr<spdlog::logger> s_VulkanLogger;
     };
 }
 
@@ -22,6 +24,11 @@ namespace Lada::Log {
 #define LD_CORE_WARN(...) Lada::Log::Logger::GetCoreLogger()->warn(__VA_ARGS__)
 #define LD_CORE_ERROR(...) Lada::Log::Logger::GetCoreLogger()->error(__VA_ARGS__)
 #define LD_CORE_CRITICAL(...) Lada::Log::Logger::GetCoreLogger()->critical(__VA_ARGS__)
+
+#define LD_CORE_VK_INFO(...) Lada::Log::Logger::GetVulkanLogger()->info(__VA_ARGS__)
+#define LD_CORE_VK_WARN(...) Lada::Log::Logger::GetVulkanLogger()->warn(__VA_ARGS__)
+#define LD_CORE_VK_ERROR(...) Lada::Log::Logger::GetVulkanLogger()->error(__VA_ARGS__)
+#define LD_CORE_VK_CRITICAL(...) Lada::Log::Logger::GetVulkanLogger()->critical(__VA_ARGS__)
 
 #define LD_TRACE(...) Lada::Log::Logger::GetClientLogger()->trace(__VA_ARGS__)
 #define LD_DEBUG(...) Lada::Log::Logger::GetClientLogger()->debug(__VA_ARGS__)

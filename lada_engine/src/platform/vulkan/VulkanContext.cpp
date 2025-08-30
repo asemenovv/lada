@@ -6,6 +6,7 @@ namespace Lada {
 
     void VulkanContext::Init() {
         m_VulkanInstance = std::make_unique<VulkanInstance>(true);
+        m_PhysicalDevice = std::make_unique<VulkanPhysicalDevice>(std::move(m_VulkanInstance));
     }
 
     void VulkanContext::SwapBuffers() {

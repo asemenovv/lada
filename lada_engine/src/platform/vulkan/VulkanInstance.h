@@ -10,6 +10,8 @@ namespace Lada {
 
         ~VulkanInstance();
 
+        [[nodiscard]] VkInstance VulkanNativeInstance() const { return m_Instance; }
+
     private:
         void createInstance();
 
