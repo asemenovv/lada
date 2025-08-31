@@ -42,6 +42,8 @@ add_library(lada_engine STATIC
         src/platform/vulkan/VulkanPhysicalDevice.h
         src/platform/vulkan/VulkanContext.cpp
         src/platform/vulkan/VulkanContext.h
+        src/platform/vulkan/VulkanDevice.cpp
+        src/platform/vulkan/VulkanDevice.h
 )
 
 target_include_directories(lada_engine

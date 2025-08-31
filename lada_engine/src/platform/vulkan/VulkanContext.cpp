@@ -5,8 +5,10 @@ namespace Lada {
     }
 
     void VulkanContext::Init() {
-        m_VulkanInstance = std::make_unique<VulkanInstance>(true);
-        m_PhysicalDevice = std::make_unique<VulkanPhysicalDevice>(std::move(m_VulkanInstance));
+        bool enableValidationLayers = true;
+        m_VulkanInstance = std::make_shared<VulkanInstance>(enableValidationLayers);
+        m_PhysicalDevice = std::make_shared<VulkanPhysicalDevice>(m_VulkanInstance);
+        m_Device = std::make_shared<VulkanDevice>(m_PhysicalDevice, enableValidationLayers);
     }
 
     void VulkanContext::SwapBuffers() {

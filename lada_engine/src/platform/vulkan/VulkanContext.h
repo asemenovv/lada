@@ -1,5 +1,6 @@
 #pragma once
 
+#include "VulkanDevice.h"
 #include "VulkanInstance.h"
 #include "VulkanPhysicalDevice.h"
 #include "renderer/GraphicsContext.h"
@@ -16,7 +17,8 @@ namespace Lada {
         void SwapBuffers() override;
     private:
         GLFWwindow* m_WindowHandle;
-        std::unique_ptr<VulkanInstance> m_VulkanInstance;
-        std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
+        std::shared_ptr<VulkanInstance> m_VulkanInstance;
+        std::shared_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
+        std::shared_ptr<VulkanDevice> m_Device;
     };
 }

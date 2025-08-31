@@ -3,7 +3,7 @@
 #include "VulkanExtensionsManager.h"
 
 namespace Lada {
-    const std::vector<const char *> VulkanInstance::s_ValidationLayers = {"VK_LAYER_KHRONOS_validation"};
+    const std::vector<const char *> VulkanInstance::ValidationLayers = {"VK_LAYER_KHRONOS_validation"};
 
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(const VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                         const VkDebugUtilsMessageTypeFlagsEXT messageType,
@@ -102,8 +102,8 @@ namespace Lada {
 
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo = {};
         if (m_EnableValidationLayers) {
-            createInfo.enabledLayerCount = static_cast<uint32_t>(s_ValidationLayers.size());
-            createInfo.ppEnabledLayerNames = s_ValidationLayers.data();
+            createInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers.size());
+            createInfo.ppEnabledLayerNames = ValidationLayers.data();
             populateDebugMessengerCreateInfo(debugCreateInfo);
             createInfo.pNext = &debugCreateInfo;
         } else {
@@ -142,7 +142,7 @@ namespace Lada {
         std::vector<VkLayerProperties> availableLayers(layerCount);
         vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
-        for (const char *layerName: s_ValidationLayers) {
+        for (const char *layerName: ValidationLayers) {
             bool layerFound = false;
             for (const auto &layerProperties: availableLayers) {
                 if (strcmp(layerName, layerProperties.layerName) == 0) {

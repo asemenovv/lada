@@ -2,6 +2,7 @@
 #define VK_USE_PLATFORM_MACOS_MVK
 
 #include <vulkan/vulkan.h>
+#include <vector>
 
 namespace Lada {
     class VulkanInstance {
@@ -10,8 +11,9 @@ namespace Lada {
 
         ~VulkanInstance();
 
-        [[nodiscard]] VkInstance VulkanNativeInstance() const { return m_Instance; }
+        [[nodiscard]] VkInstance NativeInstance() const { return m_Instance; }
 
+        static const std::vector<const char *> ValidationLayers;
     private:
         void createInstance();
 
@@ -24,6 +26,5 @@ namespace Lada {
         VkInstance m_Instance;
         VkDebugUtilsMessengerEXT m_DebugMessenger;
         bool m_EnableValidationLayers;
-        static const std::vector<const char *> s_ValidationLayers;
     };
 }

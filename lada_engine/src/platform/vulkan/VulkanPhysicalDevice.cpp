@@ -9,9 +9,13 @@ namespace Lada {
         pickPhysicalDevice();
     }
 
+    QueueFamilyIndices VulkanPhysicalDevice::FindQueueFamilies() {
+        return findQueueFamilies(m_PhysicalDevice);
+    }
+
     void VulkanPhysicalDevice::pickPhysicalDevice() {
         uint32_t deviceCount = 0;
-        const VkInstance vkInstance = m_Instance->VulkanNativeInstance();
+        const VkInstance vkInstance = m_Instance->NativeInstance();
         vkEnumeratePhysicalDevices(vkInstance, &deviceCount, nullptr);
         if (deviceCount == 0) {
             LD_CORE_CRITICAL("Failed to find GPUs with Vulkan support!");
