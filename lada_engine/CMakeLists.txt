@@ -27,25 +27,25 @@ add_library(lada_engine STATIC
         src/renderer/model/Model.cpp
         src/renderer/Camera.cpp
         src/assets/AssetManager.cpp
-        src/renderer/GraphicsContext.cpp
         src/platform/opengl/OpenGLContext.cpp
         src/app/Window.cpp
-        src/app/Window.h
         src/app/ecs/EntityManager.cpp
         src/app/ecs/ComponentArray.cpp
         src/app/ecs/ComponentManager.cpp
         src/app/ecs/SystemManager.cpp
         src/app/ecs/EcsCoordinator.cpp
-        src/platform/vulkan/VulkanInstance.cpp
-        src/platform/vulkan/VulkanInstance.h
-        src/platform/vulkan/VulkanPhysicalDevice.cpp
-        src/platform/vulkan/VulkanPhysicalDevice.h
-        src/platform/vulkan/VulkanContext.cpp
-        src/platform/vulkan/VulkanContext.h
-        src/platform/vulkan/VulkanDevice.cpp
-        src/platform/vulkan/VulkanDevice.h
-        src/platform/vulkan/VulkanSurface.cpp
-        src/platform/vulkan/VulkanSurface.h
+        src/platform/vulkan/device/VulkanInstance.cpp
+        src/platform/vulkan/device/VulkanPhysicalDevice.cpp
+        src/platform/vulkan/VulkanGraphicsContext.cpp
+        src/platform/vulkan/device/VulkanDevice.cpp
+        src/platform/vulkan/device/VulkanSurface.cpp
+        src/platform/vulkan/VulkanSwapChain.cpp
+        src/platform/vulkan/VulkanSwapChain.h
+        src/renderer/SwapChain.cpp
+        src/renderer/SwapChain.h
+        src/platform/opengl/OpenGLSwapChain.cpp
+        src/platform/opengl/OpenGLSwapChain.h
+        src/renderer/GraphicsApiFactory.cpp
 )
 
 target_include_directories(lada_engine
@@ -60,7 +60,7 @@ set_source_files_properties(
         SKIP_PRECOMPILE_HEADERS ON
 )
 
-target_compile_definitions(lada_engine PUBLIC GLFW_INCLUDE_NONE)
+target_compile_definitions(lada_engine PUBLIC GLFW_INCLUDE_NONE IMGUI_IMPL_OPENGL_LOADER_GLAD)
 
 target_link_libraries(lada_engine
         PUBLIC Vulkan::Vulkan

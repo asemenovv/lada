@@ -3,8 +3,6 @@
 #include "app/GlCall.h"
 #include "model/Model.h"
 
-#include <imgui_impl_opengl3_loader.h>
-
 namespace Lada::Render {
     Renderer::Renderer(const std::shared_ptr<Window>& window, const std::shared_ptr<GraphicsContext>& graphicsContext)
     : m_GraphicsContext(graphicsContext), m_Camera(nullptr) {

@@ -1,8 +1,14 @@
 #pragma once
+
 #include "events/EventManager.h"
-#include "renderer/GraphicsContext.h"
+#include "renderer/GraphicsApiFactory.h"
 
 namespace Lada {
+    struct WindowSize {
+        const int width;
+        int height;
+    };
+
     class Window {
     public:
         Window(int width, int height, std::shared_ptr<EventManager> &eventManager);
@@ -15,8 +21,9 @@ namespace Lada {
 
         virtual void Close() const = 0;
 
-        [[nodiscard]] virtual int GetWidth() const { return m_Width; }
+        [[nodiscard]] int GetWidth() const { return m_Width; }
         [[nodiscard]] int GetHeight() const { return m_Height; }
+        [[nodiscard]] virtual WindowSize GetPixelsSize() = 0;
 
         virtual void *GetNativeWindow() = 0;
 

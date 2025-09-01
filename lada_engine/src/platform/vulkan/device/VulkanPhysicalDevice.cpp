@@ -15,6 +15,10 @@ namespace Lada {
         return findQueueFamilies(m_PhysicalDevice);
     }
 
+    SwapChainSupportDetails VulkanPhysicalDevice::QuerySwapChainSupport() const {
+        return querySwapChainSupport(m_PhysicalDevice);
+    }
+
     void VulkanPhysicalDevice::pickPhysicalDevice() {
         uint32_t deviceCount = 0;
         const VkInstance vkInstance = m_Instance->NativeInstance();
@@ -47,17 +51,19 @@ namespace Lada {
     bool VulkanPhysicalDevice::isDeviceSuitable(const VkPhysicalDevice device) const {
         const QueueFamilyIndices indices = findQueueFamilies(device);
 
-        bool extensionsSupported = VulkanExtensionsManager::CheckDeviceExtensionSupport(device);
+        const bool extensionsSupported = VulkanExtensionsManager::CheckDeviceExtensionSupport(device);
 
-        // bool swapChainAdequate = false;
-        // SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
-        // swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+        bool swapChainAdequate = false;
+        if (extensionsSupported) {
+            const SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+            swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
+        }
 
         // VkPhysicalDeviceFeatures supportedFeatures;
         // vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
 
-        return indices.isComplete() && extensionsSupported
-        // && swapChainAdequate && supportedFeatures.samplerAnisotropy
+        return indices.isComplete() && extensionsSupported && swapChainAdequate
+        // && supportedFeatures.samplerAnisotropy
         ;
     }
 
@@ -86,5 +92,26 @@ namespace Lada {
             i++;
         }
         return indices;
+    }
+
+    SwapChainSupportDetails VulkanPhysicalDevice::querySwapChainSupport(const VkPhysicalDevice device) const {
+        SwapChainSupportDetails details;
+        auto surface = m_Surface->NativeSurface();
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
+
+        uint32_t formatCount;
+        vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, nullptr);
+        if (formatCount != 0) {
+            details.formats.resize(formatCount);
+            vkGetPhysicalDeviceSurfaceFormatsKHR(device, surface, &formatCount, details.formats.data());
+        }
+
+        uint32_t presentModeCount;
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, nullptr);
+        if (presentModeCount != 0) {
+            details.presentModes.resize(presentModeCount);
+            vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface, &presentModeCount, details.presentModes.data());
+        }
+        return details;
     }
 }

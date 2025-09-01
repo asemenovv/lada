@@ -57,6 +57,12 @@ namespace Lada {
         glfwTerminate();
     }
 
+    WindowSize GlfwWindow::GetPixelsSize() {
+        int width, height;
+        glfwGetFramebufferSize(m_Window, &width, &height);
+        return WindowSize(width, height);
+    }
+
     void GlfwWindow::SubscribeToEvents() {
         glfwSetWindowUserPointer(m_Window, this);
         glfwSetWindowCloseCallback(m_Window, WindowCloseCallback);

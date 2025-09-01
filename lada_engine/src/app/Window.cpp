@@ -8,7 +8,7 @@ namespace Lada {
     }
 
     std::shared_ptr<Window> Window::Create(std::string title, int width, int height,
-        std::shared_ptr<EventManager> &eventManager, const GraphicAPI api) {
+                                           std::shared_ptr<EventManager> &eventManager, const GraphicAPI api) {
         switch (api) {
             case GraphicAPI::OPENGL:
                 return std::make_shared<GlfwWindow>(GraphicAPI::OPENGL, title, width, height, eventManager);

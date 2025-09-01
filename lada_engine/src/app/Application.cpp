@@ -4,12 +4,13 @@
 #include "renderer/Renderer.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
+#include "renderer/GraphicsApiFactory.h"
 
 namespace Lada::App {
     Application* Application::s_Instance = nullptr;
 
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
-        constexpr auto graphicApi = GraphicAPI::VULKAN;
+        const GraphicsApiFactory apiFactory(GraphicAPI::VULKAN);
         m_LayerContext = new LayerContext();
         m_LayerStack = new LayerStack(m_LayerContext);
         if (s_Instance != nullptr) {
@@ -18,12 +19,12 @@ namespace Lada::App {
         }
         s_Instance = this;
         m_EventManager = std::make_shared<EventManager>();
-        m_Window = Window::Create(title, width, height, m_EventManager, graphicApi);
-        m_GraphicsContext = GraphicsContext::Create(m_Window, graphicApi);
+        m_Window = Window::Create(title, width, height, m_EventManager, GraphicAPI::VULKAN);
+        m_GraphicsContext = apiFactory.CreateContext(m_Window);
         m_GraphicsContext->Init();
         m_Renderer = std::make_shared<Render::Renderer>(m_Window, m_GraphicsContext);
 
-        if (graphicApi ==  GraphicAPI::VULKAN) {
+        if (apiFactory.GetAPI() ==  GraphicAPI::VULKAN) {
             std::exit(0);
         }
 

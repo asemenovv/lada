@@ -22,6 +22,8 @@ namespace Lada {
         void Close() const override;
 
         void* GetNativeWindow() override { return m_Window; }
+
+        [[nodiscard]] WindowSize GetPixelsSize() override;
     private:
         GLFWwindow* m_Window;
 

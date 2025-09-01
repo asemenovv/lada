@@ -5,7 +5,7 @@
 #include "app/Logger.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "platform/vulkan/VulkanInstance.h"
+#include "../vulkan/device/VulkanInstance.h"
 
 namespace Lada {
     OpenGLContext::OpenGLContext(const std::shared_ptr<Window>& window): m_Window(window) {
