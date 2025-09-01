@@ -19,7 +19,7 @@ namespace Lada::App {
         s_Instance = this;
         m_EventManager = std::make_shared<EventManager>();
         m_Window = Window::Create(title, width, height, m_EventManager, graphicApi);
-        m_GraphicsContext = GraphicsContext::Create(m_Window->GetNativeWindow(), graphicApi);
+        m_GraphicsContext = GraphicsContext::Create(m_Window, graphicApi);
         m_GraphicsContext->Init();
         m_Renderer = std::make_shared<Render::Renderer>(m_Window, m_GraphicsContext);
 

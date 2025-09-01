@@ -1,15 +1,17 @@
 #include "VulkanPhysicalDevice.h"
 
 #include "VulkanExtensionsManager.h"
+#include "VulkanSurface.h"
 #include "app/Logger.h"
 
 namespace Lada {
-    VulkanPhysicalDevice::VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance)
-        : m_Instance(instance) {
+    VulkanPhysicalDevice::VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance,
+        const std::shared_ptr<VulkanSurface> &surface)
+        : m_Instance(instance), m_Surface(surface) {
         pickPhysicalDevice();
     }
 
-    QueueFamilyIndices VulkanPhysicalDevice::FindQueueFamilies() {
+    QueueFamilyIndices VulkanPhysicalDevice::FindQueueFamilies() const {
         return findQueueFamilies(m_PhysicalDevice);
     }
 
@@ -42,10 +44,10 @@ namespace Lada {
         // LD_CORE_INFO("Physical device: {0}", m_Properties.deviceName);
     }
 
-    bool VulkanPhysicalDevice::isDeviceSuitable(VkPhysicalDevice device) {
+    bool VulkanPhysicalDevice::isDeviceSuitable(const VkPhysicalDevice device) const {
         const QueueFamilyIndices indices = findQueueFamilies(device);
 
-        VulkanExtensionsManager::CheckDeviceExtensionSupport(device);
+        bool extensionsSupported = VulkanExtensionsManager::CheckDeviceExtensionSupport(device);
 
         // bool swapChainAdequate = false;
         // SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
@@ -54,12 +56,12 @@ namespace Lada {
         // VkPhysicalDeviceFeatures supportedFeatures;
         // vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
 
-        return indices.isComplete()
+        return indices.isComplete() && extensionsSupported
         // && swapChainAdequate && supportedFeatures.samplerAnisotropy
         ;
     }
 
-    QueueFamilyIndices VulkanPhysicalDevice::findQueueFamilies(const VkPhysicalDevice device) {
+    QueueFamilyIndices VulkanPhysicalDevice::findQueueFamilies(const VkPhysicalDevice device) const {
         QueueFamilyIndices indices;
 
         uint32_t queueFamilyCount = 0;
@@ -72,6 +74,11 @@ namespace Lada {
         for (const auto& queueFamily : queueFamilies) {
             if (queueFamily.queueCount > 0 && queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
                 indices.graphicsFamily = i;
+            }
+            VkBool32 presentSupport = false;
+            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_Surface->NativeSurface(), &presentSupport);
+            if (queueFamily.queueCount > 0 && presentSupport) {
+                indices.presentFamily = i;
             }
             if (indices.isComplete()) {
                 break;

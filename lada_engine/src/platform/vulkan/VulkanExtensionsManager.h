@@ -22,10 +22,10 @@ namespace Lada {
         static VulkanExtensions DeviceExtensions();
         static VulkanExtensions InstanceExtensions(bool enableValidationLayers);
 
-        static void CheckInstanceExtensionsSupport(bool enableValidationLayers);
-        static void CheckDeviceExtensionSupport(VkPhysicalDevice device);
+        static bool CheckInstanceExtensionsSupport(bool enableValidationLayers);
+        static bool CheckDeviceExtensionSupport(VkPhysicalDevice device);
     private:
-        static void checkIfAvailable(std::string type, VulkanExtensions requiredExtensions,
+        static bool checkIfAvailable(std::string type, VulkanExtensions requiredExtensions,
                                      std::vector<VkExtensionProperties> supportedExtensions);
     };
 
@@ -69,26 +69,26 @@ namespace Lada {
         return result;
     }
 
-    inline void VulkanExtensionsManager::CheckInstanceExtensionsSupport(bool enableValidationLayers) {
+    inline bool VulkanExtensionsManager::CheckInstanceExtensionsSupport(bool enableValidationLayers) {
         uint32_t extensionCount = 0;
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
         std::vector<VkExtensionProperties> availableExtensions(extensionCount);
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, availableExtensions.data());
         VulkanExtensions requiredExtensions = InstanceExtensions(enableValidationLayers);
-        checkIfAvailable("INSTANCE", requiredExtensions, availableExtensions);
+        return checkIfAvailable("INSTANCE", requiredExtensions, availableExtensions);
     }
 
-    inline void VulkanExtensionsManager::CheckDeviceExtensionSupport(VkPhysicalDevice device) {
+    inline bool VulkanExtensionsManager::CheckDeviceExtensionSupport(VkPhysicalDevice device) {
         uint32_t extensionCount;
         vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
         std::vector<VkExtensionProperties> availableExtensions(extensionCount);
         vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
         VulkanExtensions requiredExtensions = DeviceExtensions();
-        checkIfAvailable("DEVICE", requiredExtensions, availableExtensions);
+        return checkIfAvailable("DEVICE", requiredExtensions, availableExtensions);
     }
 
-    inline void VulkanExtensionsManager::checkIfAvailable(std::string type, VulkanExtensions requiredExtensions,
+    inline bool VulkanExtensionsManager::checkIfAvailable(std::string type, VulkanExtensions requiredExtensions,
         std::vector<VkExtensionProperties> supportedExtensions) {
         std::ostringstream availableMsg;
         availableMsg << "Available '" << type <<"' extensions:" << std::endl;
@@ -105,9 +105,10 @@ namespace Lada {
             requiredMsg << "\t" << required << std::endl;
             if (!available.contains(required)) {
                 LD_CORE_DEBUG(requiredMsg.str());
-                throw std::runtime_error("Missing required instance extension: " + requiredMsg.str());
+                return false;
             }
         }
         LD_CORE_DEBUG(requiredMsg.str());
+        return true;
     }
 }

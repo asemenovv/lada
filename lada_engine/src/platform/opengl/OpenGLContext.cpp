@@ -8,13 +8,13 @@
 #include "platform/vulkan/VulkanInstance.h"
 
 namespace Lada {
-    OpenGLContext::OpenGLContext(GLFWwindow *window): m_WindowHandle(window) {
+    OpenGLContext::OpenGLContext(const std::shared_ptr<Window>& window): m_Window(window) {
         // const auto instance = new VulkanInstance(true);
         // delete instance;
     }
 
     void OpenGLContext::Init() {
-        glfwMakeContextCurrent(m_WindowHandle);
+        glfwMakeContextCurrent(static_cast<GLFWwindow *>(m_Window->GetNativeWindow()));
         if (const int status = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)); !status) {
             LD_CORE_CRITICAL("Failed to initialize Glad!");
         }
@@ -37,6 +37,6 @@ namespace Lada {
     }
 
     void OpenGLContext::SwapBuffers() {
-        glfwSwapBuffers(m_WindowHandle);
+        glfwSwapBuffers(static_cast<GLFWwindow *>(m_Window->GetNativeWindow()));
     }
 }

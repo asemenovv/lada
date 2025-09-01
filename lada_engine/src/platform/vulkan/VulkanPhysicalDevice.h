@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "VulkanInstance.h"
+#include "VulkanSurface.h"
 
 
 namespace Lada {
@@ -12,25 +13,25 @@ namespace Lada {
         std::optional<uint32_t> presentFamily;
 
         [[nodiscard]] bool isComplete() const {
-            return graphicsFamily.has_value()
-            // && presentFamily.has_value()
-            ;
+            return graphicsFamily.has_value() && presentFamily.has_value();
         }
     };
 
     class VulkanPhysicalDevice {
     public:
-        explicit VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance);
+        explicit VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance,
+            const std::shared_ptr<VulkanSurface> &surface);
 
         [[nodiscard]] VkPhysicalDevice NativePhysicalDevice() const { return m_PhysicalDevice; }
 
-        QueueFamilyIndices FindQueueFamilies();
+        QueueFamilyIndices FindQueueFamilies() const;
     private:
         void pickPhysicalDevice();
-        bool isDeviceSuitable(VkPhysicalDevice device);
-        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+        bool isDeviceSuitable(VkPhysicalDevice device) const;
+        QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device) const;
 
         VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
         std::shared_ptr<VulkanInstance> m_Instance;
+        std::shared_ptr<VulkanSurface> m_Surface;
     };
 }

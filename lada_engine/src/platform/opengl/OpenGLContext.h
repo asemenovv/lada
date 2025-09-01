@@ -1,17 +1,16 @@
 #pragma once
+#include "app/Window.h"
 #include "renderer/GraphicsContext.h"
-
-struct GLFWwindow;
 
 namespace Lada {
     class OpenGLContext final : public GraphicsContext {
     public:
-        explicit OpenGLContext(GLFWwindow *window);
+        explicit OpenGLContext(const std::shared_ptr<Window>& window);
         ~OpenGLContext() override = default;
 
         void Init() override;
         void SwapBuffers() override;
     private:
-        GLFWwindow* m_WindowHandle;
+        std::shared_ptr<Window> m_Window;
     };
 }

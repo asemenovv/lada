@@ -7,12 +7,18 @@ namespace Lada {
                                bool enableValidationLayers) : m_Device(nullptr) {
         const QueueFamilyIndices indices = physicalDevice->FindQueueFamilies();
 
+        std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+        std::set uniqueQueueFamilies = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+
         float queuePriority = 1.0f;
-        VkDeviceQueueCreateInfo queueCreateInfo = {};
-        queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-        queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
-        queueCreateInfo.queueCount = 1;
-        queueCreateInfo.pQueuePriorities = &queuePriority;
+        for (uint32_t queueFamily : uniqueQueueFamilies) {
+            VkDeviceQueueCreateInfo queueCreateInfo = {};
+            queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+            queueCreateInfo.queueFamilyIndex = queueFamily;
+            queueCreateInfo.queueCount = 1;
+            queueCreateInfo.pQueuePriorities = &queuePriority;
+            queueCreateInfos.push_back(queueCreateInfo);
+        }
 
         VkPhysicalDeviceFeatures deviceFeatures = {};
 
@@ -21,8 +27,8 @@ namespace Lada {
         createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
         createInfo.enabledExtensionCount = deviceExtensions.c_strings.size();
         createInfo.ppEnabledExtensionNames = deviceExtensions.c_strings.data();
-        createInfo.pQueueCreateInfos = &queueCreateInfo;
-        createInfo.queueCreateInfoCount = 1;
+        createInfo.pQueueCreateInfos = queueCreateInfos.data();
+        createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
         createInfo.pEnabledFeatures = &deviceFeatures;
 
         if (enableValidationLayers) {
@@ -37,6 +43,7 @@ namespace Lada {
                              "Failed to create logical device!");
 
         vkGetDeviceQueue(m_Device, indices.graphicsFamily.value(), 0, &m_GraphicsQueue);
+        vkGetDeviceQueue(m_Device, indices.presentFamily.value(), 0, &m_PresentQueue);
     }
 
     VulkanDevice::~VulkanDevice() {
