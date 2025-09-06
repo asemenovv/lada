@@ -19,7 +19,6 @@
 #include "renderer/buffers/IndexBuffer.h"
 #include "renderer/Mesh.h"
 #include "app/GlCall.h"
-#include "renderer/material/Shader.h"
 #include "renderer/buffers/VertexArray.h"
 #include "renderer/Renderer.h"
 #include "renderer/model/Model.h"

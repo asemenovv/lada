@@ -9,7 +9,7 @@
 #include "GLFW/glfw3.h"
 
 namespace Lada {
-    VulkanSwapChain::VulkanSwapChain(VulkanGraphicsContext *graphicalContext, const VkExtent2D windowExtent)
+    VulkanSwapChain::VulkanSwapChain(const std::shared_ptr<VulkanGraphicsContext>& graphicalContext, const VkExtent2D windowExtent)
         : m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext) {
         const std::shared_ptr<VulkanPhysicalDevice> physicalDevice = graphicalContext->GetPhysicalDevice();
         const std::shared_ptr<VulkanSurface> surface = graphicalContext->GetSurface();
@@ -55,6 +55,16 @@ namespace Lada {
 
         LD_VK_ASSERT_SUCCESS(vkCreateSwapchainKHR(device->NativeDevice(), &createInfo, nullptr, &m_SwapChain),
             "Failed to create swap chain!");
+
+        vkGetSwapchainImagesKHR(device->NativeDevice(), m_SwapChain, &imageCount, nullptr);
+        std::vector<VkImage> swapChainImages = {};
+        swapChainImages.resize(imageCount);
+        m_SwapChainImages.resize(imageCount);
+        vkGetSwapchainImagesKHR(device->NativeDevice(), m_SwapChain, &imageCount, swapChainImages.data());
+        for (size_t i = 0; i < swapChainImages.size(); i++) {
+            m_SwapChainImages[i] = VulkanImage(m_GraphicsContext, swapChainImages[i], surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT);
+        }
+        m_SwapChainExtent = extent;
     }
 
     VulkanSwapChain::~VulkanSwapChain() {

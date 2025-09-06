@@ -3,6 +3,11 @@ project(lada_engine)
 
 set(CMAKE_CXX_STANDARD 20)
 
+add_custom_target(build_shaders
+        COMMAND ./compile.sh
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 find_package(Vulkan REQUIRED)
 
 add_library(lada_engine STATIC
@@ -40,12 +45,11 @@ add_library(lada_engine STATIC
         src/platform/vulkan/device/VulkanDevice.cpp
         src/platform/vulkan/device/VulkanSurface.cpp
         src/platform/vulkan/VulkanSwapChain.cpp
-        src/platform/vulkan/VulkanSwapChain.h
         src/renderer/SwapChain.cpp
-        src/renderer/SwapChain.h
         src/platform/opengl/OpenGLSwapChain.cpp
-        src/platform/opengl/OpenGLSwapChain.h
         src/renderer/GraphicsApiFactory.cpp
+        src/platform/vulkan/buffers/VulkanImage.cpp
+        src/platform/vulkan/pipeline/VulkanShader.cpp
 )
 
 target_include_directories(lada_engine
@@ -73,3 +77,4 @@ target_link_libraries(lada_engine
         PUBLIC assimp
         PUBLIC yaml-cpp
 )
+add_dependencies(lada_engine build_shaders)

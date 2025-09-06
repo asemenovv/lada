@@ -3,3 +3,4 @@ cmake-build-lada_engine/
 cmake-build-sandbox/
 .idea/
 imgui.ini
+*.spv

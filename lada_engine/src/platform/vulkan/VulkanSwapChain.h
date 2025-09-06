@@ -1,8 +1,8 @@
 #pragma once
 
-#include <vulkan/vulkan.h>
 #include <vector>
 
+#include "buffers/VulkanImage.h"
 #include "renderer/SwapChain.h"
 
 namespace Lada {
@@ -10,7 +10,7 @@ namespace Lada {
 
     class VulkanSwapChain : public SwapChain {
     public:
-        VulkanSwapChain(VulkanGraphicsContext* graphicalContext, VkExtent2D windowExtent);
+        VulkanSwapChain(const std::shared_ptr<VulkanGraphicsContext>& graphicalContext, VkExtent2D windowExtent);
         ~VulkanSwapChain();
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
@@ -23,6 +23,9 @@ namespace Lada {
 
         VkSwapchainKHR m_SwapChain;
         VkExtent2D m_WindowExtent;
-        VulkanGraphicsContext* m_GraphicsContext;
+        std::shared_ptr<VulkanGraphicsContext> m_GraphicsContext;
+
+        std::vector<VulkanImage> m_SwapChainImages;
+        VkExtent2D m_SwapChainExtent;
     };
 }

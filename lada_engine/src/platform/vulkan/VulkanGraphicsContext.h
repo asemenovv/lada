@@ -11,7 +11,8 @@ struct GLFWwindow;
 namespace Lada {
     class VulkanSwapChain;
 
-    class VulkanGraphicsContext final : public GraphicsContext {
+    class VulkanGraphicsContext final : public GraphicsContext,
+                                        public std::enable_shared_from_this<VulkanGraphicsContext> {
     public:
         explicit VulkanGraphicsContext(const std::shared_ptr<Window>& window);
         ~VulkanGraphicsContext() override = default;
