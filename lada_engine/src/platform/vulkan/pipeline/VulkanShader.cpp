@@ -16,7 +16,7 @@ namespace Lada {
         createInfo.codeSize = code.size();
         createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
 
-        LD_VK_ASSERT_SUCCESS(vkCreateShaderModule(m_GraphicsContext->GetDevice()->NativeDevice(),
+        LD_VK_ASSERT_SUCCESS(vkCreateShaderModule(m_GraphicsContext->GetDevice().NativeDevice(),
                                  &createInfo, nullptr, &m_ShaderModule), "Could not create shader module!");
     }
 

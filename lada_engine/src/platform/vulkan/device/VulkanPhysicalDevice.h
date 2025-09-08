@@ -25,8 +25,7 @@ namespace Lada {
 
     class VulkanPhysicalDevice {
     public:
-        explicit VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance,
-            const std::shared_ptr<VulkanSurface> &surface);
+        explicit VulkanPhysicalDevice(const VulkanInstance& instance, const VulkanSurface& surface);
 
         [[nodiscard]] VkPhysicalDevice NativePhysicalDevice() const { return m_PhysicalDevice; }
 
@@ -40,7 +39,7 @@ namespace Lada {
         SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device) const;
 
         VkPhysicalDevice m_PhysicalDevice = VK_NULL_HANDLE;
-        std::shared_ptr<VulkanInstance> m_Instance;
-        std::shared_ptr<VulkanSurface> m_Surface;
+        const VulkanInstance& m_Instance;
+        const VulkanSurface& m_Surface;
     };
 }

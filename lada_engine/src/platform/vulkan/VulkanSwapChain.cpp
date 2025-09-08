@@ -9,12 +9,12 @@
 #include "GLFW/glfw3.h"
 
 namespace Lada {
-    VulkanSwapChain::VulkanSwapChain(const std::shared_ptr<VulkanGraphicsContext>& graphicalContext, const VkExtent2D windowExtent)
-        : m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext) {
-        const std::shared_ptr<VulkanPhysicalDevice> physicalDevice = graphicalContext->GetPhysicalDevice();
-        const std::shared_ptr<VulkanSurface> surface = graphicalContext->GetSurface();
-        const std::shared_ptr<VulkanDevice> device = graphicalContext->GetDevice();
-        const SwapChainSupportDetails swapChainSupport = physicalDevice->QuerySwapChainSupport();
+    VulkanSwapChain::VulkanSwapChain(VulkanGraphicsContext* graphicalContext, const VkExtent2D windowExtent)
+        : m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext), m_SwapChain(VK_NULL_HANDLE), m_SwapChainExtent({}) {
+        const VulkanPhysicalDevice& physicalDevice = graphicalContext->GetPhysicalDevice();
+        const VulkanSurface& surface = graphicalContext->GetSurface();
+        const VulkanDevice& device = graphicalContext->GetDevice();
+        const SwapChainSupportDetails swapChainSupport = physicalDevice.QuerySwapChainSupport();
 
         const VkSurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
         VkPresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
@@ -27,7 +27,7 @@ namespace Lada {
 
         VkSwapchainCreateInfoKHR createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
-        createInfo.surface = surface->NativeSurface();
+        createInfo.surface = surface.NativeSurface();
         createInfo.minImageCount = imageCount;
         createInfo.imageFormat = surfaceFormat.format;
         createInfo.imageColorSpace = surfaceFormat.colorSpace;
@@ -35,7 +35,7 @@ namespace Lada {
         createInfo.imageArrayLayers = 1;
         createInfo.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
 
-        const auto [graphicsFamily, presentFamily] = physicalDevice->FindQueueFamilies();
+        const auto [graphicsFamily, presentFamily] = physicalDevice.FindQueueFamilies();
         const uint32_t queueFamilyIndices[] = {graphicsFamily.value(), presentFamily.value()};
         if (graphicsFamily != presentFamily) {
             createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
@@ -53,23 +53,25 @@ namespace Lada {
         createInfo.clipped = VK_TRUE;
         createInfo.oldSwapchain = VK_NULL_HANDLE;
 
-        LD_VK_ASSERT_SUCCESS(vkCreateSwapchainKHR(device->NativeDevice(), &createInfo, nullptr, &m_SwapChain),
+        LD_VK_ASSERT_SUCCESS(vkCreateSwapchainKHR(device.NativeDevice(), &createInfo, nullptr, &m_SwapChain),
             "Failed to create swap chain!");
+        m_GraphicsContext->SetDebugName(reinterpret_cast<uint64_t>(m_SwapChain), VK_OBJECT_TYPE_SWAPCHAIN_KHR, "SwapChain");
 
-        vkGetSwapchainImagesKHR(device->NativeDevice(), m_SwapChain, &imageCount, nullptr);
+        vkGetSwapchainImagesKHR(device.NativeDevice(), m_SwapChain, &imageCount, nullptr);
         std::vector<VkImage> swapChainImages = {};
         swapChainImages.resize(imageCount);
         m_SwapChainImages.resize(imageCount);
-        vkGetSwapchainImagesKHR(device->NativeDevice(), m_SwapChain, &imageCount, swapChainImages.data());
+        vkGetSwapchainImagesKHR(device.NativeDevice(), m_SwapChain, &imageCount, swapChainImages.data());
         for (size_t i = 0; i < swapChainImages.size(); i++) {
-            m_SwapChainImages[i] = VulkanImage(m_GraphicsContext, swapChainImages[i], surfaceFormat.format, VK_IMAGE_ASPECT_COLOR_BIT);
+            m_SwapChainImages[i] = VulkanImage(m_GraphicsContext, swapChainImages[i], surfaceFormat.format,
+                VK_IMAGE_ASPECT_COLOR_BIT, "SwapChainImages[" + std::to_string(i) + "]");
         }
         m_SwapChainExtent = extent;
     }
 
     VulkanSwapChain::~VulkanSwapChain() {
-        const std::shared_ptr<VulkanDevice> device = m_GraphicsContext->GetDevice();
-        vkDestroySwapchainKHR(device->NativeDevice(), m_SwapChain, nullptr);
+        const VulkanDevice& device = m_GraphicsContext->GetDevice();
+        vkDestroySwapchainKHR(device.NativeDevice(), m_SwapChain, nullptr);
     }
 
     VkSurfaceFormatKHR VulkanSwapChain::chooseSwapSurfaceFormat(

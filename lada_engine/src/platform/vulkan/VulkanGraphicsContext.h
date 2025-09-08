@@ -15,20 +15,22 @@ namespace Lada {
                                         public std::enable_shared_from_this<VulkanGraphicsContext> {
     public:
         explicit VulkanGraphicsContext(const std::shared_ptr<Window>& window);
-        ~VulkanGraphicsContext() override = default;
+        ~VulkanGraphicsContext() override;
 
         void Init() override;
         void SwapBuffers() override;
 
-        std::shared_ptr<VulkanPhysicalDevice> GetPhysicalDevice() const { return m_PhysicalDevice; }
-        std::shared_ptr<VulkanSurface> GetSurface() const { return m_Surface; }
-        std::shared_ptr<VulkanDevice> GetDevice() const { return m_Device; }
+        void SetDebugName(const uint64_t handle, const VkObjectType type, const char *name);
+
+        VulkanPhysicalDevice& GetPhysicalDevice() const { return *m_PhysicalDevice; }
+        VulkanSurface& GetSurface() const { return *m_Surface; }
+        VulkanDevice& GetDevice() const { return *m_Device; }
     private:
+        std::unique_ptr<VulkanInstance> m_VulkanInstance;
+        std::unique_ptr<VulkanSurface> m_Surface;
+        std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
+        std::unique_ptr<VulkanDevice> m_Device;
+        std::unique_ptr<VulkanSwapChain> m_SwapChain;
         std::shared_ptr<Window> m_Window;
-        std::shared_ptr<VulkanInstance> m_VulkanInstance;
-        std::shared_ptr<VulkanSurface> m_Surface;
-        std::shared_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
-        std::shared_ptr<VulkanDevice> m_Device;
-        std::shared_ptr<VulkanSwapChain> m_SwapChain;
     };
 }

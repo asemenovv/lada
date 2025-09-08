@@ -5,8 +5,7 @@
 #include "app/Logger.h"
 
 namespace Lada {
-    VulkanPhysicalDevice::VulkanPhysicalDevice(const std::shared_ptr<VulkanInstance> &instance,
-        const std::shared_ptr<VulkanSurface> &surface)
+    VulkanPhysicalDevice::VulkanPhysicalDevice(const VulkanInstance& instance, const VulkanSurface& surface)
         : m_Instance(instance), m_Surface(surface) {
         pickPhysicalDevice();
     }
@@ -21,7 +20,7 @@ namespace Lada {
 
     void VulkanPhysicalDevice::pickPhysicalDevice() {
         uint32_t deviceCount = 0;
-        const VkInstance vkInstance = m_Instance->NativeInstance();
+        const VkInstance vkInstance = m_Instance.NativeInstance();
         vkEnumeratePhysicalDevices(vkInstance, &deviceCount, nullptr);
         if (deviceCount == 0) {
             LD_CORE_CRITICAL("Failed to find GPUs with Vulkan support!");
@@ -82,7 +81,7 @@ namespace Lada {
                 indices.graphicsFamily = i;
             }
             VkBool32 presentSupport = false;
-            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_Surface->NativeSurface(), &presentSupport);
+            vkGetPhysicalDeviceSurfaceSupportKHR(device, i, m_Surface.NativeSurface(), &presentSupport);
             if (queueFamily.queueCount > 0 && presentSupport) {
                 indices.presentFamily = i;
             }
@@ -96,7 +95,7 @@ namespace Lada {
 
     SwapChainSupportDetails VulkanPhysicalDevice::querySwapChainSupport(const VkPhysicalDevice device) const {
         SwapChainSupportDetails details;
-        auto surface = m_Surface->NativeSurface();
+        const auto surface = m_Surface.NativeSurface();
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, &details.capabilities);
 
         uint32_t formatCount;

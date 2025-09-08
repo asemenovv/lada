@@ -11,8 +11,8 @@ namespace Lada {
               // m_ImageView(VK_NULL_HANDLE)
         {}
 
-        VulkanImage(const std::shared_ptr<VulkanGraphicsContext> &graphicsContext, VkImage image,
-            VkFormat format, const VkImageAspectFlags aspectFlags);
+        VulkanImage(VulkanGraphicsContext* graphicsContext, VkImage image,
+            VkFormat format, const VkImageAspectFlags aspectFlags, const std::string& name);
 
         ~VulkanImage();
 
@@ -27,12 +27,12 @@ namespace Lada {
     private:
         void reset();
 
-        void createImageView(VkFormat format, VkImageAspectFlags aspectFlags);
+        void createImageView(VkFormat format, VkImageAspectFlags aspectFlags, const std::string& name);
 
         VkImage m_Image;
         VkImageView m_ImageView;
         VkFormat m_Format;
-        std::shared_ptr<VulkanGraphicsContext> m_GraphicsContext;
+        VulkanGraphicsContext* m_GraphicsContext;
         bool m_ResetImage = true;
     };
 }

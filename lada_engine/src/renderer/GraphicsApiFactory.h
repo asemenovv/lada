@@ -15,7 +15,7 @@ namespace Lada {
         explicit GraphicsApiFactory(const GraphicAPI graphicAPI) : m_GraphicAPI(graphicAPI) {
         }
 
-        [[nodiscard]] std::shared_ptr<GraphicsContext> CreateContext(const std::shared_ptr<Window> &window) const;
+        [[nodiscard]] std::unique_ptr<GraphicsContext> CreateContext(const std::shared_ptr<Window> &window) const;
 
         [[nodiscard]] GraphicAPI GetAPI() const { return m_GraphicAPI; }
 

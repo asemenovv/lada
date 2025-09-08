@@ -3,12 +3,13 @@
 #include "app/Logger.h"
 
 namespace Lada {
-    VulkanImage::VulkanImage(const std::shared_ptr<VulkanGraphicsContext> &graphicsContext, const VkImage image,
-        const VkFormat format, const VkImageAspectFlags aspectFlags)
+    VulkanImage::VulkanImage(VulkanGraphicsContext* graphicsContext, const VkImage image,
+        const VkFormat format, const VkImageAspectFlags aspectFlags, const std::string& name)
         : m_Image(image), m_Format(format), m_GraphicsContext(graphicsContext) {
+        m_GraphicsContext->SetDebugName(reinterpret_cast<uint64_t>(image), VK_OBJECT_TYPE_IMAGE, name.c_str());
         m_Image = image;
         m_ResetImage = false;
-        createImageView(m_Format, aspectFlags);
+        createImageView(m_Format, aspectFlags, name);
     }
 
     VulkanImage::~VulkanImage() {
@@ -17,6 +18,7 @@ namespace Lada {
 
     VulkanImage::VulkanImage(VulkanImage &&other) noexcept {
         *this = std::move(other);
+        m_GraphicsContext = other.m_GraphicsContext;
     }
 
     VulkanImage &VulkanImage::operator=(VulkanImage &&other) noexcept {
@@ -40,7 +42,7 @@ namespace Lada {
 
     void VulkanImage::reset() {
         if (m_GraphicsContext) {
-            const auto device = m_GraphicsContext->GetDevice()->NativeDevice();
+            const auto device = m_GraphicsContext->GetDevice().NativeDevice();
             if (m_ImageView) {
                 vkDestroyImageView(device, m_ImageView, nullptr);
                 m_ImageView = VK_NULL_HANDLE;
@@ -60,8 +62,8 @@ namespace Lada {
         }
     }
 
-    void VulkanImage::createImageView(const VkFormat format, const VkImageAspectFlags aspectFlags) {
-        const auto device = m_GraphicsContext->GetDevice()->NativeDevice();
+    void VulkanImage::createImageView(const VkFormat format, const VkImageAspectFlags aspectFlags, const std::string& name) {
+        const auto device = m_GraphicsContext->GetDevice().NativeDevice();
         VkImageViewCreateInfo viewInfo{};
         viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
         viewInfo.image = m_Image;
@@ -78,5 +80,6 @@ namespace Lada {
         viewInfo.subresourceRange.layerCount = 1;
         LD_VK_ASSERT_SUCCESS(vkCreateImageView(device, &viewInfo, nullptr, &m_ImageView),
             "Failed to create texture image view!");
+        m_GraphicsContext->SetDebugName(reinterpret_cast<uint64_t>(m_ImageView), VK_OBJECT_TYPE_IMAGE_VIEW, (name + "->ImageView").c_str());
     }
 }
