@@ -12,7 +12,7 @@ namespace Lada::Render {
 
     class Renderer {
     public:
-        explicit Renderer(const std::shared_ptr<Window>& window,
+        explicit Renderer(Window& window,
             const std::shared_ptr<GraphicsContext>& graphicsContext);
 
         void Init();

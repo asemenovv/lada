@@ -3,7 +3,7 @@
 #include "VulkanSwapChain.h"
 
 namespace Lada {
-    VulkanGraphicsContext::VulkanGraphicsContext(const std::shared_ptr<Window>& window): m_Window(window) {
+    VulkanGraphicsContext::VulkanGraphicsContext(Window& window): m_Window(window) {
     }
 
     VulkanGraphicsContext::~VulkanGraphicsContext() {
@@ -11,7 +11,7 @@ namespace Lada {
 
     void VulkanGraphicsContext::Init() {
         bool enableValidationLayers = true;
-        const auto [width, height] = m_Window->GetPixelsSize();
+        const auto [width, height] = m_Window.GetPixelsSize();
         auto extent = VkExtent2D(width, height);
         m_VulkanInstance = std::make_unique<VulkanInstance>(enableValidationLayers);
         m_Surface = std::make_unique<VulkanSurface>(*m_VulkanInstance, m_Window);

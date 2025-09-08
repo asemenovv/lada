@@ -17,17 +17,17 @@ namespace Lada::App {
         virtual ~Application();
         void Run();
         void Shutdown();
-        std::shared_ptr<Window> GetWindow() const { return m_Window; }
+        [[nodiscard]] Window& GetWindow() const { return *m_Window; }
         static Application& Get() { return *s_Instance; }
     protected:
         void PushLayer(Layer *layer);
         void PushOverlay(Layer *layer);
         void PopLayer(const Layer *layer);
         void PopOverlay(Layer *layer);
-        std::shared_ptr<EventManager> GetEventManager() const { return m_EventManager; }
+        [[nodiscard]] std::shared_ptr<EventManager> GetEventManager() const { return m_EventManager; }
     private:
         bool m_Running = true;
-        std::shared_ptr<Window> m_Window;
+        std::unique_ptr<Window> m_Window;
         std::shared_ptr<EventManager> m_EventManager;
         std::shared_ptr<GraphicsContext> m_GraphicsContext;
         LayerStack* m_LayerStack;

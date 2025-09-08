@@ -5,12 +5,12 @@
 namespace Lada {
     class OpenGLContext final : public GraphicsContext {
     public:
-        explicit OpenGLContext(const std::shared_ptr<Window>& window);
+        explicit OpenGLContext(Window& window);
         ~OpenGLContext() override = default;
 
         void Init() override;
         void SwapBuffers() override;
     private:
-        std::shared_ptr<Window> m_Window;
+        Window& m_Window;
     };
 }

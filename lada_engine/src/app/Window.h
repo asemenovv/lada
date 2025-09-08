@@ -27,7 +27,7 @@ namespace Lada {
 
         virtual void *GetNativeWindow() = 0;
 
-        static std::shared_ptr<Window> Create(std::string title, int width, int height,
+        static std::unique_ptr<Window> Create(std::string title, int width, int height,
                                               std::shared_ptr<EventManager> &eventManager, GraphicAPI api);
 
     protected:

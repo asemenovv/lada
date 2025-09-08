@@ -7,13 +7,13 @@ namespace Lada {
         m_EventManager(eventManager) {
     }
 
-    std::shared_ptr<Window> Window::Create(std::string title, int width, int height,
+    std::unique_ptr<Window> Window::Create(std::string title, int width, int height,
                                            std::shared_ptr<EventManager> &eventManager, const GraphicAPI api) {
         switch (api) {
             case GraphicAPI::OPENGL:
-                return std::make_shared<GlfwWindow>(GraphicAPI::OPENGL, title, width, height, eventManager);
+                return std::make_unique<GlfwWindow>(GraphicAPI::OPENGL, title, width, height, eventManager);
             case GraphicAPI::VULKAN:
-                return std::make_shared<GlfwWindow>(GraphicAPI::VULKAN, title, width, height, eventManager);
+                return std::make_unique<GlfwWindow>(GraphicAPI::VULKAN, title, width, height, eventManager);
             default:
                 throw std::runtime_error("Unsupported API");
         }

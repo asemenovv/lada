@@ -14,7 +14,7 @@ namespace Lada {
     class VulkanGraphicsContext final : public GraphicsContext,
                                         public std::enable_shared_from_this<VulkanGraphicsContext> {
     public:
-        explicit VulkanGraphicsContext(const std::shared_ptr<Window>& window);
+        explicit VulkanGraphicsContext(Window& window);
         ~VulkanGraphicsContext() override;
 
         void Init() override;
@@ -31,6 +31,6 @@ namespace Lada {
         std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
         std::unique_ptr<VulkanDevice> m_Device;
         std::unique_ptr<VulkanSwapChain> m_SwapChain;
-        std::shared_ptr<Window> m_Window;
+        Window& m_Window;
     };
 }

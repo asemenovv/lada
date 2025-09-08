@@ -4,10 +4,10 @@
 #include "model/Model.h"
 
 namespace Lada::Render {
-    Renderer::Renderer(const std::shared_ptr<Window>& window, const std::shared_ptr<GraphicsContext>& graphicsContext)
+    Renderer::Renderer(Window& window, const std::shared_ptr<GraphicsContext>& graphicsContext)
     : m_GraphicsContext(graphicsContext), m_Camera(nullptr) {
         m_Camera = CameraBuilder()
-                .Screen(45.0, window->GetWidth() / window->GetHeight(), 1.0, 100.0)
+                .Screen(45.0, window.GetWidth() / window.GetHeight(), 1.0, 100.0)
                 .Position({0.0, 0.0, 0.0})
                 .ViewDirection({0.0, 0.0, 1.0})
                 .UpDirection({0.0, 1.0, 0.0})

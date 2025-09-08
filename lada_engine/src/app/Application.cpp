@@ -21,9 +21,9 @@ namespace Lada::App {
         s_Instance = this;
         m_EventManager = std::make_shared<EventManager>();
         m_Window = Window::Create(title, width, height, m_EventManager, GraphicAPI::VULKAN);
-        m_GraphicsContext = apiFactory.CreateContext(m_Window);
+        m_GraphicsContext = apiFactory.CreateContext(*m_Window);
         m_GraphicsContext->Init();
-        m_Renderer = std::make_shared<Render::Renderer>(m_Window, m_GraphicsContext);
+        m_Renderer = std::make_shared<Render::Renderer>(*m_Window, m_GraphicsContext);
         const VulkanShaderCompiler compiler(true, true);
         auto result = compiler.CompileString(
             R"EoS(#version 450

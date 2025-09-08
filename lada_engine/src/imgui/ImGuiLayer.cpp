@@ -41,11 +41,11 @@ namespace Lada::Render {
         SetDarkThemeColors();
 
         App::Application &app = App::Application::Get();
-        void *window = app.GetWindow()->GetNativeWindow();
+        void *window = app.GetWindow().GetNativeWindow();
         ImGui_ImplGlfw_InitForOpenGL(static_cast<GLFWwindow *>(window), true);
         ImGui_ImplOpenGL3_Init("#version 410");
-        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow()->GetWidth()),
-                                static_cast<float>(app.GetWindow()->GetHeight()));
+        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow().GetWidth()),
+                                static_cast<float>(app.GetWindow().GetHeight()));
     }
 
     void ImGuiLayer::OnDetach(App::LayerContext* context) {

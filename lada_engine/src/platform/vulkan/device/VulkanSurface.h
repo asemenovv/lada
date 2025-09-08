@@ -8,7 +8,7 @@
 namespace Lada {
     class VulkanSurface {
     public:
-        VulkanSurface(const VulkanInstance& instance, const std::shared_ptr<Window> &window);
+        VulkanSurface(const VulkanInstance& instance, Window& window);
 
         ~VulkanSurface();
 

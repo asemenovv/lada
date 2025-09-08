@@ -4,7 +4,7 @@
 #include "platform/vulkan/VulkanGraphicsContext.h"
 
 namespace Lada {
-    std::unique_ptr<GraphicsContext> GraphicsApiFactory::CreateContext(const std::shared_ptr<Window> &window) const {
+    std::unique_ptr<GraphicsContext> GraphicsApiFactory::CreateContext(Window& window) const {
             switch (m_GraphicAPI) {
                 case GraphicAPI::OPENGL:
                     return std::make_unique<OpenGLContext>(window);
