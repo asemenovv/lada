@@ -4,6 +4,7 @@
 #include "renderer/Renderer.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
+#include "platform/vulkan/pipeline/VulkanShaderCompiler.h"
 #include "renderer/GraphicsApiFactory.h"
 
 namespace Lada::App {
@@ -23,6 +24,16 @@ namespace Lada::App {
         m_GraphicsContext = apiFactory.CreateContext(m_Window);
         m_GraphicsContext->Init();
         m_Renderer = std::make_shared<Render::Renderer>(m_Window, m_GraphicsContext);
+        const VulkanShaderCompiler compiler(true, true);
+        auto result = compiler.CompileString(
+            R"EoS(#version 450
+
+layout(location = 0) in vec3 fragColor;
+layout(location = 0) out vec4 outColor;
+
+void main() {
+    outColor = vec4(fragColor, 1.0);
+})EoS", ShaderStage::Fragment);
 
         if (apiFactory.GetAPI() ==  GraphicAPI::VULKAN) {
             std::exit(0);

@@ -23,3 +23,15 @@
 [submodule "deps/yaml-cpp"]
 	path = deps/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "deps/shaderc"]
+	path = deps/shaderc
+	url = https://github.com/google/shaderc.git
+[submodule "deps/spirv-headers"]
+	path = deps/spirv-headers
+	url = https://github.com/KhronosGroup/SPIRV-Headers.git
+[submodule "deps/spirv-tools"]
+	path = deps/spirv-tools
+	url = https://github.com/KhronosGroup/SPIRV-Tools.git
+[submodule "deps/glslang"]
+	path = deps/glslang
+	url = https://github.com/KhronosGroup/glslang.git

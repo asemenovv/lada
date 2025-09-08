@@ -16,6 +16,8 @@ namespace Lada {
     private:
         void createShaderModule(const std::vector<char> &code);
 
+        static std::vector<char> readFile(const std::string &filePath);
+
         VkShaderModule m_ShaderModule;
         std::shared_ptr<VulkanGraphicsContext> m_GraphicsContext;
     };

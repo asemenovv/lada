@@ -50,6 +50,7 @@ add_library(lada_engine STATIC
         src/renderer/GraphicsApiFactory.cpp
         src/platform/vulkan/buffers/VulkanImage.cpp
         src/platform/vulkan/pipeline/VulkanShader.cpp
+        src/platform/vulkan/pipeline/VulkanShaderCompiler.cpp
 )
 
 target_include_directories(lada_engine
@@ -76,5 +77,6 @@ target_link_libraries(lada_engine
         PUBLIC stb_image
         PUBLIC assimp
         PUBLIC yaml-cpp
+        PUBLIC shaderc
 )
 add_dependencies(lada_engine build_shaders)

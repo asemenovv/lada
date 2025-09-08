@@ -15,3 +15,15 @@ add_subdirectory(deps/GLFW)
 add_subdirectory(deps/GLAD)
 add_subdirectory(deps/assimp)
 add_subdirectory(deps/yaml-cpp)
+
+####################################### shaderc #######################################
+add_subdirectory(deps/spirv-headers)
+add_subdirectory(deps/spirv-tools)
+add_subdirectory(deps/glslang)
+set(SPIRV-Headers_SOURCE_DIR ${CMAKE_SOURCE_DIR}/deps/spirv-headers CACHE PATH "" FORCE)
+set(SPIRV-Tools_SOURCE_DIR   ${CMAKE_SOURCE_DIR}/deps/spirv-tools   CACHE PATH "" FORCE)
+set(SHADERC_SKIP_TESTS     ON CACHE BOOL "" FORCE)
+set(SHADERC_ENABLE_TESTS   OFF CACHE BOOL "" FORCE)
+set(SHADERC_SKIP_EXAMPLES  ON CACHE BOOL "" FORCE)
+add_subdirectory(deps/shaderc)
+####################################### shaderc #######################################
