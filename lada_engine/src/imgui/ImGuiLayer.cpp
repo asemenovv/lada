@@ -60,7 +60,7 @@ namespace Lada::Render {
         ImGui::NewFrame();
     }
 
-    void ImGuiLayer::OnRender(App::LayerContext& context, const std::shared_ptr<Renderer> &renderer) {
+    void ImGuiLayer::OnRender(App::LayerContext& context, Renderer& renderer) {
         ImGuiIO &io = ImGui::GetIO();
         RenderElements(io, context);
 

@@ -52,6 +52,6 @@ void RendererLayer::OnUpdate(Lada::App::LayerContext& context) {
 }
 
 void RendererLayer::OnRender(Lada::App::LayerContext& context,
-                             const std::shared_ptr<Lada::Render::Renderer> &renderer) {
-    renderer->Submit(m_Square);
+                             Lada::Render::Renderer& renderer) {
+    renderer.Submit(m_Square);
 }

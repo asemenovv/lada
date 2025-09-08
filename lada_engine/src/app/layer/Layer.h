@@ -8,7 +8,7 @@
 namespace Lada::App {
     class Layer {
     public:
-        explicit Layer(const std::string &name = "Layer"): m_DebugName(name) {
+        explicit Layer(const std::string& name = "Layer"): m_DebugName(name) {
         }
 
         virtual ~Layer() = default;
@@ -22,7 +22,7 @@ namespace Lada::App {
         virtual void OnUpdate(LayerContext& context) {
         }
 
-        virtual void OnRender(LayerContext& context, const std::shared_ptr<Render::Renderer> &renderer) {
+        virtual void OnRender(LayerContext& context, Render::Renderer& renderer) {
         }
 
         virtual void OnEvent(Event &event, LayerContext& context) {

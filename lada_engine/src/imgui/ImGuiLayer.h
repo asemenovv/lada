@@ -15,7 +15,7 @@ namespace Lada::Render {
 
         void OnUpdate(App::LayerContext& context) override;
 
-        void OnRender(App::LayerContext& context, const std::shared_ptr<Renderer> &renderer) override;
+        void OnRender(App::LayerContext& context, Renderer& renderer) override;
 
         void OnEvent(Event &event, App::LayerContext& context) override;
 

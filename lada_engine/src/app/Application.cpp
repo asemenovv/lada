@@ -23,7 +23,7 @@ namespace Lada::App {
         m_Window = Window::Create(title, width, height, *m_EventManager, GraphicAPI::VULKAN);
         m_GraphicsContext = apiFactory.CreateContext(*m_Window);
         m_GraphicsContext->Init();
-        m_Renderer = std::make_shared<Render::Renderer>(*m_Window, *m_GraphicsContext);
+        m_Renderer = std::make_unique<Render::Renderer>(*m_Window, *m_GraphicsContext);
         const VulkanShaderCompiler compiler(true, true);
         auto result = compiler.CompileString(
             R"EoS(#version 450
@@ -65,7 +65,7 @@ void main() {
             }
             m_Renderer->BeginFrame();
             for (Layer* layer : *m_LayerStack) {
-                layer->OnRender(*m_LayerContext, m_Renderer);
+                layer->OnRender(*m_LayerContext, *m_Renderer);
             }
             m_Renderer->EndFrame();
             m_Window->OnUpdate();

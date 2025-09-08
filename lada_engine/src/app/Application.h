@@ -32,7 +32,7 @@ namespace Lada::App {
         std::unique_ptr<GraphicsContext> m_GraphicsContext;
         std::unique_ptr<LayerStack> m_LayerStack;
         std::unique_ptr<LayerContext> m_LayerContext;
-        std::shared_ptr<Render::Renderer> m_Renderer;
+        std::unique_ptr<Render::Renderer> m_Renderer;
         std::shared_ptr<SwapChain> m_SwapChain;
 
 
