@@ -4,7 +4,7 @@
 #include "model/Model.h"
 
 namespace Lada::Render {
-    Renderer::Renderer(Window& window, const std::shared_ptr<GraphicsContext>& graphicsContext)
+    Renderer::Renderer(const Window& window, GraphicsContext& graphicsContext)
     : m_GraphicsContext(graphicsContext), m_Camera(nullptr) {
         m_Camera = CameraBuilder()
                 .Screen(45.0, window.GetWidth() / window.GetHeight(), 1.0, 100.0)
@@ -33,6 +33,6 @@ namespace Lada::Render {
     }
 
     void Renderer::EndFrame() {
-        m_GraphicsContext->SwapBuffers();
+        m_GraphicsContext.SwapBuffers();
     }
 }
