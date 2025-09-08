@@ -24,11 +24,11 @@ namespace Lada::App {
         void PushOverlay(Layer *layer);
         void PopLayer(const Layer *layer);
         void PopOverlay(Layer *layer);
-        [[nodiscard]] std::shared_ptr<EventManager> GetEventManager() const { return m_EventManager; }
+        [[nodiscard]] EventManager& GetEventManager() const { return *m_EventManager; }
     private:
         bool m_Running = true;
         std::unique_ptr<Window> m_Window;
-        std::shared_ptr<EventManager> m_EventManager;
+        std::unique_ptr<EventManager> m_EventManager;
         std::shared_ptr<GraphicsContext> m_GraphicsContext;
         LayerStack* m_LayerStack;
         LayerContext* m_LayerContext;

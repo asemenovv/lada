@@ -8,7 +8,7 @@
 
 namespace Lada {
     GlfwWindow::GlfwWindow(const GraphicAPI graphicApi, const std::string &title, const int width, const int height,
-                           std::shared_ptr<EventManager>& eventManager)
+                           EventManager& eventManager)
     : Window(width, height, eventManager) {
         if (!glfwInit())
             LD_CORE_CRITICAL("Failed to initialize GLFW");
@@ -33,7 +33,7 @@ namespace Lada {
 
         SubscribeToEvents();
 
-        eventManager->REGISTER_HANDLER(WindowResizeEvent, {
+        eventManager.REGISTER_HANDLER(WindowResizeEvent, {
                                        m_Width = event.GetWidth();
                                        m_Height = event.GetHeight();
                                        return true;
@@ -82,7 +82,7 @@ namespace Lada {
         }
 
         WindowCloseEvent event;
-        window->m_EventManager->HandleEvent(event);
+        window->m_EventManager.HandleEvent(event);
     }
 
     void GlfwWindow::FramebufferSizeCallback(GLFWwindow *glfwWindow, int width, int height) {
@@ -93,7 +93,7 @@ namespace Lada {
         }
 
         WindowResizeEvent event(width, height);
-        window->m_EventManager->HandleEvent(event);
+        window->m_EventManager.HandleEvent(event);
     }
 
     void GlfwWindow::KeyCallback(GLFWwindow *glfwWindow, int key, int scancode, int action, int mods) {
@@ -106,17 +106,17 @@ namespace Lada {
         switch (action) {
             case GLFW_PRESS: {
                 KeyPressedEvent event(key, 0);
-                window->m_EventManager->HandleEvent(event);
+                window->m_EventManager.HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
                 KeyReleasedEvent event(key);
-                window->m_EventManager->HandleEvent(event);
+                window->m_EventManager.HandleEvent(event);
                 break;
             }
             case GLFW_REPEAT: {
                 KeyPressedEvent event(key, true);
-                window->m_EventManager->HandleEvent(event);
+                window->m_EventManager.HandleEvent(event);
                 break;
             }
             default:
@@ -132,7 +132,7 @@ namespace Lada {
         }
 
         KeyTypedEvent event(keycode);
-        window->m_EventManager->HandleEvent(event);
+        window->m_EventManager.HandleEvent(event);
     }
 
     void GlfwWindow::MouseButtonCallback(GLFWwindow *glfwWindow, int button, int action, int mods) {
@@ -145,12 +145,12 @@ namespace Lada {
         switch (action) {
             case GLFW_PRESS: {
                 MouseButtonPressedEvent event(button);
-                window->m_EventManager->HandleEvent(event);
+                window->m_EventManager.HandleEvent(event);
                 break;
             }
             case GLFW_RELEASE: {
                 MouseButtonReleasedEvent event(button);
-                window->m_EventManager->HandleEvent(event);
+                window->m_EventManager.HandleEvent(event);
                 break;
             }
             default:
@@ -166,7 +166,7 @@ namespace Lada {
         }
 
         MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
-        window->m_EventManager->HandleEvent(event);
+        window->m_EventManager.HandleEvent(event);
     }
 
     void GlfwWindow::CursorPosCallback(GLFWwindow *glfwWindow, double xPos, double yPos) {
@@ -177,6 +177,6 @@ namespace Lada {
         }
 
         MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
-        window->m_EventManager->HandleEvent(event);
+        window->m_EventManager.HandleEvent(event);
     }
 }

@@ -7,11 +7,11 @@
 #include "events/MouseEvent.h"
 
 DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
-    GetEventManager()->REGISTER_HANDLER(Lada::WindowCloseEvent, {
+    GetEventManager().REGISTER_HANDLER(Lada::WindowCloseEvent, {
         LD_TRACE("WindowCloseEvent is fired {}", event.ToString());
         return true;
         });
-    GetEventManager()->REGISTER_HANDLER(Lada::WindowResizeEvent, {
+    GetEventManager().REGISTER_HANDLER(Lada::WindowResizeEvent, {
         LD_TRACE("WindowResizeEvent is fired {}", event.ToString());
         return true;
         });

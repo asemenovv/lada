@@ -11,7 +11,7 @@ namespace Lada {
 
     class Window {
     public:
-        Window(int width, int height, std::shared_ptr<EventManager> &eventManager);
+        Window(int width, int height, EventManager& eventManager);
 
         virtual ~Window() = default;
 
@@ -28,10 +28,10 @@ namespace Lada {
         virtual void *GetNativeWindow() = 0;
 
         static std::unique_ptr<Window> Create(std::string title, int width, int height,
-                                              std::shared_ptr<EventManager> &eventManager, GraphicAPI api);
+                                              EventManager& eventManager, GraphicAPI api);
 
     protected:
         int m_Width, m_Height;
-        std::shared_ptr<EventManager> m_EventManager;
+        EventManager& m_EventManager;
     };
 }
