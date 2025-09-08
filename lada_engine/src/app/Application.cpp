@@ -12,8 +12,8 @@ namespace Lada::App {
 
     Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
         const GraphicsApiFactory apiFactory(GraphicAPI::VULKAN);
-        m_LayerContext = new LayerContext();
-        m_LayerStack = new LayerStack(m_LayerContext);
+        m_LayerContext = std::make_unique<LayerContext>();
+        m_LayerStack = std::make_unique<LayerStack>(*m_LayerContext);
         if (s_Instance != nullptr) {
             LD_CORE_CRITICAL("Application already initialized!");
             return;
@@ -48,11 +48,6 @@ void main() {
         m_EventManager->BIND_HANDLER(WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
-    Application::~Application() {
-        delete m_LayerStack;
-        delete m_LayerContext;
-    }
-
     bool Application::OnWindowCloseEvent(const WindowCloseEvent& event) {
         this->Shutdown();
         return true;
@@ -66,11 +61,11 @@ void main() {
     void Application::Run() {
         while (m_Running) {
             for (Layer *layer : *m_LayerStack) {
-                layer->OnUpdate(m_LayerContext);
+                layer->OnUpdate(*m_LayerContext);
             }
             m_Renderer->BeginFrame();
             for (Layer* layer : *m_LayerStack) {
-                layer->OnRender(m_LayerContext, m_Renderer);
+                layer->OnRender(*m_LayerContext, m_Renderer);
             }
             m_Renderer->EndFrame();
             m_Window->OnUpdate();
@@ -101,7 +96,7 @@ void main() {
     void Application::SubscribeLayersOnEvents() {
         m_EventManager->RegisterGlobalHandler([this](Event& event) {
             for (auto it = m_LayerStack->end(); it != m_LayerStack->begin();) {
-                (*--it)->OnEvent(event, m_LayerContext);
+                (*--it)->OnEvent(event, *m_LayerContext);
                 if (event.IsHandled())
                     break;
             }

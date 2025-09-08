@@ -13,7 +13,7 @@ namespace Lada::Render {
     ImGuiLayer::ImGuiLayer(): App::Layer("ImGuiLayer") {
     }
 
-    void ImGuiLayer::OnAttach(App::LayerContext* context) {
+    void ImGuiLayer::OnAttach(App::LayerContext& context) {
         const std::string workingDirectory = AssetManager::WorkingDir();
 
         IMGUI_CHECKVERSION();
@@ -48,19 +48,19 @@ namespace Lada::Render {
                                 static_cast<float>(app.GetWindow().GetHeight()));
     }
 
-    void ImGuiLayer::OnDetach(App::LayerContext* context) {
+    void ImGuiLayer::OnDetach(App::LayerContext& context) {
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate(App::LayerContext* context) {
+    void ImGuiLayer::OnUpdate(App::LayerContext& context) {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
 
-    void ImGuiLayer::OnRender(App::LayerContext* context, const std::shared_ptr<Renderer> &renderer) {
+    void ImGuiLayer::OnRender(App::LayerContext& context, const std::shared_ptr<Renderer> &renderer) {
         ImGuiIO &io = ImGui::GetIO();
         RenderElements(io, context);
 
@@ -69,10 +69,10 @@ namespace Lada::Render {
         ImGui::UpdatePlatformWindows();
     }
 
-    void ImGuiLayer::OnEvent(Event &event, App::LayerContext* context) {
+    void ImGuiLayer::OnEvent(Event &event, App::LayerContext& context) {
     }
 
-    void ImGuiLayer::RenderElements(const ImGuiIO& io, App::LayerContext* context) {
+    void ImGuiLayer::RenderElements(const ImGuiIO& io, App::LayerContext& context) {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
     }
 

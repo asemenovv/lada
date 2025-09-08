@@ -5,11 +5,11 @@
 #include "assets/AssetManager.h"
 #include "renderer/model/ModelLoader.h"
 
-void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
+void RendererLayer::OnAttach(Lada::App::LayerContext& context) {
     std::string workingDirectory = Lada::AssetManager::WorkingDir();
 
-    context->SetF(SQUARE_ROTATION, 0.0f);
-    context->SetF(SQUARE_ROTATION_INCREMENT, 0.005f);
+    context.SetF(SQUARE_ROTATION, 0.0f);
+    context.SetF(SQUARE_ROTATION_INCREMENT, 0.005f);
 
     constexpr float positions[] = {
         -0.5f, -0.5f, 2.0, 0.0f, 0.0f,
@@ -42,16 +42,16 @@ void RendererLayer::OnAttach(Lada::App::LayerContext *context) {
             .Build();
 }
 
-void RendererLayer::OnUpdate(Lada::App::LayerContext *context) {
-    const auto rotation = context->GetF(SQUARE_ROTATION);
-    const auto rotationIncrement = context->GetF(SQUARE_ROTATION_INCREMENT);
+void RendererLayer::OnUpdate(Lada::App::LayerContext& context) {
+    const auto rotation = context.GetF(SQUARE_ROTATION);
+    const auto rotationIncrement = context.GetF(SQUARE_ROTATION_INCREMENT);
     if (*rotation > 1.0f) {
-        context->SetF(SQUARE_ROTATION, 0.0f);
+        context.SetF(SQUARE_ROTATION, 0.0f);
     }
-    context->SetF(SQUARE_ROTATION, (*rotation) + (*rotationIncrement));
+    context.SetF(SQUARE_ROTATION, (*rotation) + (*rotationIncrement));
 }
 
-void RendererLayer::OnRender(Lada::App::LayerContext *context,
+void RendererLayer::OnRender(Lada::App::LayerContext& context,
                              const std::shared_ptr<Lada::Render::Renderer> &renderer) {
     renderer->Submit(m_Square);
 }

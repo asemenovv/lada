@@ -14,7 +14,7 @@ namespace Lada::App {
     class Application {
     public:
         Application(const std::string &title, int width, int height);
-        virtual ~Application();
+        virtual ~Application() = default;
         void Run();
         void Shutdown();
         [[nodiscard]] Window& GetWindow() const { return *m_Window; }
@@ -30,8 +30,8 @@ namespace Lada::App {
         std::unique_ptr<Window> m_Window;
         std::unique_ptr<EventManager> m_EventManager;
         std::unique_ptr<GraphicsContext> m_GraphicsContext;
-        LayerStack* m_LayerStack;
-        LayerContext* m_LayerContext;
+        std::unique_ptr<LayerStack> m_LayerStack;
+        std::unique_ptr<LayerContext> m_LayerContext;
         std::shared_ptr<Render::Renderer> m_Renderer;
         std::shared_ptr<SwapChain> m_SwapChain;
 

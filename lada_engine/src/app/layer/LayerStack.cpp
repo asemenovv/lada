@@ -2,7 +2,7 @@
 #include "LayerStack.h"
 
 namespace Lada::App {
-    LayerStack::LayerStack(LayerContext* context): m_LayerContext(context) {
+    LayerStack::LayerStack(LayerContext& context): m_LayerContext(context) {
         m_LayerInsert = m_Layers.begin();
     }
 
