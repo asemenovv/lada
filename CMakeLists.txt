@@ -16,6 +16,10 @@ add_subdirectory(deps/GLAD)
 add_subdirectory(deps/assimp)
 add_subdirectory(deps/yaml-cpp)
 
+################################### Svarozhich (Qt) ###################################
+add_subdirectory(svarozhich)
+################################### Svarozhich (Qt) ###################################
+
 ####################################### shaderc #######################################
 add_subdirectory(deps/spirv-headers)
 add_subdirectory(deps/spirv-tools)

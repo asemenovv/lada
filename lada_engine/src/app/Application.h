@@ -8,7 +8,6 @@
 #include "layer/LayerContext.h"
 #include "layer/LayerStack.h"
 #include "renderer/Renderer.h"
-#include "renderer/SwapChain.h"
 
 namespace Lada::App {
     class Application {
@@ -33,7 +32,6 @@ namespace Lada::App {
         std::unique_ptr<LayerStack> m_LayerStack;
         std::unique_ptr<LayerContext> m_LayerContext;
         std::unique_ptr<Render::Renderer> m_Renderer;
-        std::shared_ptr<SwapChain> m_SwapChain;
 
 
         static Application* s_Instance;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>InspectorWidget</class>
+    <widget class="QWidget" name="InspectorWidget">
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QPushButton" name="btnAddRoot">
+                    <property name="text">
+                        <string>Add Root</string>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

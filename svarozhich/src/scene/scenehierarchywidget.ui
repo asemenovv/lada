@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>SceneHierarchyWidget</class>
+    <widget class="QWidget" name="SceneHierarchyWidget">
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <layout class="QHBoxLayout" name="toolbarLayout">
+                    <item>
+                        <widget class="QPushButton" name="btnAddRoot">
+                            <property name="text">
+                                <string>Add Root</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QPushButton" name="btnAddChild">
+                            <property name="text">
+                                <string>Add Child</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="QPushButton" name="btnRemove">
+                            <property name="text">
+                                <string>Remove</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <spacer name="spacer">
+                            <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                            </property>
+                        </spacer>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <widget class="QTreeView" name="treeView">
+                    <property name="headerHidden">
+                        <bool>true</bool>
+                    </property>
+                    <property name="uniformRowHeights">
+                        <bool>true</bool>
+                    </property>
+                    <property name="expandsOnDoubleClick">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>
