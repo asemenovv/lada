@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>CameraComponentWidget</class>
+    <widget class="QWidget" name="CameraComponentWidget">
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing"><number>6</number></property>
+            <property name="leftMargin"><number>8</number></property>
+            <property name="topMargin"><number>0</number></property>
+            <property name="rightMargin"><number>8</number></property>
+            <property name="bottomMargin"><number>8</number></property>
+
+            <!-- Projection -->
+            <item>
+                <widget class="QGroupBox" name="groupProjection">
+                    <property name="title"><string>Projection</string></property>
+                    <layout class="QGridLayout" name="layoutProjection">
+                        <item row="0" column="0"><widget class="QLabel" name="lblType"><property name="text"><string>Type</string></property></widget></item>
+                        <item row="0" column="1"><widget class="QComboBox" name="projectionType">
+                            <item><property name="text"><string>Perspective</string></property></item>
+                            <item><property name="text"><string>Orthographic</string></property></item>
+                        </widget></item>
+
+                        <item row="1" column="0"><widget class="QLabel" name="lblFov"><property name="text"><string>FOV</string></property></widget></item>
+                        <item row="1" column="1">
+                            <layout class="QHBoxLayout" name="layoutFov">
+                                <item><widget class="QDoubleSpinBox" name="fov">
+                                    <property name="decimals"><number>2</number></property>
+                                    <property name="minimum"><double>1.0</double></property>
+                                    <property name="maximum"><double>179.0</double></property>
+                                    <property name="value"><double>60.0</double></property>
+                                    <property name="singleStep"><double>1.0</double></property>
+                                    <property name="suffix"><string>°</string></property>
+                                </widget></item>
+                                <item><widget class="QComboBox" name="fovAxis">
+                                    <item><property name="text"><string>Vertical</string></property></item>
+                                    <item><property name="text"><string>Horizontal</string></property></item>
+                                </widget></item>
+                            </layout>
+                        </item>
+
+                        <item row="2" column="0"><widget class="QLabel" name="lblOrtho"><property name="text"><string>Ortho Size</string></property></widget></item>
+                        <item row="2" column="1"><widget class="QDoubleSpinBox" name="orthoSize">
+                            <property name="decimals"><number>3</number></property>
+                            <property name="minimum"><double>0.001</double></property>
+                            <property name="maximum"><double>100000.0</double></property>
+                            <property name="value"><double>10.0</double></property>
+                            <property name="singleStep"><double>0.5</double></property>
+                        </widget></item>
+
+                        <item row="3" column="0"><widget class="QLabel" name="lblAspect"><property name="text"><string>Aspect</string></property></widget></item>
+                        <item row="3" column="1">
+                            <layout class="QHBoxLayout" name="layoutAspect">
+                                <item><widget class="QDoubleSpinBox" name="aspectRatio">
+                                    <property name="decimals"><number>3</number></property>
+                                    <property name="minimum"><double>0.100</double></property>
+                                    <property name="maximum"><double>10.000</double></property>
+                                    <property name="value"><double>1.778</double></property>
+                                    <property name="singleStep"><double>0.01</double></property>
+                                </widget></item>
+                                <item><widget class="QCheckBox" name="autoAspect">
+                                    <property name="text"><string>Auto</string></property>
+                                    <property name="checked"><bool>true</bool></property>
+                                </widget></item>
+                            </layout>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Clipping & Depth -->
+            <item>
+                <widget class="QGroupBox" name="groupClipping">
+                    <property name="title"><string>Clipping &amp; Depth</string></property>
+                    <layout class="QGridLayout" name="layoutClipping">
+                        <item row="0" column="0"><widget class="QLabel" name="lblNear"><property name="text"><string>Near</string></property></widget></item>
+                        <item row="0" column="1"><widget class="QDoubleSpinBox" name="nearPlane">
+                            <property name="decimals"><number>4</number></property>
+                            <property name="minimum"><double>0.0001</double></property>
+                            <property name="maximum"><double>1000.0</double></property>
+                            <property name="value"><double>0.1000</double></property>
+                            <property name="singleStep"><double>0.01</double></property>
+                        </widget></item>
+
+                        <item row="1" column="0"><widget class="QLabel" name="lblFar"><property name="text"><string>Far</string></property></widget></item>
+                        <item row="1" column="1"><widget class="QDoubleSpinBox" name="farPlane">
+                            <property name="decimals"><number>1</number></property>
+                            <property name="minimum"><double>1.0</double></property>
+                            <property name="maximum"><double>1000000.0</double></property>
+                            <property name="value"><double>1000.0</double></property>
+                            <property name="singleStep"><double>10.0</double></property>
+                        </widget></item>
+
+                        <item row="2" column="0"><widget class="QLabel" name="lblOrder"><property name="text"><string>Render Order</string></property></widget></item>
+                        <item row="2" column="1"><widget class="QSpinBox" name="renderOrder">
+                            <property name="minimum"><number>-1000</number></property>
+                            <property name="maximum"><number>1000</number></property>
+                            <property name="value"><number>0</number></property>
+                        </widget></item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Viewport (normalized 0..1) -->
+            <item>
+                <widget class="QGroupBox" name="groupViewport">
+                    <property name="title"><string>Viewport (0..1)</string></property>
+                    <layout class="QGridLayout" name="layoutViewport">
+                        <item row="0" column="0"><widget class="QLabel" name="lblVpX"><property name="text"><string>X</string></property></widget></item>
+                        <item row="0" column="1"><widget class="QDoubleSpinBox" name="vpX">
+                            <property name="decimals"><number>3</number></property>
+                            <property name="minimum"><double>0.0</double></property>
+                            <property name="maximum"><double>1.0</double></property>
+                            <property name="singleStep"><double>0.01</double></property>
+                        </widget></item>
+
+                        <item row="0" column="2"><widget class="QLabel" name="lblVpY"><property name="text"><string>Y</string></property></widget></item>
+                        <item row="0" column="3"><widget class="QDoubleSpinBox" name="vpY">
+                            <property name="decimals"><number>3</number></property>
+                            <property name="minimum"><double>0.0</double></property>
+                            <property name="maximum"><double>1.0</double></property>
+                            <property name="singleStep"><double>0.01</double></property>
+                        </widget></item>
+
+                        <item row="1" column="0"><widget class="QLabel" name="lblVpW"><property name="text"><string>W</string></property></widget></item>
+                        <item row="1" column="1"><widget class="QDoubleSpinBox" name="vpW">
+                            <property name="decimals"><number>3</number></property>
+                            <property name="minimum"><double>0.0</double></property>
+                            <property name="maximum"><double>1.0</double></property>
+                            <property name="value"><double>1.0</double></property>
+                            <property name="singleStep"><double>0.01</double></property>
+                        </widget></item>
+
+                        <item row="1" column="2"><widget class="QLabel" name="lblVpH"><property name="text"><string>H</string></property></widget></item>
+                        <item row="1" column="3"><widget class="QDoubleSpinBox" name="vpH">
+                            <property name="decimals"><number>3</number></property>
+                            <property name="minimum"><double>0.0</double></property>
+                            <property name="maximum"><double>1.0</double></property>
+                            <property name="value"><double>1.0</double></property>
+                            <property name="singleStep"><double>0.01</double></property>
+                        </widget></item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Clear & Culling -->
+            <item>
+                <widget class="QGroupBox" name="groupRender">
+                    <property name="title"><string>Clear &amp; Culling</string></property>
+                    <layout class="QGridLayout" name="layoutRender">
+                        <item row="0" column="0"><widget class="QLabel" name="lblClear"><property name="text"><string>Clear</string></property></widget></item>
+                        <item row="0" column="1"><widget class="QComboBox" name="clearMode">
+                            <item><property name="text"><string>Skybox</string></property></item>
+                            <item><property name="text"><string>Color</string></property></item>
+                            <item><property name="text"><string>Depth Only</string></property></item>
+                            <item><property name="text"><string>Don't Clear</string></property></item>
+                        </widget></item>
+
+                        <item row="1" column="0"><widget class="QLabel" name="lblBg"><property name="text"><string>Background</string></property></widget></item>
+                        <item row="1" column="1"><widget class="QPushButton" name="bgColorButton">
+                            <property name="text"><string>Color…</string></property>
+                        </widget></item>
+
+                        <item row="2" column="0"><widget class="QLabel" name="lblCulling"><property name="text"><string>Culling Mask</string></property></widget></item>
+                        <item row="2" column="1"><widget class="QLineEdit" name="cullingMask">
+                            <property name="placeholderText"><string>e.g. Default|Static|Terrain</string></property>
+                        </widget></item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Quality / Flags -->
+            <item>
+                <widget class="QGroupBox" name="groupQuality">
+                    <property name="title"><string>Quality &amp; Flags</string></property>
+                    <layout class="QGridLayout" name="layoutQuality">
+                        <item row="0" column="0"><widget class="QCheckBox" name="hdr"><property name="text"><string>HDR</string></property><property name="checked"><bool>true</bool></property></widget></item>
+                        <item row="0" column="1"><widget class="QLabel" name="lblMSAA"><property name="text"><string>MSAA</string></property></widget></item>
+                        <item row="0" column="2"><widget class="QComboBox" name="msaaSamples">
+                            <item><property name="text"><string>x1</string></property></item>
+                            <item><property name="text"><string>x2</string></property></item>
+                            <item><property name="text"><string>x4</string></property></item>
+                            <item><property name="text"><string>x8</string></property></item>
+                        </widget></item>
+
+                        <item row="1" column="0"><widget class="QCheckBox" name="taa"><property name="text"><string>TAA</string></property></widget></item>
+                        <item row="1" column="1"><widget class="QCheckBox" name="motionVectors"><property name="text"><string>Motion Vectors</string></property></widget></item>
+                        <item row="1" column="2"><widget class="QCheckBox" name="depthPrepass"><property name="text"><string>Depth Pre-Pass</string></property></widget></item>
+                    </layout>
+                </widget>
+            </item>
+
+            <item><spacer name="verticalSpacer">
+                <property name="orientation"><enum>Qt::Vertical</enum></property>
+                <property name="sizeHint" stdset="0"><size><width>0</width><height>0</height></size></property>
+            </spacer></item>
+
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

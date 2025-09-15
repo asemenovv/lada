@@ -99,7 +99,7 @@ int SceneTreeModel::columnCount(const QModelIndex &) const {
 
 QVariant SceneTreeModel::data(const QModelIndex &idx, const int role) const {
     if (!idx.isValid()) return {};
-    const auto item = static_cast<TreeItem *>(idx.internalPointer());
+    const auto item = FindItem(idx);
     if (role == Qt::DisplayRole || role == NameRole) {
         switch (item->type) {
             case NodeType::FOLDER:
@@ -113,9 +113,9 @@ QVariant SceneTreeModel::data(const QModelIndex &idx, const int role) const {
     if (role == Qt::DecorationRole) {
         switch (item->type) {
             case NodeType::FOLDER:
-                return QIcon(":/icons/folder_open_24.png");
+                return QIcon(":/icons/folder_open_24");
             case NodeType::ENTITY:
-                return QIcon(":/icons/mesh.png");
+                return QIcon(":/icons/mesh");
             default:
                 return {};
         }
@@ -168,13 +168,18 @@ void SceneTreeModel::AddEntity(Svch::Entity* entity) {
 
 void SceneTreeModel::Remove(const QModelIndex &index) {
     if (!index.isValid()) return;
-    const auto *item = static_cast<TreeItem *>(index.internalPointer());
+    const auto *item = FindItem(index);
     TreeItem *parent = item->parent;
     if (!parent) return;
     const int row = item->row();
     beginRemoveRows(index.parent(), row, row);
     parent->children.erase(parent->children.begin() + row);
     endRemoveRows();
+}
+
+TreeItem* SceneTreeModel::FindItem(const QModelIndex &index) const {
+    if (!index.isValid()) return nullptr;
+    return static_cast<TreeItem *>(index.internalPointer());
 }
 
 TreeItem* SceneTreeModel::addFolderIfNotExist(TreeItem* parent, std::vector<std::string> pathElements) {

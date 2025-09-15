@@ -29,6 +29,16 @@ add_executable(svarozhich
         src/inspector/InspectorWidget.h
         src/inspector/inspectorwidget.ui
         src/utils.h
+        src/components/CollapsibleSection.cpp
+        src/components/CollapsibleSection.h
+        src/inspector/TransformComponentWidget.cpp
+        src/inspector/TransformComponentWidget.h
+        src/inspector/transformcomponentwidget.ui
+        src/components/DisclosureButton.cpp
+        src/components/DisclosureButton.h
+        src/inspector/cameracomponentwidget.ui
+        src/inspector/CameraComponentWidget.cpp
+        src/inspector/CameraComponentWidget.h
 )
 
 target_include_directories(svarozhich

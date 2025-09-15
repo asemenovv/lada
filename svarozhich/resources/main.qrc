@@ -1,11 +1,12 @@
 <RCC>
     <qresource prefix="/icons">
-        <file alias="folder_open_24.png">icons/folder_open_24.png</file>
-        <file alias="folder_closed_24.png">icons/folder_closed_24.png</file>
-        <file alias="camera.png">icons/camera.png</file>
-        <file alias="mesh.png">icons/mesh.png</file>
-        <file alias="directional_light.png">icons/directional_light.png</file>
-        <file alias="lightbulb.png">icons/lightbulb.png</file>
-        <file alias="spot_light.png">icons/spot_light.png</file>
+        <file alias="folder_open_24">icons/folder_open_24.png</file>
+        <file alias="folder_closed_24">icons/folder_closed_24.png</file>
+        <file alias="xyz">icons/xyz.png</file>
+        <file alias="camera">icons/camera.png</file>
+        <file alias="mesh">icons/mesh.png</file>
+        <file alias="directional_light">icons/directional_light.png</file>
+        <file alias="lightbulb">icons/lightbulb.png</file>
+        <file alias="spot_light">icons/spot_light.png</file>
     </qresource>
 </RCC>

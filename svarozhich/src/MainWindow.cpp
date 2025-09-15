@@ -33,12 +33,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent),
     connect(sceneHierarchyWidget, &SceneHierarchyWidget::removeRequested, this, [this](const QModelIndex& p){
         m_SceneTreeModel->Remove(p);
     });
-
-    qInfo() << "List :/icons =" << QDir(":/icons").entryList();
-    // Должен вывести: {"camera.png","mesh.png","directional_light.png","lightbulb.png","spot_light.png"}
-
-    qInfo() << "exists camera =" << QFile(":/icons/camera.png").exists();
-    qInfo() << "isNull camera =" << QIcon(":/icons/camera.png").isNull();
 }
 
 MainWindow::~MainWindow() = default;

@@ -1,7 +1,10 @@
 #pragma once
 
-#include <QWidget>
 #include <memory>
+
+#include "CameraComponentWidget.h"
+#include "TransformComponentWidget.h"
+#include "components/CollapsibleSection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InspectorWidget; }
@@ -14,4 +17,10 @@ public:
     ~InspectorWidget() override;
 private:
     std::unique_ptr<Ui::InspectorWidget> ui;
+
+    Svch::TransformComponentWidget* m_TransformWidget;
+    Svch::CollapsibleSection* m_SecTransform;
+
+    Svch::CameraComponentWidget* m_CameraWidget;
+    Svch::CollapsibleSection* m_SecCamera;
 };

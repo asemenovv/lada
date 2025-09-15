@@ -2,45 +2,36 @@
 <ui version="4.0">
     <class>SceneHierarchyWidget</class>
     <widget class="QWidget" name="SceneHierarchyWidget">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>321</width>
+                <height>258</height>
+            </rect>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-                <layout class="QHBoxLayout" name="toolbarLayout">
-                    <item>
-                        <widget class="QPushButton" name="btnAddRoot">
-                            <property name="text">
-                                <string>Add Root</string>
-                            </property>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QPushButton" name="btnAddChild">
-                            <property name="text">
-                                <string>Add Child</string>
-                            </property>
-                        </widget>
-                    </item>
-                    <item>
-                        <widget class="QPushButton" name="btnRemove">
-                            <property name="text">
-                                <string>Remove</string>
-                            </property>
-                        </widget>
-                    </item>
-                    <item>
-                        <spacer name="spacer">
-                            <property name="orientation">
-                                <enum>Qt::Horizontal</enum>
-                            </property>
-                        </spacer>
-                    </item>
-                </layout>
-            </item>
+            <property name="spacing">
+                <number>0</number>
+            </property>
+            <property name="leftMargin">
+                <number>0</number>
+            </property>
+            <property name="topMargin">
+                <number>0</number>
+            </property>
+            <property name="rightMargin">
+                <number>0</number>
+            </property>
+            <property name="bottomMargin">
+                <number>0</number>
+            </property>
             <item>
                 <widget class="QTreeView" name="treeView">
-                    <property name="headerHidden">
+                    <property name="uniformRowHeights">
                         <bool>true</bool>
                     </property>
-                    <property name="uniformRowHeights">
+                    <property name="headerHidden">
                         <bool>true</bool>
                     </property>
                     <property name="expandsOnDoubleClick">

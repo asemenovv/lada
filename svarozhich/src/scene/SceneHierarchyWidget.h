@@ -26,7 +26,7 @@ public:
 
     void SetModel(QAbstractItemModel *model);
 
-    QTreeView *TreeView() const; // если нужно прямой доступ
+    [[nodiscard]] QTreeView *TreeView() const; // если нужно прямой доступ
 
 signals:
     void addRootRequested();
@@ -35,6 +35,11 @@ signals:
 
     void removeRequested(const QModelIndex &index);
 
+private slots:
+    void onSceneTreeContextMenu(const QPoint& pos);
+
 private:
     std::unique_ptr<Ui::SceneHierarchyWidget> ui;
+
+    void configureContextMenu();
 };

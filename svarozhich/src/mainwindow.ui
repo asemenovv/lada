@@ -47,6 +47,21 @@
    </attribute>
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="SceneHierarchyWidget" name="sceneHierarchy" native="true"/>
      </item>
@@ -54,12 +69,24 @@
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockInspector">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="InspectorWidget" name="dockWidgetContents_2"/>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>SceneHierarchyWidget</class>
    <extends>QWidget</extends>
    <header>scene/SceneHierarchyWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>InspectorWidget</class>
+   <extends>QWidget</extends>
+   <header>inspector/InspectorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

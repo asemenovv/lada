@@ -18,12 +18,12 @@ namespace Svch {
 
         virtual ~Component() = default;
 
-        [[nodiscard]] virtual ComponentType GetType() const;
+        [[nodiscard]] virtual ComponentType GetType() const { throw "Not implemented"; }
     };
 
     class TransformComponent final : public Component {
     public:
-        TransformComponent() : m_Position({}), m_Rotation({}), m_Scale({}) {
+        TransformComponent() : Component(), m_Position({}), m_Rotation({}), m_Scale({1.0, 1.0, 1.0}) {
         }
 
         [[nodiscard]] ComponentType GetType() const override {
@@ -52,5 +52,22 @@ namespace Svch {
         Vector3f m_Position;
         Vector3f m_Rotation;
         Vector3f m_Scale;
+    };
+
+    enum class CameraProjectionMode {
+        Orthographic = 0,
+        Perspective = 1
+    };
+
+    class CameraComponent final : public Component {
+    public:
+        CameraComponent();
+    private:
+        bool m_Primary = true;
+        CameraProjectionMode m_ProjectionMode = CameraProjectionMode::Perspective;
+        float m_FOV = 45.0f;
+        float m_Size = 1.0;
+        float m_NearPlane = 0.01;
+        float m_FarPlane = 1000.0;
     };
 }

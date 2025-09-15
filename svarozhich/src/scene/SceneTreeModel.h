@@ -65,6 +65,8 @@ public:
 
     void Remove(const QModelIndex& index);
 
+    TreeItem* FindItem(const QModelIndex& index) const;
+
 private:
     std::unique_ptr<TreeItem> m_Root;
     std::unordered_map<std::string, TreeItem*> m_FoldersCache;
