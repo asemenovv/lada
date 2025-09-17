@@ -70,4 +70,16 @@ namespace Svch {
         float m_NearPlane = 0.01;
         float m_FarPlane = 1000.0;
     };
+
+    class MeshComponent final : public Component {
+    public:
+        MeshComponent();
+    private:
+        QString meshAsset;
+        QString materialAsset;
+        bool visible = true;
+        bool castShadows = false;
+        bool receiveShadows = false;
+        Vector3f colorTint{1.0, 1.0, 1.0};
+    };
 }

@@ -39,6 +39,13 @@ add_executable(svarozhich
         src/inspector/cameracomponentwidget.ui
         src/inspector/CameraComponentWidget.cpp
         src/inspector/CameraComponentWidget.h
+        src/inspector/MeshComponentWidget.cpp
+        src/inspector/MeshComponentWidget.h
+        src/inspector/meshcomponentwidget.ui
+        src/model/Project.cpp
+        src/model/Project.h
+        src/model/Shader.cpp
+        src/model/Shader.h
 )
 
 target_include_directories(svarozhich

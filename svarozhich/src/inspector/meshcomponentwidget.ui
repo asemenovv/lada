@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>MeshComponentWidget</class>
+    <widget class="QWidget" name="MeshComponentWidget">
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing"><number>6</number></property>
+            <property name="leftMargin"><number>8</number></property>
+            <property name="topMargin"><number>0</number></property>
+            <property name="rightMargin"><number>8</number></property>
+            <property name="bottomMargin"><number>8</number></property>
+
+            <!-- Mesh -->
+            <item>
+                <widget class="QGroupBox" name="groupMesh">
+                    <property name="title"><string>Mesh</string></property>
+                    <layout class="QGridLayout" name="layoutMesh">
+                        <item row="0" column="0">
+                            <widget class="QLabel" name="lblMesh"><property name="text"><string>Asset</string></property></widget>
+                        </item>
+                        <item row="0" column="1">
+                            <widget class="QLineEdit" name="meshAsset"><property name="placeholderText"><string>path or asset id</string></property></widget>
+                        </item>
+                        <item row="0" column="2">
+                            <widget class="QPushButton" name="btnBrowseMesh"><property name="text"><string>Browse…</string></property></widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Material -->
+            <item>
+                <widget class="QGroupBox" name="groupMaterial">
+                    <property name="title"><string>Material</string></property>
+                    <layout class="QGridLayout" name="layoutMaterial">
+                        <item row="0" column="0">
+                            <widget class="QLabel" name="lblMat"><property name="text"><string>Asset</string></property></widget>
+                        </item>
+                        <item row="0" column="1">
+                            <widget class="QLineEdit" name="materialAsset"><property name="placeholderText"><string>path or asset id</string></property></widget>
+                        </item>
+                        <item row="0" column="2">
+                            <widget class="QPushButton" name="btnBrowseMaterial"><property name="text"><string>Browse…</string></property></widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+
+            <!-- Rendering -->
+            <item>
+                <widget class="QGroupBox" name="groupRendering">
+                    <property name="title"><string>Rendering</string></property>
+                    <layout class="QGridLayout" name="layoutRendering">
+                        <item row="0" column="0">
+                            <widget class="QCheckBox" name="visible"><property name="text"><string>Visible</string></property><property name="checked"><bool>true</bool></property></widget>
+                        </item>
+                        <item row="0" column="1">
+                            <widget class="QCheckBox" name="castShadows"><property name="text"><string>Cast Shadows</string></property><property name="checked"><bool>true</bool></property></widget>
+                        </item>
+                        <item row="0" column="2">
+                            <widget class="QCheckBox" name="receiveShadows"><property name="text"><string>Receive Shadows</string></property><property name="checked"><bool>true</bool></property></widget>
+                        </item>
+
+                        <item row="1" column="0">
+                            <widget class="QLabel" name="lblSubmesh"><property name="text"><string>Submesh</string></property></widget>
+                        </item>
+                        <item row="1" column="1">
+                            <widget class="QSpinBox" name="submeshIndex"><property name="minimum"><number>-1</number></property><property name="maximum"><number>9999</number></property><property name="value"><number>-1</number></property></widget>
+                        </item>
+
+                        <item row="1" column="2">
+                            <layout class="QHBoxLayout" name="layoutTint">
+                                <item><widget class="QPushButton" name="btnTint"><property name="text"><string>Tint…</string></property></widget></item>
+                                <item><widget class="QLabel" name="tintPreview">
+                                    <property name="minimumSize"><size><width>24</width><height>24</height></size></property>
+                                    <property name="frameShape"><enum>QFrame::Box</enum></property>
+                                    <property name="autoFillBackground"><bool>true</bool></property>
+                                </widget></item>
+                            </layout>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+
+            <item><spacer name="verticalSpacer">
+                <property name="orientation"><enum>Qt::Vertical</enum></property>
+                <property name="sizeHint" stdset="0"><size><width>0</width><height>0</height></size></property>
+            </spacer></item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

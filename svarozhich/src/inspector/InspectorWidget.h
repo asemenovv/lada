@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "CameraComponentWidget.h"
+#include "MeshComponentWidget.h"
 #include "TransformComponentWidget.h"
 #include "components/CollapsibleSection.h"
 
@@ -23,4 +24,7 @@ private:
 
     Svch::CameraComponentWidget* m_CameraWidget;
     Svch::CollapsibleSection* m_SecCamera;
+
+    Svch::MeshComponentWidget* m_MeshWidget;
+    Svch::CollapsibleSection* m_SecMesh;
 };

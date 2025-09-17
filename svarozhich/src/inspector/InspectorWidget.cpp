@@ -17,6 +17,11 @@ InspectorWidget::InspectorWidget(QWidget *parent)
         m_CameraWidget, this);
     root->insertWidget(1, m_SecCamera);
 
+    m_MeshWidget = new Svch::MeshComponentWidget(this);
+    m_SecMesh = new Svch::CollapsibleSection("Mesh", QIcon(":/icons/mesh"),
+        m_MeshWidget, this);
+    root->insertWidget(2, m_SecMesh);
+
     root->addStretch(1);
 }
 
