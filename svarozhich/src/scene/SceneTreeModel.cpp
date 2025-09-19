@@ -50,6 +50,7 @@ int TreeItem::indexOf(TreeItem *item) {
     if (it != children.end()) {
         return std::distance(children.begin(), it); // idx = 2
     }
+    return -1;
 }
 
 SceneTreeModel::SceneTreeModel(QObject *parent)

@@ -11,7 +11,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class InspectorWidget; }
 QT_END_NAMESPACE
 
-class InspectorWidget : public QWidget {
+class InspectorWidget final : public QWidget {
     Q_OBJECT
 public:
     explicit InspectorWidget(QWidget* parent = nullptr);

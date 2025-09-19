@@ -13,7 +13,6 @@
         <property name="windowTitle">
             <string>Svarožič</string>
         </property>
-        <widget class="QWidget" name="centralwidget"/>
         <widget class="QMenuBar" name="menuBar">
             <property name="geometry">
                 <rect>
@@ -45,7 +44,7 @@
             <attribute name="dockWidgetArea">
                 <number>1</number>
             </attribute>
-            <widget class="QScrollArea" name="scrollArea">
+            <widget class="QScrollArea" name="sceneHierarchyScrollArea">
                 <property name="widgetResizable">
                     <bool>true</bool>
                 </property>
@@ -73,6 +72,9 @@
             </widget>
             </widget>
         </widget>
+        <widget class="QWidget" name="centralWidget">
+            <widget class="NodeEditorWidget" name="nodeEditorWidget"/>
+        </widget>
         <widget class="QStatusBar" name="statusBar"/>
         <widget class="QDockWidget" name="dockInspector">
             <property name="allowedAreas">
@@ -84,7 +86,7 @@
             <attribute name="dockWidgetArea">
                 <number>2</number>
             </attribute>
-            <widget class="QScrollArea" name="scrollArea">
+            <widget class="QScrollArea" name="inspectorScrollArea">
                 <property name="widgetResizable">
                     <bool>true</bool>
                 </property>
@@ -103,6 +105,12 @@
             <class>InspectorWidget</class>
             <extends>QWidget</extends>
             <header>inspector/InspectorWidget.h</header>
+            <container>1</container>
+        </customwidget>
+        <customwidget>
+            <class>NodeEditorWidget</class>
+            <extends>QWidget</extends>
+            <header>materials/NodeEditorWidget.h</header>
             <container>1</container>
         </customwidget>
     </customwidgets>

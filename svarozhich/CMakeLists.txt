@@ -46,6 +46,14 @@ add_executable(svarozhich
         src/model/Project.h
         src/model/Shader.cpp
         src/model/Shader.h
+        src/materials/NodeEditorWidget.cpp
+        src/materials/NodeEditorWidget.h
+        src/materials/nodeeditorwidget.ui
+        src/materials/ShaderGraphModel.cpp
+        src/materials/ShaderGraphModel.h
+        src/model/shader/operations.h
+        src/model/shader/NodeElement.cpp
+        src/model/shader/NodeElement.h
 )
 
 target_include_directories(svarozhich
@@ -54,6 +62,7 @@ target_include_directories(svarozhich
 
 target_link_libraries(svarozhich
         PRIVATE lada_engine
+        PRIVATE QtNodes::QtNodes
         PRIVATE Qt6::Core
         PRIVATE Qt6::Gui
         PRIVATE Qt6::Widgets

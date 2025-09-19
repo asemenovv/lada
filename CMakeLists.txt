@@ -7,6 +7,7 @@ include_directories("${PROJECT_SOURCE_DIR}/lada_engine/src")
 
 add_subdirectory(lada_engine)
 add_subdirectory(lada_sandbox)
+add_subdirectory(svarozhich)
 add_subdirectory(deps/spdlog)
 add_subdirectory(deps/glm)
 add_subdirectory(deps/imgui_wrapper)
@@ -16,9 +17,10 @@ add_subdirectory(deps/GLAD)
 add_subdirectory(deps/assimp)
 add_subdirectory(deps/yaml-cpp)
 
-################################### Svarozhich (Qt) ###################################
-add_subdirectory(svarozhich)
-################################### Svarozhich (Qt) ###################################
+################################## Node Editor (Qt) ##################################
+set(CMAKE_PREFIX_PATH "~/Qt/6.9.2/macos")
+add_subdirectory(deps/nodeeditor)
+################################## Node Editor (Qt) ##################################
 
 ####################################### shaderc #######################################
 add_subdirectory(deps/spirv-headers)
