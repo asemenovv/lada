@@ -2,17 +2,6 @@
 <ui version="4.0">
     <class>MainWindow</class>
     <widget class="QMainWindow" name="MainWindow">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>724</width>
-                <height>550</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Svarožič</string>
-        </property>
         <widget class="QMenuBar" name="menuBar">
             <property name="geometry">
                 <rect>
@@ -34,86 +23,9 @@
                 <bool>false</bool>
             </attribute>
         </widget>
-        <widget class="QDockWidget" name="dockSceneHierarchy">
-            <property name="allowedAreas">
-                <set>Qt::DockWidgetArea::AllDockWidgetAreas</set>
-            </property>
-            <property name="windowTitle">
-                <string>Scene Hierarchy</string>
-            </property>
-            <attribute name="dockWidgetArea">
-                <number>1</number>
-            </attribute>
-            <widget class="QScrollArea" name="sceneHierarchyScrollArea">
-                <property name="widgetResizable">
-                    <bool>true</bool>
-                </property>
-                <widget class="QWidget" name="dockWidgetContents">
-                <layout class="QVBoxLayout" name="verticalLayout">
-                    <property name="spacing">
-                        <number>0</number>
-                    </property>
-                    <property name="leftMargin">
-                        <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                        <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                        <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                        <number>0</number>
-                    </property>
-                    <item>
-                        <widget class="SceneHierarchyWidget" name="sceneHierarchy" native="true"/>
-                    </item>
-                </layout>
-            </widget>
-            </widget>
-        </widget>
-        <widget class="QWidget" name="centralWidget">
-            <widget class="NodeEditorWidget" name="nodeEditorWidget"/>
-        </widget>
         <widget class="QStatusBar" name="statusBar"/>
-        <widget class="QDockWidget" name="dockInspector">
-            <property name="allowedAreas">
-                <set>Qt::DockWidgetArea::AllDockWidgetAreas</set>
-            </property>
-            <property name="windowTitle">
-                <string>Inspector</string>
-            </property>
-            <attribute name="dockWidgetArea">
-                <number>2</number>
-            </attribute>
-            <widget class="QScrollArea" name="inspectorScrollArea">
-                <property name="widgetResizable">
-                    <bool>true</bool>
-                </property>
-                <widget class="InspectorWidget" name="dockWidgetContents_2"/>
-            </widget>
-        </widget>
     </widget>
-    <customwidgets>
-        <customwidget>
-            <class>SceneHierarchyWidget</class>
-            <extends>QWidget</extends>
-            <header>scene/SceneHierarchyWidget.h</header>
-            <container>1</container>
-        </customwidget>
-        <customwidget>
-            <class>InspectorWidget</class>
-            <extends>QWidget</extends>
-            <header>inspector/InspectorWidget.h</header>
-            <container>1</container>
-        </customwidget>
-        <customwidget>
-            <class>NodeEditorWidget</class>
-            <extends>QWidget</extends>
-            <header>materials/NodeEditorWidget.h</header>
-            <container>1</container>
-        </customwidget>
-    </customwidgets>
+    <customwidgets/>
     <resources/>
     <connections/>
 </ui>

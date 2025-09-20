@@ -9,7 +9,6 @@ namespace Svch {
         m_Button->setIcon(icon);
         m_Button->setIconSize(QSize(16, 16));
         m_Button->setCheckable(true);
-        m_Button->setChecked(true);
         m_Button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         m_Button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
@@ -31,6 +30,7 @@ namespace Svch {
             m_ContentFrame->setVisible(checked);
             static_cast<DisclosureButton*>(m_Button)->SetExpanded(checked);
         });
+        setExpanded(false);
     }
 
     void CollapsibleSection::SetContent(QWidget *widget) {

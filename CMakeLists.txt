@@ -5,10 +5,14 @@ set("ROOT_FOLDER" ${PROJECT_SOURCE_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}/lada_engine/src")
 
+#add_definitions(-DSPDLOG_FMT_EXTERNAL=0)
+
 add_subdirectory(lada_engine)
 add_subdirectory(lada_sandbox)
 add_subdirectory(svarozhich)
+add_subdirectory(deps/fmt)
 add_subdirectory(deps/spdlog)
+add_subdirectory(deps/KDDockWidgets)
 add_subdirectory(deps/glm)
 add_subdirectory(deps/imgui_wrapper)
 add_subdirectory(deps/stb_image_wrapper)

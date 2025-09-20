@@ -38,3 +38,9 @@
 [submodule "deps/nodeeditor"]
 	path = deps/nodeeditor
 	url = https://github.com/paceholder/nodeeditor.git
+[submodule "deps/KDDockWidgets"]
+	path = deps/KDDockWidgets
+	url = https://github.com/KDAB/KDDockWidgets.git
+[submodule "deps/fmt"]
+	path = deps/fmt
+	url = https://github.com/fmtlib/fmt.git

@@ -68,4 +68,5 @@ target_link_libraries(svarozhich
         PRIVATE Qt6::Core
         PRIVATE Qt6::Gui
         PRIVATE Qt6::Widgets
+        PRIVATE KDAB::kddockwidgets
 )
