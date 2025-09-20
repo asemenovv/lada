@@ -146,7 +146,7 @@ bool ShaderGraphModel::setNodeData(QtNodes::NodeId nodeId, QtNodes::NodeRole rol
     }
 }
 
-void ShaderGraphModel::SetNodeModel(const QtNodes::NodeId nodeId, Svch::NodeElement* model) {
+void ShaderGraphModel::SetNodeModel(const QtNodes::NodeId nodeId, const std::shared_ptr<Svch::NodeElement> &model) {
     m_NodeModels[nodeId] = model;
     Q_EMIT nodeUpdated(nodeId);
 }

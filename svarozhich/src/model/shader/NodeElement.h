@@ -25,14 +25,11 @@ namespace Svch {
         virtual unsigned int OutputPorts() const {
             return 0;
         }
-    private:
-        unsigned int m_InPorts;
-        unsigned int m_OutPorts;
     };
 
     class InputNodeElement final : public NodeElement {
     public:
-        InputNodeElement() = default;
+        explicit InputNodeElement(const std::string &variableName);
 
         ~InputNodeElement() override = default;
 
@@ -43,11 +40,13 @@ namespace Svch {
         unsigned int InputPorts() const override;
 
         unsigned int OutputPorts() const override;
+    private:
+        std::string m_VariableName;
     };
 
     class OutputNodeElement final : public NodeElement {
     public:
-        OutputNodeElement() = default;
+        OutputNodeElement(const std::string &variableName);
 
         ~OutputNodeElement() override = default;
 
@@ -58,6 +57,8 @@ namespace Svch {
         unsigned int InputPorts() const override;
 
         unsigned int OutputPorts() const override;
+    private:
+        std::string m_VariableName;
     };
 
     class BinaryOperationNodeElement final : public NodeElement {

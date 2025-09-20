@@ -46,7 +46,7 @@ public:
 
     bool setNodeData(QtNodes::NodeId nodeId, QtNodes::NodeRole role, QVariant value) override;
 
-    void SetNodeModel(QtNodes::NodeId nodeId, Svch::NodeElement* model);
+    void SetNodeModel(QtNodes::NodeId nodeId, const std::shared_ptr<Svch::NodeElement> &model);
 
     QVariant portData(QtNodes::NodeId nodeId,
                       QtNodes::PortType portType,
@@ -66,7 +66,7 @@ public:
 private:
     QtNodes::NodeId m_NextNodeId;
     std::unordered_set<QtNodes::NodeId> m_NodeIds;
-    mutable std::unordered_map<QtNodes::NodeId, Svch::NodeElement*> m_NodeModels;
+    mutable std::unordered_map<QtNodes::NodeId, std::shared_ptr<Svch::NodeElement>> m_NodeModels;
     std::unordered_set<QtNodes::ConnectionId> m_Connectivity;
     mutable std::unordered_map<QtNodes::NodeId, NodeGeometryData> m_NodeGeometryData;
 };

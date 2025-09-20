@@ -5,12 +5,16 @@ namespace Svch {
         return "IN vec3";
     }
 
+    InputNodeElement::InputNodeElement(const std::string &variableName)
+        : m_VariableName(variableName) {
+    }
+
     NodeType InputNodeElement::GetNodeType() const {
         return NodeType::INPUT;
     }
 
     std::string InputNodeElement::GetCaption() const {
-        return "IN";
+        return "IN (" + m_VariableName + ")";
     }
 
     unsigned int InputNodeElement::InputPorts() const {
@@ -21,12 +25,16 @@ namespace Svch {
         return 1;
     }
 
+    OutputNodeElement::OutputNodeElement(const std::string &variableName)
+        : m_VariableName(variableName) {
+    }
+
     NodeType OutputNodeElement::GetNodeType() const {
         return NodeType::OUTPUT;
     }
 
     std::string OutputNodeElement::GetCaption() const {
-        return "OUT";
+        return "OUT (" + m_VariableName + ")";
     }
 
     unsigned int OutputNodeElement::InputPorts() const {

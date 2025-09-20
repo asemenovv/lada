@@ -34,6 +34,6 @@ private:
 
     std::unique_ptr<QAction> createNodeAction;
 
-    void connectUi();
-    void buildRegistry();
+    void initCreateActions();
+    void createNode(QPoint position, const std::shared_ptr<Svch::NodeElement> &nodeModel) const;
 };

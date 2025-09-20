@@ -54,6 +54,8 @@ add_executable(svarozhich
         src/model/shader/operations.h
         src/model/shader/NodeElement.cpp
         src/model/shader/NodeElement.h
+        src/model/shader/NodesFactory.cpp
+        src/model/shader/NodesFactory.h
 )
 
 target_include_directories(svarozhich
