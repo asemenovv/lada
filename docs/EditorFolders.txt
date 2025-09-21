@@ -1,0 +1,125 @@
+/editor
+  /app                      # entrypoint и сборка окна
+    main.cpp
+    MainWindow.h
+    MainWindow.cpp
+    mainwindow.ui
+
+  /ui                       # чистые виджеты/формы (без доменной логики)
+    /inspector
+      InspectorWidget.h
+      InspectorWidget.cpp
+      inspectorwidget.ui
+      /components
+        TransformComponentWidget.h
+        TransformComponentWidget.cpp
+        transformcomponentwidget.ui
+        MeshComponentWidget.h
+        MeshComponentWidget.cpp
+        meshcomponent.ui
+        CameraComponentWidget.h
+        CameraComponentWidget.cpp
+        cameracomponent.ui
+        CollapsibleSection.h
+        CollapsibleSection.cpp
+    /scene_hierarchy
+      SceneHierarchyWidget.h
+      SceneHierarchyWidget.cpp
+      scenehierarchywidget.ui
+    /content_browser
+      ContentBrowserWidget.h
+      ContentBrowserWidget.cpp
+      contentbrowserwidget.ui
+    /node_editor
+      NodeEditorWidget.h
+      NodeEditorWidget.cpp
+      nodeeditor.ui
+    /common
+      Icons.qrc
+      styles.qss
+
+  /models                   # Qt-модели/посредники между доменом и UI
+    SceneTreeModel.h
+    SceneTreeModel.cpp
+    AssetsModel.h
+    AssetsModel.cpp
+    MaterialsModel.h
+    MaterialsModel.cpp
+    PropertyAdapters.h      # map<componentId, editor-factory>
+
+  /editor_core              # слой «Editor» без UI: команды, сервисы, состояние
+    EditorService.h
+    EditorService.cpp
+    Selection.h
+    Selection.cpp
+    EditorState.h
+    EditorState.cpp
+    /commands
+      ICommand.h
+      CreateEntityCommand.h
+      CreateEntityCommand.cpp
+      DeleteEntityCommand.h
+      DeleteEntityCommand.cpp
+      SetPropertyCommand.h
+      SetPropertyCommand.cpp
+
+  /engine_core              # домен/движок (минимум Qt; переиспользуемый)
+    /ecs
+      Entity.h
+      Component.h
+      System.h
+      Scene.h
+      Scene.cpp
+      EntityManager.h
+      EntityManager.cpp
+      components/
+        Transform.h
+        Transform.cpp
+        Mesh.h
+        Mesh.cpp
+        Camera.h
+        Camera.cpp
+        Light.h
+        Light.cpp
+    /assets
+      AssetId.h
+      Asset.h
+      AssetManager.h
+      AssetManager.cpp
+      importers/
+        GltfImporter.h
+        GltfImporter.cpp
+    /render
+      Renderer.h
+      Renderer.cpp
+      Material.h
+      Material.cpp
+      ShaderGraphIR.h
+      ShaderCompiler.h
+      ShaderCompiler.cpp
+    /math
+      Math.h
+      Bounds.h
+
+  /integration              # мосты UI↔engine (adapters, converters)
+    QtSceneAdapter.h
+    QtSceneAdapter.cpp
+    IconsProvider.h
+    IconsProvider.cpp
+
+  /plugins                  # расширения редактора/движка
+    /sample_material_nodes
+      CMakeLists.txt
+      MultiplyNode.h
+      MultiplyNode.cpp
+      OutputNode.h
+      OutputNode.cpp
+
+  /tests
+    /unit
+      test_EntityManager.cpp
+      test_Commands.cpp
+    /ui
+      test_SceneTreeModel.cpp
+
+  CMakeLists.txt

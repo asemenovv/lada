@@ -51,6 +51,10 @@ add_library(lada_engine STATIC
         src/platform/vulkan/buffers/VulkanImage.cpp
         src/platform/vulkan/pipeline/VulkanShader.cpp
         src/platform/vulkan/pipeline/VulkanShaderCompiler.cpp
+        src/platform/vulkan/pipeline/VulkanPipeline.cpp
+        src/platform/vulkan/pipeline/VulkanPipeline.h
+        src/platform/vulkan/pipeline/VulkanPipelineLayout.cpp
+        src/platform/vulkan/pipeline/VulkanPipelineLayout.h
 )
 
 target_include_directories(lada_engine

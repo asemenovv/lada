@@ -1,13 +1,17 @@
 #include "VulkanShader.h"
 
 #include "app/Logger.h"
+#include "platform/vulkan/VulkanGraphicsContext.h"
 
 namespace Lada {
-    VulkanShader::VulkanShader(const std::string &shaderPath,
-                               const std::shared_ptr<VulkanGraphicsContext> &graphicsContext)
-        : m_GraphicsContext(graphicsContext) {
+    VulkanShader::VulkanShader(const std::string &shaderPath, VulkanGraphicsContext* graphicsContext)
+        : m_ShaderModule(nullptr), m_GraphicsContext(graphicsContext) {
         const auto code = readFile(shaderPath);
         createShaderModule(code);
+    }
+
+    VulkanShader::~VulkanShader() {
+        vkDestroyShaderModule(m_GraphicsContext->GetDevice().NativeDevice(), m_ShaderModule, nullptr);
     }
 
     void VulkanShader::createShaderModule(const std::vector<char> &code) {

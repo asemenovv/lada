@@ -18,6 +18,9 @@ namespace Lada {
         m_PhysicalDevice = std::make_unique<VulkanPhysicalDevice>(*m_VulkanInstance, *m_Surface);
         m_Device = std::make_unique<VulkanDevice>(*m_VulkanInstance, *m_PhysicalDevice, enableValidationLayers);
         m_SwapChain = std::make_unique<VulkanSwapChain>(this, extent);
+        m_Pipeline = std::make_unique<VulkanPipeline>(this,
+            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert.spv",
+            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag.spv");
     }
 
     void VulkanGraphicsContext::SwapBuffers() {

@@ -12,6 +12,8 @@ namespace Lada {
     public:
         VulkanSwapChain(VulkanGraphicsContext* graphicalContext, VkExtent2D windowExtent);
         ~VulkanSwapChain();
+
+        VkExtent2D GetSwapChainExtent() const { return m_SwapChainExtent; }
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR>& availableFormats);

@@ -4,6 +4,7 @@
 #include "device/VulkanInstance.h"
 #include "device/VulkanPhysicalDevice.h"
 #include "device/VulkanSurface.h"
+#include "pipeline/VulkanPipeline.h"
 #include "renderer/GraphicsContext.h"
 
 struct GLFWwindow;
@@ -25,12 +26,14 @@ namespace Lada {
         VulkanPhysicalDevice& GetPhysicalDevice() const { return *m_PhysicalDevice; }
         VulkanSurface& GetSurface() const { return *m_Surface; }
         VulkanDevice& GetDevice() const { return *m_Device; }
+        VulkanSwapChain& GetSwapChain() const { return *m_SwapChain; }
     private:
         std::unique_ptr<VulkanInstance> m_VulkanInstance;
         std::unique_ptr<VulkanSurface> m_Surface;
         std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
         std::unique_ptr<VulkanDevice> m_Device;
         std::unique_ptr<VulkanSwapChain> m_SwapChain;
+        std::unique_ptr<VulkanPipeline> m_Pipeline;
         Window& m_Window;
     };
 }
