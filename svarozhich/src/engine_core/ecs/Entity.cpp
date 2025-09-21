@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "Math.h"
+#include "model/Math.h"
 
 namespace Svch {
     Entity::Entity(const std::string &name)
@@ -17,7 +17,7 @@ namespace Svch {
     }
 
     Entity::Entity(const unsigned int id, std::string name, std::vector<std::string> folderPath)
-        : m_EntityID(id), m_Name(std::move(name)), m_FolderPath(std::move(folderPath)) {
+        : m_ID(id), m_Name(std::move(name)), m_FolderPath(std::move(folderPath)) {
     }
 
     unsigned int Entity::NewId() {

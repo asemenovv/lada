@@ -2,7 +2,7 @@
 
 #include <QAbstractItemModel>
 
-#include "model/Entity.h"
+#include "../engine_core/ecs/Entity.h"
 
 enum class NodeType {
     ENTITY = 0,

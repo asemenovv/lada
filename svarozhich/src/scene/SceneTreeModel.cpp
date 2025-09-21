@@ -7,7 +7,7 @@
 #include <ranges>
 
 #include "utils.h"
-#include "model/Entity.h"
+#include "../engine_core/ecs/Entity.h"
 #include "spdlog/fmt/bundled/format.h"
 #include "spdlog/fmt/bundled/xchar.h"
 

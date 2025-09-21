@@ -9,8 +9,8 @@ SceneHierarchyWidget::SceneHierarchyWidget(QWidget *parent) : QWidget(parent),
                                                               ui(std::make_unique<Ui::SceneHierarchyWidget>()) {
     ui->setupUi(this);
 
-    // ui->btnAddChild->setEnabled(false);
-    // ui->btnRemove->setEnabled(false);
+    m_SceneTreeModel = std::make_unique<SceneTreeModel>();
+    ui->treeView->setModel(m_SceneTreeModel.get());
 
     configureContextMenu();
 
@@ -28,10 +28,6 @@ SceneHierarchyWidget::SceneHierarchyWidget(QWidget *parent) : QWidget(parent),
 }
 
 SceneHierarchyWidget::~SceneHierarchyWidget() = default;
-
-void SceneHierarchyWidget::SetModel(QAbstractItemModel *model) {
-    ui->treeView->setModel(model);
-}
 
 QTreeView *SceneHierarchyWidget::TreeView() const {
     return ui->treeView;

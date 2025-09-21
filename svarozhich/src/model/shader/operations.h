@@ -39,6 +39,18 @@ namespace Svch {
         }
     };
 
+    BaseKind Promote(const BaseKind a, const BaseKind b) {
+        if (a == b) return a;
+        auto rank = [](const BaseKind k){
+            switch (k) { case BaseKind::Double: return 4;
+                case BaseKind::Float:  return 3;
+                case BaseKind::UInt:   return 2;
+                case BaseKind::Int:    return 1;
+                default:               return 0; }
+        };
+        return (rank(a) >= rank(b)) ? a : b;
+    }
+
     enum class BinOp { Add, Sub, Mul, Div };
 
     struct OpRule {
@@ -53,4 +65,17 @@ namespace Svch {
             return it == rules.end() ? nullptr : &it->second;
         }
     };
+
+    bool isArithmeticBase(const BaseKind b) {
+        return b == BaseKind::Int || b == BaseKind::UInt
+            || b == BaseKind::Float || b == BaseKind::Double;
+    }
+
+    bool sameShape(const Type& a, const Type& b) {
+        if (a.kind != b.kind) return false;
+        if (a.isScalar() && b.isScalar()) return true;
+        if (a.isVector() && b.isVector()) return a.components() == b.components();
+        if (a.isMatrix() && b.isMatrix()) return a.rows == b.rows && a.cols == b.cols;
+        return false;
+    }
 }

@@ -1,0 +1,40 @@
+@startuml
+autonumber
+actor User
+participant UI as SceneHierarchyWidget
+participant MW as MainWindow
+participant ES as EditorService
+participant US as QUndoStack
+participant CMD as CreateEntityCommand
+participant SC as Scene
+participant BUS as EventBus
+participant TM as SceneTreeModel
+
+User -> UI : Click "Create Entity"
+UI --> MW : signal createEntityRequested(parentId)
+MW -> ES : createEntity(parentId, "New Entity")
+ES -> US : push(new CreateEntityCommand(...))
+note right of US
+  QUndoStack immediately
+  calls redo() on push
+end note
+
+US -> CMD : redo()
+CMD -> SC : id = createEntity("New Entity")
+CMD -> SC : setParent(id, parentId)
+CMD -> BUS : emitEntityCreated(id)
+CMD -> BUS : emitHierarchyChanged()
+
+BUS --> TM : onHierarchyChanged()
+TM -> TM : refreshFromScene()
+TM --> UI : dataChanged/layoutChanged()
+
+== Undo ==
+User -> MW : Ctrl+Z
+MW -> US : undo()
+US -> CMD : undo()
+CMD -> SC : destroyEntity(id)
+CMD -> BUS : emitEntityDestroyed(id)
+CMD -> BUS : emitHierarchyChanged()
+BUS --> TM : refresh + notify view
+@enduml

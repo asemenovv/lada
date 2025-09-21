@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtWidgets/QTreeView>
 
+class SceneTreeModel;
 QT_BEGIN_NAMESPACE
 
 namespace Ui {
@@ -40,6 +41,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::SceneHierarchyWidget> ui;
+    std::unique_ptr<SceneTreeModel> m_SceneTreeModel;
 
     void configureContextMenu();
 };

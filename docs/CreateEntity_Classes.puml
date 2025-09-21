@@ -1,0 +1,84 @@
+@startuml
+
+class MainWindow {
+  - SceneHierarchyWidget* m_hierarchy
+  - QUndoStack* m_undo
+  - EditorService* m_editor
+  + onCreateEntityTriggered()
+}
+
+class SceneHierarchyWidget {
+  + QAction* actCreateEntity
+  + signal createEntityRequested(parentEntityId)
+}
+
+class EditorService {
+  - Scene* m_scene
+  - EventBus* m_bus
+  - QUndoStack* m_undo
+  + createEntity(Optional<EntId> parent, QString name) : void
+  + execute(std::unique_ptr<ICommand>)
+}
+
+class ICommand {
+  <<interface>>
+  + redo(): void
+  + undo(): void
+  + text(): QString
+}
+
+class CreateEntityCommand {
+  - Scene* m_scene
+  - EventBus* m_bus
+  - Optional<EntId> m_parent
+  - EntId m_newEntity
+  - QString m_name
+  + redo(): void
+  + undo(): void
+  + text(): QString
+}
+
+class Scene {
+  - EntityManager m_entities
+  + EntId createEntity(QString name)
+  + void destroyEntity(EntId)
+  + void setParent(EntId child, Optional<EntId> parent)
+}
+
+class EntityManager {
+  - DenseMap<EntId, EntityRecord> m_records
+  - IdAllocator m_ids
+  + EntId allocate(QString name)
+  + void free(EntId)
+  + bool exists(EntId) const
+  + QString name(EntId) const
+}
+
+class EventBus {
+  + emitEntityCreated(EntId)
+  + emitEntityDestroyed(EntId)
+  + emitHierarchyChanged()
+}
+
+class SceneTreeModel {
+  - Scene* m_scene
+  - vector<TreeItem*> m_items
+  + index/parent/rowCount/data(...)
+  + refreshFromScene()
+}
+
+MainWindow --> SceneHierarchyWidget : owns
+MainWindow --> EditorService : uses
+MainWindow --> QUndoStack : owns
+SceneHierarchyWidget ..> MainWindow : signals
+EditorService --> Scene : uses
+EditorService --> QUndoStack : uses
+EditorService --> ICommand : executes
+CreateEntityCommand ..|> ICommand
+CreateEntityCommand --> Scene : mutates
+CreateEntityCommand --> EventBus : notifies
+Scene --> EntityManager : owns
+SceneTreeModel --> Scene : reads
+EventBus --> SceneTreeModel : notifies
+
+@enduml

@@ -8,16 +8,15 @@ MainWindow::MainWindow(QWidget *parent): KDDockWidgets::QtWidgets::MainWindow("S
 
     ui->setupUi(this);
 
-    m_SceneTreeModel = std::make_unique<SceneTreeModel>();
-    m_Entities.emplace_back("Camera");
-    m_Entities.emplace_back("Sun Directional Light",
-        std::vector<std::string>{"Global", "Rendering", "Lights"});
-    m_Entities.emplace_back("Floor", std::vector<std::string>{"Room"});
-    m_Entities.emplace_back("Vase", std::vector<std::string>{"Room"});
-    m_Entities.emplace_back("Table", std::vector<std::string>{"Room"});
-    for (auto& entity : m_Entities) {
-        m_SceneTreeModel->AddEntity(&entity);
-    }
+    // m_Entities.emplace_back("Camera");
+    // m_Entities.emplace_back("Sun Directional Light",
+    //     std::vector<std::string>{"Global", "Rendering", "Lights"});
+    // m_Entities.emplace_back("Floor", std::vector<std::string>{"Room"});
+    // m_Entities.emplace_back("Vase", std::vector<std::string>{"Room"});
+    // m_Entities.emplace_back("Table", std::vector<std::string>{"Room"});
+    // for (auto& entity : m_Entities) {
+    //     m_SceneTreeModel->AddEntity(&entity);
+    // }
 
     m_DockNodeEditor = new KDDockWidgets::QtWidgets::DockWidget(QStringLiteral("Shader Material"));
     m_NodeEditor = new NodeEditorWidget();
@@ -25,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent): KDDockWidgets::QtWidgets::MainWindow("S
     addDockWidget(m_DockNodeEditor, KDDockWidgets::Location_OnTop);
 
     m_SceneHierarchy = new SceneHierarchyWidget();
-    m_SceneHierarchy->SetModel(m_SceneTreeModel.get());
     auto* sceneHierarchyScrollArea = new QScrollArea();
     sceneHierarchyScrollArea->setWidgetResizable(true);
     sceneHierarchyScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

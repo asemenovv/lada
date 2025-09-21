@@ -4,10 +4,10 @@
 #include <kddockwidgets/DockWidget.h>
 #include <memory>
 
-#include "inspector/InspectorWidget.h"
-#include "materials/NodeEditorWidget.h"
-#include "scene/SceneHierarchyWidget.h"
-#include "scene/SceneTreeModel.h"
+#include "../inspector/InspectorWidget.h"
+#include "../materials/NodeEditorWidget.h"
+#include "../scene/SceneHierarchyWidget.h"
+#include "../scene/SceneTreeModel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +21,6 @@ public:
 
 private:
     std::unique_ptr<Ui::MainWindow> ui;
-    std::unique_ptr<SceneTreeModel> m_SceneTreeModel;
     std::vector<Svch::Entity> m_Entities;
 
     KDDockWidgets::QtWidgets::DockWidget* m_DockSceneHierarchy;

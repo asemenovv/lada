@@ -12,17 +12,17 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 add_executable(svarozhich
         resources/main.qrc
-        src/main.cpp
-        src/MainWindow.h
-        src/MainWindow.cpp
-        src/mainwindow.ui
+        src/app/main.cpp
+        src/app/MainWindow.h
+        src/app/MainWindow.cpp
+        src/app/mainwindow.ui
         src/scene/SceneTreeModel.h
         src/scene/SceneTreeModel.cpp
         src/scene/SceneHierarchyWidget.h
         src/scene/SceneHierarchyWidget.cpp
         src/scene/scenehierarchywidget.ui
-        src/model/Entity.cpp
-        src/model/Entity.h
+        src/engine_core/ecs/Entity.cpp
+        src/engine_core/ecs/Entity.h
         src/model/Component.h
         src/model/Math.h
         src/inspector/InspectorWidget.cpp
@@ -56,6 +56,14 @@ add_executable(svarozhich
         src/model/shader/NodeElement.h
         src/model/shader/NodesFactory.cpp
         src/model/shader/NodesFactory.h
+        src/editor_core/commands/ICommand.h
+        src/editor_core/commands/CreateEntityCommand.h
+        src/editor_core/commands/CreateEntityCommand.cpp
+        src/editor_core/commands/CreateEntityCommand.h
+        src/engine_core/ecs/Scene.cpp
+        src/engine_core/ecs/Scene.h
+        src/engine_core/events/EventBus.cpp
+        src/engine_core/events/EventBus.h
 )
 
 target_include_directories(svarozhich

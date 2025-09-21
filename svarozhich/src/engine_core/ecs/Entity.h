@@ -1,18 +1,20 @@
 #pragma once
 
+typedef unsigned int EntityID;
+
 namespace Svch {
     class Entity {
     public:
         explicit Entity(const std::string& name);
 
-        explicit Entity(unsigned int id, const std::string& name);
+        explicit Entity(EntityID id, const std::string& name);
 
         explicit Entity(const std::string &name, const std::vector<std::string> &folderPath);
 
-        explicit Entity(unsigned int id, std::string  name, std::vector<std::string> folderPath);
+        explicit Entity(EntityID id, std::string  name, std::vector<std::string> folderPath);
 
-        [[nodiscard]] unsigned int GetID() const {
-            return m_EntityID;
+        [[nodiscard]] EntityID GetID() const {
+            return m_ID;
         }
 
         [[nodiscard]] std::string GetName() const {
@@ -25,7 +27,7 @@ namespace Svch {
 
         static unsigned int NewId();
     private:
-        unsigned int m_EntityID;
+        EntityID m_ID;
         std::string m_Name;
         std::vector<std::string> m_FolderPath;
     };
