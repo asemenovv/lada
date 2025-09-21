@@ -8,7 +8,7 @@ namespace Lada {
         explicit VulkanPipelineLayout(VulkanGraphicsContext* graphicsContext);
         ~VulkanPipelineLayout();
 
-        VkPipelineLayout NativeInstance() const { return m_PipelineLayout; }
+        VkPipelineLayout NativeLayout() const { return m_PipelineLayout; }
     private:
         VulkanGraphicsContext* m_GraphicsContext;
         VkPipelineLayout m_PipelineLayout;

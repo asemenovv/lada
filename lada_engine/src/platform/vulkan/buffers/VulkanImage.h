@@ -24,6 +24,8 @@ namespace Lada {
 
         VulkanImage &operator=(VulkanImage &&other) noexcept;
 
+        VkFormat GetFormat() const { return m_Format; }
+
     private:
         void reset();
 

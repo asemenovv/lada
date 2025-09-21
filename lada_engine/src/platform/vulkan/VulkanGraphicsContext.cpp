@@ -1,6 +1,7 @@
 #include "VulkanGraphicsContext.h"
 
 #include "VulkanSwapChain.h"
+#include "pipeline/VulkanPipeline.h"
 
 namespace Lada {
     VulkanGraphicsContext::VulkanGraphicsContext(Window& window): m_Window(window) {

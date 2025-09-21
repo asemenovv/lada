@@ -10,7 +10,7 @@
 
 namespace Lada {
     VulkanSwapChain::VulkanSwapChain(VulkanGraphicsContext* graphicalContext, const VkExtent2D windowExtent)
-        : m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext), m_SwapChain(VK_NULL_HANDLE), m_SwapChainExtent({}) {
+        : m_SwapChain(VK_NULL_HANDLE), m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext), m_SwapChainExtent({}) {
         const VulkanPhysicalDevice& physicalDevice = graphicalContext->GetPhysicalDevice();
         const VulkanSurface& surface = graphicalContext->GetSurface();
         const VulkanDevice& device = graphicalContext->GetDevice();

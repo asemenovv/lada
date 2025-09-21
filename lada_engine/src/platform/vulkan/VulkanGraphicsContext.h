@@ -4,13 +4,13 @@
 #include "device/VulkanInstance.h"
 #include "device/VulkanPhysicalDevice.h"
 #include "device/VulkanSurface.h"
-#include "pipeline/VulkanPipeline.h"
 #include "renderer/GraphicsContext.h"
 
 struct GLFWwindow;
 
 namespace Lada {
     class VulkanSwapChain;
+    class VulkanPipeline;
 
     class VulkanGraphicsContext final : public GraphicsContext,
                                         public std::enable_shared_from_this<VulkanGraphicsContext> {

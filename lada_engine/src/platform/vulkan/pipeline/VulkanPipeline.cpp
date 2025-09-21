@@ -1,5 +1,6 @@
 #include "VulkanPipeline.h"
 
+#include "app/Logger.h"
 #include "platform/vulkan/VulkanGraphicsContext.h"
 #include "platform/vulkan/VulkanSwapChain.h"
 
@@ -8,10 +9,13 @@ namespace Lada {
         const std::string &fragPath): m_GraphicsContext(graphicsContext) {
         m_VertShader = std::make_unique<VulkanShader>(vertPath, graphicsContext);
         m_FragShader = std::make_unique<VulkanShader>(fragPath, graphicsContext);
+        m_Layout = std::make_unique<VulkanPipelineLayout>(graphicsContext);
+        m_RenderPass = std::make_unique<VulkanRenderPass>(graphicsContext);
         createGraphicsPipeline();
     }
 
     VulkanPipeline::~VulkanPipeline() {
+        vkDestroyPipeline(m_GraphicsContext->GetDevice().NativeDevice(), m_Pipeline, nullptr);
     }
 
     void VulkanPipeline::createGraphicsPipeline() {
@@ -29,15 +33,6 @@ namespace Lada {
         fragShaderStageInfo.pName = "main";
 
         VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
-
-        const std::vector dynamicStates = {
-            VK_DYNAMIC_STATE_VIEWPORT,
-            VK_DYNAMIC_STATE_SCISSOR
-        };
-        VkPipelineDynamicStateCreateInfo dynamicState = {};
-        dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-        dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
-        dynamicState.pDynamicStates = dynamicStates.data();
 
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
@@ -116,5 +111,35 @@ namespace Lada {
         colorBlending.blendConstants[1] = 0.0f;
         colorBlending.blendConstants[2] = 0.0f;
         colorBlending.blendConstants[3] = 0.0f;
+
+        const std::vector dynamicStates = {
+            VK_DYNAMIC_STATE_VIEWPORT,
+            VK_DYNAMIC_STATE_SCISSOR
+        };
+        VkPipelineDynamicStateCreateInfo dynamicState = {};
+        dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
+        dynamicState.dynamicStateCount = static_cast<uint32_t>(dynamicStates.size());
+        dynamicState.pDynamicStates = dynamicStates.data();
+
+        VkGraphicsPipelineCreateInfo pipelineInfo = {};
+        pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+        pipelineInfo.stageCount = 2;
+        pipelineInfo.pStages = shaderStages;
+        pipelineInfo.pVertexInputState = &vertexInputInfo;
+        pipelineInfo.pInputAssemblyState = &inputAssembly;
+        pipelineInfo.pViewportState = &viewportState;
+        pipelineInfo.pRasterizationState = &rasterizer;
+        pipelineInfo.pMultisampleState = &multisampling;
+        pipelineInfo.pDepthStencilState = nullptr;
+        pipelineInfo.pColorBlendState = &colorBlending;
+        pipelineInfo.pDynamicState = &dynamicState;
+        pipelineInfo.layout = m_Layout->NativeLayout();
+        pipelineInfo.renderPass = m_RenderPass->NativeRenderPass();
+        pipelineInfo.subpass = 0;
+        pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+        pipelineInfo.basePipelineIndex = -1;
+
+        LD_VK_ASSERT_SUCCESS(vkCreateGraphicsPipelines(m_GraphicsContext->GetDevice().NativeDevice(), VK_NULL_HANDLE,
+            1, &pipelineInfo, nullptr, &m_Pipeline), "Failed to create graphics pipeline!");
     }
 }
