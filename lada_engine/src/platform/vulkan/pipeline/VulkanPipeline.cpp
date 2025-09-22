@@ -3,6 +3,7 @@
 #include "app/Logger.h"
 #include "platform/vulkan/VulkanGraphicsContext.h"
 #include "platform/vulkan/VulkanSwapChain.h"
+#include "platform/vulkan/commands/VulkanCommandBuffer.h"
 
 namespace Lada {
     VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const std::string &vertPath,
@@ -16,6 +17,11 @@ namespace Lada {
 
     VulkanPipeline::~VulkanPipeline() {
         vkDestroyPipeline(m_GraphicsContext->GetDevice().NativeDevice(), m_Pipeline, nullptr);
+    }
+
+    void VulkanPipeline::Bind(CommandBuffer* commandBuffer) {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
+        vkCmdBindPipeline(vulkanCommandBuffer->GetNativeCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_Pipeline);
     }
 
     void VulkanPipeline::createGraphicsPipeline() {

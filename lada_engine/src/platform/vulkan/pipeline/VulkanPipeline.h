@@ -5,15 +5,18 @@
 #include "VulkanPipelineLayout.h"
 #include "VulkanRenderPass.h"
 #include "VulkanShader.h"
+#include "renderer/Pipeline.h"
 
 namespace Lada {
-    class VulkanPipeline {
+    class VulkanPipeline : public Pipeline {
     public:
         VulkanPipeline(VulkanGraphicsContext* graphicsContext, const std::string &vertPath,
                        const std::string &fragPath);
         ~VulkanPipeline();
 
-        VulkanRenderPass* GetRenderPass() const { return m_RenderPass.get(); }
+        RenderPass* GetRenderPass() override { return m_RenderPass.get(); }
+
+        void Bind(CommandBuffer* commandBuffer) override;
     private:
         void createGraphicsPipeline(/*const PipelineConfigInfo &configInfo*/);
 

@@ -10,6 +10,10 @@ namespace Lada {
 
         void Init() override;
         void SwapBuffers() override;
+
+        Pipeline* GetPipeline() const override { return nullptr; }
+
+        std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() override { return nullptr; }
     private:
         Window& m_Window;
     };

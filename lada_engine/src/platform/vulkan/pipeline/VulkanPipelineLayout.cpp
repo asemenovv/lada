@@ -1,6 +1,7 @@
 #include "VulkanPipelineLayout.h"
 
 #include "app/Logger.h"
+#include "platform/vulkan/VulkanGraphicsContext.h"
 
 namespace Lada {
     VulkanPipelineLayout::VulkanPipelineLayout(VulkanGraphicsContext *graphicsContext)

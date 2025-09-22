@@ -1,5 +1,6 @@
 #include "VulkanFramebuffer.h"
 
+#include "VulkanGraphicsContext.h"
 #include "VulkanSwapChain.h"
 #include "app/Logger.h"
 #include "buffers/VulkanImage.h"
@@ -8,14 +9,14 @@
 namespace Lada {
     VulkanFramebuffer::VulkanFramebuffer(VulkanGraphicsContext *graphicsContext, VulkanImage& image)
         : m_GraphicsContext(graphicsContext) {
-        VkDevice device = graphicsContext->GetDevice().NativeDevice();
-        const VkRenderPass &renderPass = graphicsContext->GetPipeline().GetRenderPass()->NativeRenderPass();
+        const VkDevice device = graphicsContext->GetDevice().NativeDevice();
+        const auto renderPass = static_cast<VulkanRenderPass*>(graphicsContext->GetPipeline()->GetRenderPass());
         const VkImageView attachments[] = { image.GetView() };
         const auto [width, height] = graphicsContext->GetSwapChain().GetSwapChainExtent();
 
         VkFramebufferCreateInfo framebufferInfo{};
         framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
-        framebufferInfo.renderPass = renderPass;
+        framebufferInfo.renderPass = renderPass->NativeRenderPass();
         framebufferInfo.attachmentCount = 1;
         framebufferInfo.pAttachments = attachments;
         framebufferInfo.width = width;

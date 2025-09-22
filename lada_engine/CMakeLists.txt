@@ -59,6 +59,16 @@ add_library(lada_engine STATIC
         src/platform/vulkan/pipeline/VulkanRenderPass.h
         src/platform/vulkan/VulkanFramebuffer.cpp
         src/platform/vulkan/VulkanFramebuffer.h
+        src/platform/vulkan/commands/VulkanCommandPool.cpp
+        src/platform/vulkan/commands/VulkanCommandPool.h
+        src/platform/vulkan/commands/VulkanCommandBuffer.cpp
+        src/platform/vulkan/commands/VulkanCommandBuffer.h
+        src/renderer/CommandBuffer.cpp
+        src/renderer/CommandBuffer.h
+        src/renderer/RenderPass.cpp
+        src/renderer/RenderPass.h
+        src/renderer/Pipeline.cpp
+        src/renderer/Pipeline.h
 )
 
 target_include_directories(lada_engine

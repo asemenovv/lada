@@ -1,9 +1,11 @@
 #include "VulkanGraphicsContext.h"
 
+#include "commands/VulkanCommandPool.h"
 #include "VulkanSwapChain.h"
 #include "app/Logger.h"
 #include "pipeline/VulkanPipeline.h"
 #include "VulkanFramebuffer.h"
+#include "commands/VulkanCommandBuffer.h"
 
 namespace Lada {
     VulkanGraphicsContext::VulkanGraphicsContext(Window& window): m_Window(window) {
@@ -25,6 +27,7 @@ namespace Lada {
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert.spv",
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag.spv");
         crateFrameBuffers();
+        m_CommandPool = std::make_unique<VulkanCommandPool>(this);
     }
 
     void VulkanGraphicsContext::crateFrameBuffers() {
@@ -40,5 +43,13 @@ namespace Lada {
 
     void VulkanGraphicsContext::SetDebugName(const uint64_t handle, const VkObjectType type, const char *name) {
         m_Device->SetDebugName(handle, type, name);
+    }
+
+    std::unique_ptr<CommandBuffer> VulkanGraphicsContext::BeginSingleTimeCommands() {
+        return std::make_unique<VulkanCommandBuffer>(this, m_CommandPool.get());
+    }
+
+    VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
+        return *swapChainFramebuffers[index];
     }
 }

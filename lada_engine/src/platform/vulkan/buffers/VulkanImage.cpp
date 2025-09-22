@@ -1,6 +1,7 @@
 #include "VulkanImage.h"
 
 #include "app/Logger.h"
+#include "platform/vulkan/VulkanGraphicsContext.h"
 
 namespace Lada {
     VulkanImage::VulkanImage(VulkanGraphicsContext* graphicsContext, const VkImage image,

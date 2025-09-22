@@ -1,9 +1,13 @@
 #pragma once
 
-#include "platform/vulkan/VulkanGraphicsContext.h"
+#include <vulkan/vulkan.h>
+
+#include "renderer/RenderPass.h"
 
 namespace Lada {
-    class VulkanRenderPass {
+    class VulkanGraphicsContext;
+
+    class VulkanRenderPass : public RenderPass {
     public:
         explicit VulkanRenderPass(VulkanGraphicsContext *graphicsContext);
 
@@ -11,6 +15,7 @@ namespace Lada {
 
         VkRenderPass NativeRenderPass() const { return m_RenderPass; }
 
+        void Begin(CommandBuffer* commandBuffer, uint32_t currentImageIndex, const glm::vec4 &clearColor) const override;
     private:
         VulkanGraphicsContext *m_GraphicsContext;
         VkRenderPass m_RenderPass;

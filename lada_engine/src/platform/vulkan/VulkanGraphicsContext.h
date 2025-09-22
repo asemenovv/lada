@@ -1,18 +1,22 @@
 #pragma once
 
+#include "VulkanFramebuffer.h"
+#include "VulkanSwapChain.h"
+#include "commands/VulkanCommandPool.h"
 #include "device/VulkanDevice.h"
 #include "device/VulkanInstance.h"
 #include "device/VulkanPhysicalDevice.h"
 #include "device/VulkanSurface.h"
+#include "pipeline/VulkanPipeline.h"
 #include "renderer/GraphicsContext.h"
+
+namespace Lada {
+    class VulkanCommandBuffer;
+}
 
 struct GLFWwindow;
 
 namespace Lada {
-    class VulkanFramebuffer;
-    class VulkanSwapChain;
-    class VulkanPipeline;
-
     class VulkanGraphicsContext final : public GraphicsContext,
                                         public std::enable_shared_from_this<VulkanGraphicsContext> {
     public:
@@ -24,11 +28,15 @@ namespace Lada {
 
         void SetDebugName(const uint64_t handle, const VkObjectType type, const char *name);
 
+        std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() override;
+
         VulkanPhysicalDevice& GetPhysicalDevice() const { return *m_PhysicalDevice; }
         VulkanSurface& GetSurface() const { return *m_Surface; }
         VulkanDevice& GetDevice() const { return *m_Device; }
         VulkanSwapChain& GetSwapChain() const { return *m_SwapChain; }
-        VulkanPipeline& GetPipeline() const { return *m_Pipeline; }
+        Pipeline* GetPipeline() const override { return m_Pipeline.get(); }
+
+        VulkanFramebuffer& GetFramebuffer(uint32_t index) const;
     private:
         std::unique_ptr<VulkanInstance> m_VulkanInstance;
         std::unique_ptr<VulkanSurface> m_Surface;
@@ -37,6 +45,7 @@ namespace Lada {
         std::unique_ptr<VulkanSwapChain> m_SwapChain;
         std::vector<std::unique_ptr<VulkanFramebuffer>> swapChainFramebuffers;
         std::unique_ptr<VulkanPipeline> m_Pipeline;
+        std::unique_ptr<VulkanCommandPool> m_CommandPool;
         Window& m_Window;
 
         void crateFrameBuffers();

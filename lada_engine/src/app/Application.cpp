@@ -8,9 +8,9 @@
 #include "renderer/GraphicsApiFactory.h"
 
 namespace Lada::App {
-    Application* Application::s_Instance = nullptr;
+    Application *Application::s_Instance = nullptr;
 
-    Application::Application(const std::string& title, const int width, const int height): m_Window(nullptr) {
+    Application::Application(const std::string &title, const int width, const int height) : m_Window(nullptr) {
         const GraphicsApiFactory apiFactory(GraphicAPI::VULKAN);
         m_LayerContext = std::make_unique<LayerContext>();
         m_LayerStack = std::make_unique<LayerStack>(*m_LayerContext);
@@ -23,6 +23,12 @@ namespace Lada::App {
         m_Window = Window::Create(title, width, height, *m_EventManager, GraphicAPI::VULKAN);
         m_GraphicsContext = apiFactory.CreateContext(*m_Window);
         m_GraphicsContext->Init();
+
+        glm::vec4 clearColor(0.0, 0.0, 0.0, 1.0f);
+        std::unique_ptr<CommandBuffer> commandBuffer = m_GraphicsContext->BeginSingleTimeCommands();
+        m_GraphicsContext->GetPipeline()->GetRenderPass()->Begin(commandBuffer.get(), 0, clearColor);
+        m_GraphicsContext->GetPipeline()->Bind(commandBuffer.get());
+
         m_Renderer = std::make_unique<Render::Renderer>(*m_Window, *m_GraphicsContext);
         const VulkanShaderCompiler compiler(true, true);
         auto result = compiler.CompileString(
@@ -35,7 +41,7 @@ void main() {
     outColor = vec4(fragColor, 1.0);
 })EoS", ShaderStage::Fragment);
 
-        if (apiFactory.GetAPI() ==  GraphicAPI::VULKAN) {
+        if (apiFactory.GetAPI() == GraphicAPI::VULKAN) {
             std::exit(0);
         }
 
@@ -48,7 +54,7 @@ void main() {
         m_EventManager->BIND_HANDLER(WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
-    bool Application::OnWindowCloseEvent(const WindowCloseEvent& event) {
+    bool Application::OnWindowCloseEvent(const WindowCloseEvent &event) {
         this->Shutdown();
         return true;
     }
@@ -60,11 +66,11 @@ void main() {
 
     void Application::Run() {
         while (m_Running) {
-            for (Layer *layer : *m_LayerStack) {
+            for (Layer *layer: *m_LayerStack) {
                 layer->OnUpdate(*m_LayerContext);
             }
             m_Renderer->BeginFrame();
-            for (Layer* layer : *m_LayerStack) {
+            for (Layer *layer: *m_LayerStack) {
                 layer->OnRender(*m_LayerContext, *m_Renderer);
             }
             m_Renderer->EndFrame();
@@ -94,7 +100,7 @@ void main() {
     }
 
     void Application::SubscribeLayersOnEvents() {
-        m_EventManager->RegisterGlobalHandler([this](Event& event) {
+        m_EventManager->RegisterGlobalHandler([this](Event &event) {
             for (auto it = m_LayerStack->end(); it != m_LayerStack->begin();) {
                 (*--it)->OnEvent(event, *m_LayerContext);
                 if (event.IsHandled())

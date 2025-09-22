@@ -1,7 +1,9 @@
 #include "VulkanRenderPass.h"
 
 #include "app/Logger.h"
+#include "platform/vulkan/VulkanGraphicsContext.h"
 #include "platform/vulkan/VulkanSwapChain.h"
+#include "platform/vulkan/commands/VulkanCommandBuffer.h"
 
 namespace Lada {
     VulkanRenderPass::VulkanRenderPass(VulkanGraphicsContext *graphicsContext):
@@ -40,5 +42,23 @@ namespace Lada {
 
     VulkanRenderPass::~VulkanRenderPass() {
         vkDestroyRenderPass(m_GraphicsContext->GetDevice().NativeDevice(), m_RenderPass, nullptr);
+    }
+
+    void VulkanRenderPass::Begin(CommandBuffer* commandBuffer, uint32_t currentImageIndex, const glm::vec4 &clearColor) const {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
+        const VkExtent2D swapChainExtent = m_GraphicsContext->GetSwapChain().GetSwapChainExtent();
+        VkRenderPassBeginInfo renderPassInfo{};
+        renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+        renderPassInfo.renderPass = m_RenderPass;
+        renderPassInfo.framebuffer = m_GraphicsContext->GetFramebuffer(currentImageIndex).GetNativeFramebuffer();
+
+        renderPassInfo.renderArea.offset = {0, 0};
+        renderPassInfo.renderArea.extent = swapChainExtent;
+
+        const VkClearValue vkClearColor = {{{clearColor.r, clearColor.g, clearColor.b, clearColor.a}}};
+        renderPassInfo.clearValueCount = 1;
+        renderPassInfo.pClearValues = &vkClearColor;
+
+        vkCmdBeginRenderPass(vulkanCommandBuffer->GetNativeCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
     }
 } // Lada

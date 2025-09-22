@@ -1,0 +1,12 @@
+#pragma once
+
+#include "CommandBuffer.h"
+#include "RenderPass.h"
+
+namespace Lada {
+    class Pipeline {
+    public:
+        virtual RenderPass* GetRenderPass() = 0;
+        virtual void Bind(CommandBuffer* commandBuffer) = 0;
+    };
+}

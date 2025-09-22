@@ -1,8 +1,10 @@
 #pragma once
 
-#include "platform/vulkan/VulkanGraphicsContext.h"
+#include <vulkan/vulkan.h>
 
 namespace Lada {
+    class VulkanGraphicsContext;
+
     class VulkanPipelineLayout {
     public:
         explicit VulkanPipelineLayout(VulkanGraphicsContext* graphicsContext);
