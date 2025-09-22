@@ -6,9 +6,8 @@
 #include "platform/vulkan/commands/VulkanCommandBuffer.h"
 
 namespace Lada {
-    VulkanRenderPass::VulkanRenderPass(VulkanGraphicsContext *graphicsContext):
-        m_GraphicsContext(graphicsContext) {
-        VulkanSwapChain& swapChain = graphicsContext->GetSwapChain();
+    VulkanRenderPass::VulkanRenderPass(VulkanGraphicsContext *graphicsContext) : m_GraphicsContext(graphicsContext) {
+        VulkanSwapChain &swapChain = graphicsContext->GetSwapChain();
 
         VkAttachmentDescription colorAttachment = {};
         colorAttachment.format = swapChain.GetImage(0).GetFormat();
@@ -37,15 +36,16 @@ namespace Lada {
         renderPassInfo.pSubpasses = &subpass;
 
         LD_VK_ASSERT_SUCCESS(vkCreateRenderPass(graphicsContext->GetDevice().NativeDevice(),
-            &renderPassInfo, nullptr, &m_RenderPass), "Failed to create render pass!");
+                                 &renderPassInfo, nullptr, &m_RenderPass), "Failed to create render pass!");
     }
 
     VulkanRenderPass::~VulkanRenderPass() {
         vkDestroyRenderPass(m_GraphicsContext->GetDevice().NativeDevice(), m_RenderPass, nullptr);
     }
 
-    void VulkanRenderPass::Begin(CommandBuffer* commandBuffer, uint32_t currentImageIndex, const glm::vec4 &clearColor) const {
-        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
+    void VulkanRenderPass::Begin(CommandBuffer *commandBuffer, uint32_t currentImageIndex,
+                                 const glm::vec4 &clearColor) const {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
         const VkExtent2D swapChainExtent = m_GraphicsContext->GetSwapChain().GetSwapChainExtent();
         VkRenderPassBeginInfo renderPassInfo{};
         renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
@@ -59,6 +59,37 @@ namespace Lada {
         renderPassInfo.clearValueCount = 1;
         renderPassInfo.pClearValues = &vkClearColor;
 
-        vkCmdBeginRenderPass(vulkanCommandBuffer->GetNativeCommandBuffer(), &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+        vkCmdBeginRenderPass(vulkanCommandBuffer->GetNativeCommandBuffer(), &renderPassInfo,
+                             VK_SUBPASS_CONTENTS_INLINE);
+    }
+
+    void VulkanRenderPass::End(CommandBuffer *commandBuffer) const {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
+        vkCmdEndRenderPass(vulkanCommandBuffer->GetNativeCommandBuffer());
+    }
+
+    void VulkanRenderPass::SetViewportAndScissor(CommandBuffer *commandBuffer, const Render::Viewport &viewport,
+                                                 const Render::Scissor &scissor) const {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
+        VkExtent2D swapChainExtent = m_GraphicsContext->GetSwapChain().GetSwapChainExtent();
+        VkViewport vkViewport{};
+        vkViewport.x = viewport.X;
+        vkViewport.y = viewport.Y;
+        vkViewport.width = swapChainExtent.width * viewport.Width;
+        vkViewport.height = swapChainExtent.height * viewport.Height;
+        vkViewport.minDepth = viewport.MinDepth;
+        vkViewport.maxDepth = viewport.MaxDepth;
+        vkCmdSetViewport(vulkanCommandBuffer->GetNativeCommandBuffer(), 0, 1, &vkViewport);
+
+        VkRect2D vkScissor{};
+        vkScissor.offset = {
+            static_cast<int32_t>(scissor.OffsetX * swapChainExtent.width),
+            static_cast<int32_t>(scissor.OffsetX * swapChainExtent.height)
+        };
+        vkScissor.extent = {
+            static_cast<uint32_t>(scissor.Width * swapChainExtent.width),
+            static_cast<uint32_t>(scissor.Height * swapChainExtent.height)
+        };
+        vkCmdSetScissor(vulkanCommandBuffer->GetNativeCommandBuffer(), 0, 1, &vkScissor);
     }
 } // Lada

@@ -49,6 +49,11 @@ namespace Lada {
         return std::make_unique<VulkanCommandBuffer>(this, m_CommandPool.get());
     }
 
+    void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer *commandBuffer) {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
+        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->GetNativeCommandBuffer()), "Failed to record command buffer!");
+    }
+
     VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
         return *swapChainFramebuffers[index];
     }

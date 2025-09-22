@@ -24,12 +24,11 @@ namespace Lada::App {
         m_GraphicsContext = apiFactory.CreateContext(*m_Window);
         m_GraphicsContext->Init();
 
-        glm::vec4 clearColor(0.0, 0.0, 0.0, 1.0f);
-        std::unique_ptr<CommandBuffer> commandBuffer = m_GraphicsContext->BeginSingleTimeCommands();
-        m_GraphicsContext->GetPipeline()->GetRenderPass()->Begin(commandBuffer.get(), 0, clearColor);
-        m_GraphicsContext->GetPipeline()->Bind(commandBuffer.get());
+        m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get());
+        m_Renderer->BeginFrame();
+        m_Renderer->EndFrame();
 
-        m_Renderer = std::make_unique<Render::Renderer>(*m_Window, *m_GraphicsContext);
+
         const VulkanShaderCompiler compiler(true, true);
         auto result = compiler.CompileString(
             R"EoS(#version 450

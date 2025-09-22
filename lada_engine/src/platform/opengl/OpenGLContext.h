@@ -14,6 +14,9 @@ namespace Lada {
         Pipeline* GetPipeline() const override { return nullptr; }
 
         std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() override { return nullptr; }
+
+        void EndSingleTimeCommands(CommandBuffer *commandBuffer) override {}
+
     private:
         Window& m_Window;
     };

@@ -3,6 +3,22 @@
 #include "glm/mat4x4.hpp"
 
 namespace Lada::Render {
+    struct Viewport {
+        float X = 0.0f;
+        float Y = 0.0f;
+        float Width = 1.0f;
+        float Height = 1.0f;
+        float MinDepth = 0.0f;
+        float MaxDepth = 1.0f;
+    };
+
+    struct Scissor {
+        float OffsetX = 0.0f;
+        float OffsetY = 0.0f;
+        float Width = 1.0f;
+        float Height = 1.0f;
+    };
+
     class Camera {
     public:
         Camera(float fovGrad, float aspect, float near, float far, const glm::vec3 &position,
@@ -13,6 +29,10 @@ namespace Lada::Render {
         glm::mat4 GetProjectionMatrix() const;
 
         glm::mat4 GetViewProjectionMatrix() const;
+
+        Viewport GetViewport() const { return m_Viewport; }
+
+        Scissor GetScissor() const { return m_Scissor; }
     private:
         float m_FovGrad;
         float m_Aspect;
@@ -25,6 +45,9 @@ namespace Lada::Render {
 
         glm::mat4 m_ViewMatrix;
         glm::mat4 m_ProjectionMatrix;
+
+        Viewport m_Viewport = {};
+        Scissor m_Scissor = {};
 
         void UpdateMatrices();
     };

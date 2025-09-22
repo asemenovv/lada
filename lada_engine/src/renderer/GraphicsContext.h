@@ -14,5 +14,6 @@ namespace Lada {
 
         virtual Pipeline* GetPipeline() const = 0;
         virtual std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() = 0;
+        virtual void EndSingleTimeCommands(CommandBuffer* commandBuffer) = 0;
     };
 }

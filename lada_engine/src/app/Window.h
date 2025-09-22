@@ -1,13 +1,14 @@
 #pragma once
 
 #include "events/EventManager.h"
-#include "renderer/GraphicsApiFactory.h"
 
 namespace Lada {
     struct WindowSize {
         const int width;
         int height;
     };
+
+    enum class GraphicAPI;
 
     class Window {
     public:

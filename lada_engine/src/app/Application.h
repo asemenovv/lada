@@ -7,6 +7,7 @@
 #include "events/ApplicationEvent.h"
 #include "layer/LayerContext.h"
 #include "layer/LayerStack.h"
+#include "renderer/GraphicsContext.h"
 #include "renderer/Renderer.h"
 
 namespace Lada::App {

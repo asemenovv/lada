@@ -1,6 +1,7 @@
 #include "Window.h"
 
 #include "platform/glfw/GlfwWindow.h"
+#include "renderer/GraphicsApiFactory.h"
 
 namespace Lada {
     Window::Window(const int width, const int height, EventManager& eventManager) : m_Width(width), m_Height(height),

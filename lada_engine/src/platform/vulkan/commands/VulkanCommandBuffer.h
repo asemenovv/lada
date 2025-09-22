@@ -1,7 +1,6 @@
 #pragma once
 
 #include "VulkanCommandPool.h"
-#include "glm/glm.hpp"
 #include "platform/vulkan/pipeline/VulkanRenderPass.h"
 #include "renderer/CommandBuffer.h"
 

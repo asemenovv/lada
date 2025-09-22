@@ -5,6 +5,7 @@
 #include "events/KeyEvent.h"
 #include "events/MouseEvent.h"
 #include "GLFW/glfw3.h"
+#include "renderer/GraphicsApiFactory.h"
 
 namespace Lada {
     GlfwWindow::GlfwWindow(const GraphicAPI graphicApi, const std::string &title, const int width, const int height,
