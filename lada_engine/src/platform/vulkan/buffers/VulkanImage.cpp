@@ -27,13 +27,13 @@ namespace Lada {
             m_GraphicsContext = std::move(other.m_GraphicsContext);
             m_Image = other.m_Image;
             // m_ImageMemory = other.m_ImageMemory;
-            // m_ImageView = other.m_ImageView;
+            m_ImageView = other.m_ImageView;
             m_Format = other.m_Format;
             m_ResetImage = other.m_ResetImage;
 
             other.m_Image = VK_NULL_HANDLE;
             // other.m_ImageMemory = VK_NULL_HANDLE;
-            // other.m_ImageView = VK_NULL_HANDLE;
+            other.m_ImageView = VK_NULL_HANDLE;
             other.m_Format = VK_FORMAT_UNDEFINED;
             other.m_ResetImage = true;
         }
@@ -56,7 +56,7 @@ namespace Lada {
                 // m_ImageMemory = VK_NULL_HANDLE;
             // }
         } else {
-            // m_ImageView = VK_NULL_HANDLE;
+            m_ImageView = VK_NULL_HANDLE;
             m_Image = VK_NULL_HANDLE;
             // m_ImageMemory = VK_NULL_HANDLE;
         }

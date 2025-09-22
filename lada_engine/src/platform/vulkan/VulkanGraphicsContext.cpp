@@ -1,7 +1,9 @@
 #include "VulkanGraphicsContext.h"
 
 #include "VulkanSwapChain.h"
+#include "app/Logger.h"
 #include "pipeline/VulkanPipeline.h"
+#include "VulkanFramebuffer.h"
 
 namespace Lada {
     VulkanGraphicsContext::VulkanGraphicsContext(Window& window): m_Window(window) {
@@ -22,6 +24,15 @@ namespace Lada {
         m_Pipeline = std::make_unique<VulkanPipeline>(this,
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert.spv",
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag.spv");
+        crateFrameBuffers();
+    }
+
+    void VulkanGraphicsContext::crateFrameBuffers() {
+        swapChainFramebuffers.resize(m_SwapChain->GetImageCount());
+        for (size_t i = 0; i < m_SwapChain->GetImageCount(); i++) {
+            VulkanImage& image = m_SwapChain->GetImage(i);
+            swapChainFramebuffers[i] = std::make_unique<VulkanFramebuffer>(this, image);
+        }
     }
 
     void VulkanGraphicsContext::SwapBuffers() {

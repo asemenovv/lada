@@ -9,6 +9,7 @@
 struct GLFWwindow;
 
 namespace Lada {
+    class VulkanFramebuffer;
     class VulkanSwapChain;
     class VulkanPipeline;
 
@@ -27,13 +28,17 @@ namespace Lada {
         VulkanSurface& GetSurface() const { return *m_Surface; }
         VulkanDevice& GetDevice() const { return *m_Device; }
         VulkanSwapChain& GetSwapChain() const { return *m_SwapChain; }
+        VulkanPipeline& GetPipeline() const { return *m_Pipeline; }
     private:
         std::unique_ptr<VulkanInstance> m_VulkanInstance;
         std::unique_ptr<VulkanSurface> m_Surface;
         std::unique_ptr<VulkanPhysicalDevice> m_PhysicalDevice;
         std::unique_ptr<VulkanDevice> m_Device;
         std::unique_ptr<VulkanSwapChain> m_SwapChain;
+        std::vector<std::unique_ptr<VulkanFramebuffer>> swapChainFramebuffers;
         std::unique_ptr<VulkanPipeline> m_Pipeline;
         Window& m_Window;
+
+        void crateFrameBuffers();
     };
 }

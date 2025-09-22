@@ -16,6 +16,8 @@ namespace Lada {
         VkExtent2D GetSwapChainExtent() const { return m_SwapChainExtent; }
 
         VulkanImage& GetImage(const uint32_t imageIndex) { return m_SwapChainImages[imageIndex]; }
+
+        uint32_t GetImageCount() const { return m_SwapChainImages.size(); }
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR>& availableFormats);

@@ -26,6 +26,8 @@ namespace Lada {
 
         VkFormat GetFormat() const { return m_Format; }
 
+        VkImageView GetView() const { return m_ImageView; }
+
     private:
         void reset();
 

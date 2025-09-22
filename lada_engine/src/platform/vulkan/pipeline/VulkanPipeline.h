@@ -12,6 +12,8 @@ namespace Lada {
         VulkanPipeline(VulkanGraphicsContext* graphicsContext, const std::string &vertPath,
                        const std::string &fragPath);
         ~VulkanPipeline();
+
+        VulkanRenderPass* GetRenderPass() const { return m_RenderPass.get(); }
     private:
         void createGraphicsPipeline(/*const PipelineConfigInfo &configInfo*/);
 
