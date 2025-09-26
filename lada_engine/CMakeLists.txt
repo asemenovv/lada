@@ -73,6 +73,10 @@ add_library(lada_engine STATIC
         src/platform/vulkan/sync/VulkanSemaphore.h
         src/platform/vulkan/sync/VulkanFence.cpp
         src/platform/vulkan/sync/VulkanFence.h
+        src/scene/Scene.cpp
+        src/scene/Scene.h
+        src/core/UUID.cpp
+        src/core/UUID.h
 )
 
 target_include_directories(lada_engine
