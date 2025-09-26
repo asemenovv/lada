@@ -39,6 +39,8 @@ namespace Lada {
         Pipeline* GetPipeline() const override { return m_Pipeline.get(); }
 
         VulkanFramebuffer& GetFramebuffer(uint32_t index) const;
+
+        void WaitIdle() override;
     private:
         std::unique_ptr<VulkanInstance> m_VulkanInstance;
         std::unique_ptr<VulkanSurface> m_Surface;

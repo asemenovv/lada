@@ -4,7 +4,7 @@
 #include "platform/vulkan/VulkanGraphicsContext.h"
 
 namespace Lada {
-    VulkanFence::VulkanFence(VulkanGraphicsContext *graphicsContext, const bool signaled) : m_GraphicsContext(graphicsContext) {
+    VulkanFence::VulkanFence(VulkanGraphicsContext *graphicsContext, const std::string &name, const bool signaled) : m_GraphicsContext(graphicsContext) {
         VkFenceCreateInfo fenceInfo{};
         fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
         if (signaled) {
@@ -15,6 +15,7 @@ namespace Lada {
         LD_VK_ASSERT_SUCCESS(
             vkCreateFence(m_GraphicsContext->GetDevice().NativeDevice(), &fenceInfo, nullptr, &m_Fence),
             "Failed to create fence!");
+        m_GraphicsContext->SetDebugName(reinterpret_cast<uint64_t>(m_Fence), VK_OBJECT_TYPE_FENCE, name.c_str());
     }
 
     VulkanFence::~VulkanFence() {

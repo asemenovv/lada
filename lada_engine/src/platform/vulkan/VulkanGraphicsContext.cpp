@@ -57,4 +57,8 @@ namespace Lada {
     VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
         return *swapChainFramebuffers[index];
     }
+
+    void VulkanGraphicsContext::WaitIdle() {
+        vkDeviceWaitIdle(GetDevice().NativeDevice());
+    }
 }

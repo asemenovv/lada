@@ -16,6 +16,6 @@ DemoApp::DemoApp(): Application("LADA Engine", 640, 480) {
         return true;
         });
     m_ImGuiLayer = new DemoImGuiLayer();
-    PushLayer(new RendererLayer());
-    PushOverlay(m_ImGuiLayer);
+    // PushLayer(new RendererLayer());
+    // PushOverlay(m_ImGuiLayer);
 }

@@ -37,7 +37,8 @@ namespace Lada::Render {
         glm::vec4 m_ClearColor = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
         GraphicsContext* m_GraphicsContext;
         std::shared_ptr<Camera> m_Camera;
-        std::unique_ptr<CommandBuffer> m_CommandBuffer;
+        std::vector<std::unique_ptr<CommandBuffer>> m_CommandBuffers;
         uint32_t m_CurrentImageIndex;
+        int m_CurrentFrameIndex;
     };
 }

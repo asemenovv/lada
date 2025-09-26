@@ -1,6 +1,5 @@
 #include "ldpch.h"
 #include "Application.h"
-#include "GlCall.h"
 #include "renderer/Renderer.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
@@ -26,10 +25,6 @@ namespace Lada::App {
 
         m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get());
         LD_CORE_INFO("Application initialized");
-        m_Renderer->BeginFrame();
-        LD_CORE_INFO("On Begin Frame");
-        m_Renderer->EndFrame();
-        LD_CORE_INFO("On End Frame");
 
 
         /*const VulkanShaderCompiler compiler(true, true);
@@ -43,12 +38,9 @@ void main() {
     outColor = vec4(fragColor, 1.0);
 })EoS", ShaderStage::Fragment);*/
 
-        if (apiFactory.GetAPI() == GraphicAPI::VULKAN) {
-            std::exit(0);
-        }
-
-        GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-        GL_CALL(glEnable(GL_BLEND));
+        // if (apiFactory.GetAPI() == GraphicAPI::VULKAN) {
+            // std::exit(0);
+        // }
 
         m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::OnWindowCloseEvent);
         SubscribeLayersOnEvents();
@@ -72,12 +64,14 @@ void main() {
                 layer->OnUpdate(*m_LayerContext);
             }
             m_Renderer->BeginFrame();
+            m_Renderer->Submit(nullptr);
             for (Layer *layer: *m_LayerStack) {
                 layer->OnRender(*m_LayerContext, *m_Renderer);
             }
             m_Renderer->EndFrame();
             m_Window->OnUpdate();
         }
+        m_GraphicsContext->WaitIdle();
     }
 
     void Application::Shutdown() {

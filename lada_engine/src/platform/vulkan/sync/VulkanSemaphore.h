@@ -7,7 +7,7 @@ namespace Lada {
 
     class VulkanSemaphore {
     public:
-        explicit VulkanSemaphore(VulkanGraphicsContext* graphicsContext);
+        explicit VulkanSemaphore(VulkanGraphicsContext* graphicsContext, const std::string &name = "UNNAMED");
         ~VulkanSemaphore();
 
         VkSemaphore NativeSemaphore() const { return m_Semaphore; }

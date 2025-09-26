@@ -102,4 +102,4 @@ namespace Lada {
         };
         vkCmdSetScissor(vulkanCommandBuffer->NativeCommandBuffer(), 0, 1, &vkScissor);
     }
-} // Lada
+}

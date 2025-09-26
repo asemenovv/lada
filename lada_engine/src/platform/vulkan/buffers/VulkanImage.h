@@ -8,9 +8,9 @@ namespace Lada {
     class VulkanImage {
     public:
         VulkanImage() noexcept
-            : m_Image(VK_NULL_HANDLE)
-              //, m_ImageMemory(VK_NULL_HANDLE),
-              // m_ImageView(VK_NULL_HANDLE)
+            : m_Image(VK_NULL_HANDLE),
+              // m_ImageMemory(VK_NULL_HANDLE),
+              m_ImageView(VK_NULL_HANDLE)
         {}
 
         VulkanImage(VulkanGraphicsContext* graphicsContext, VkImage image,

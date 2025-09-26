@@ -13,6 +13,7 @@ namespace Lada {
     class VulkanSwapChain : public SwapChain {
     public:
         VulkanSwapChain(VulkanGraphicsContext* graphicalContext, VkExtent2D windowExtent);
+
         ~VulkanSwapChain();
 
         VkExtent2D GetSwapChainExtent() const { return m_SwapChainExtent; }
@@ -21,11 +22,12 @@ namespace Lada {
 
         uint32_t GetImageCount() const { return m_SwapChainImages.size(); }
 
-        bool AcquireNextImage(uint32_t *imageIndex) override;
+        bool AcquireNextImage(uint32_t *imageIndex, int frameIndex) override;
 
-        bool SubmitCommandBuffer(CommandBuffer *commandBuffer, uint32_t *imageIndex) override;
+        bool SubmitCommandBuffer(CommandBuffer *commandBuffer, uint32_t *imageIndex, int frameIndex) override;
 
-        bool Present(uint32_t *imageIndex) override;
+        bool Present(uint32_t *imageIndex, int frameIndex) override;
+
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -35,15 +37,21 @@ namespace Lada {
 
         VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities) const;
 
+        void createSyncObjects();
+
         VkSwapchainKHR m_SwapChain;
+
         VkExtent2D m_WindowExtent;
+
         VulkanGraphicsContext* m_GraphicsContext;
 
         std::vector<VulkanImage> m_SwapChainImages;
+
         VkExtent2D m_SwapChainExtent;
 
-        std::unique_ptr<VulkanSemaphore> m_ImageAvailableSemaphore;
-        std::unique_ptr<VulkanSemaphore> m_RenderFinishedSemaphore;
-        std::unique_ptr<VulkanFence> m_InFlightFence;
+        std::vector<std::unique_ptr<VulkanSemaphore>> m_RenderFinishedPerImage;
+        std::vector<std::unique_ptr<VulkanSemaphore>> m_ImageAvailableSemaphores;
+        std::vector<std::unique_ptr<VulkanFence>> m_InFlightFences;
+
     };
 }

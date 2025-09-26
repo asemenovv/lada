@@ -10,12 +10,19 @@ namespace Lada {
     class GraphicsContext {
     public:
         virtual ~GraphicsContext() = default;
+
         virtual void Init() = 0;
+
         virtual void SwapBuffers() = 0;
 
-        virtual Pipeline* GetPipeline() const = 0;
-        virtual SwapChain* GetSwapChain() const = 0;
+        virtual Pipeline *GetPipeline() const = 0;
+
+        virtual SwapChain *GetSwapChain() const = 0;
+
         virtual std::unique_ptr<CommandBuffer> CreateCommandBuffer() = 0;
-        virtual void EndSingleTimeCommands(CommandBuffer* commandBuffer) = 0;
+
+        virtual void EndSingleTimeCommands(CommandBuffer *commandBuffer) = 0;
+
+        virtual void WaitIdle() = 0;
     };
 }

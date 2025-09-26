@@ -25,16 +25,16 @@ namespace Lada {
         }
         switch (messageSeverity) {
             case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
-                LD_CORE_DEBUG("[VULKAN::{0}] Validation layer:\n{1}", type, pCallbackData->pMessage);
+                LD_CORE_DEBUG("[VULKAN::{0}] Validation layer:\n{1}\n", type, pCallbackData->pMessage);
                 break;
             case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
-                LD_CORE_INFO("[VULKAN::{0}] Validation layer:\n{1}", type, pCallbackData->pMessage);
+                LD_CORE_INFO("[VULKAN::{0}] Validation layer:\n{1}\n", type, pCallbackData->pMessage);
                 break;
             case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-                LD_CORE_WARN("[VULKAN::{0}] Validation layer:\n{1}", type, pCallbackData->pMessage);
+                LD_CORE_WARN("[VULKAN::{0}] Validation layer:\n{1}\n", type, pCallbackData->pMessage);
                 break;
             case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-                LD_CORE_ERROR("[VULKAN::{0}] Validation layer:\n{1}", type, pCallbackData->pMessage);
+                LD_CORE_ERROR("[VULKAN::{0}] Validation layer:\n{1}\n", type, pCallbackData->pMessage);
                 break;
             default: ;
         }

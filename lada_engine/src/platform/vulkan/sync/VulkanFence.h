@@ -7,7 +7,8 @@ namespace Lada {
 
     class VulkanFence {
     public:
-        explicit VulkanFence(VulkanGraphicsContext* graphicsContext, bool signaled = false);
+        explicit VulkanFence(VulkanGraphicsContext *graphicsContext, const std::string &name = "UNNAMED",
+                             bool signaled = false);
         ~VulkanFence();
 
         void Wait();
