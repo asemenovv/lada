@@ -45,13 +45,13 @@ namespace Lada {
         m_Device->SetDebugName(handle, type, name);
     }
 
-    std::unique_ptr<CommandBuffer> VulkanGraphicsContext::BeginSingleTimeCommands() {
+    std::unique_ptr<CommandBuffer> VulkanGraphicsContext::CreateCommandBuffer() {
         return std::make_unique<VulkanCommandBuffer>(this, m_CommandPool.get());
     }
 
     void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer *commandBuffer) {
         const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
-        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->GetNativeCommandBuffer()), "Failed to record command buffer!");
+        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->NativeCommandBuffer()), "Failed to record command buffer!");
     }
 
     VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {

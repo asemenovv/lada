@@ -21,11 +21,11 @@ namespace Lada {
 
     void VulkanPipeline::Bind(CommandBuffer* commandBuffer) {
         const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer*>(commandBuffer);
-        vkCmdBindPipeline(vulkanCommandBuffer->GetNativeCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_Pipeline);
+        vkCmdBindPipeline(vulkanCommandBuffer->NativeCommandBuffer(), VK_PIPELINE_BIND_POINT_GRAPHICS, m_Pipeline);
     }
 
     void VulkanPipeline::createGraphicsPipeline() {
-        VkExtent2D swapChainExtent = m_GraphicsContext->GetSwapChain().GetSwapChainExtent();
+        VkExtent2D swapChainExtent = m_GraphicsContext->GetSwapChain()->GetSwapChainExtent();
         VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
         vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
         vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;

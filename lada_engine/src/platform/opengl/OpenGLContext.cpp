@@ -39,4 +39,8 @@ namespace Lada {
     void OpenGLContext::SwapBuffers() {
         glfwSwapBuffers(static_cast<GLFWwindow *>(m_Window.GetNativeWindow()));
     }
+
+    SwapChain * OpenGLContext::GetSwapChain() const {
+        return nullptr;
+    }
 }

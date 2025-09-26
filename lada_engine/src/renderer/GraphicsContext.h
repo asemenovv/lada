@@ -2,6 +2,7 @@
 
 #include "CommandBuffer.h"
 #include "Pipeline.h"
+#include "SwapChain.h"
 
 namespace Lada {
     class Window;
@@ -13,7 +14,8 @@ namespace Lada {
         virtual void SwapBuffers() = 0;
 
         virtual Pipeline* GetPipeline() const = 0;
-        virtual std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() = 0;
+        virtual SwapChain* GetSwapChain() const = 0;
+        virtual std::unique_ptr<CommandBuffer> CreateCommandBuffer() = 0;
         virtual void EndSingleTimeCommands(CommandBuffer* commandBuffer) = 0;
     };
 }

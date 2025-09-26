@@ -12,7 +12,7 @@ namespace Lada {
         const VkDevice device = graphicsContext->GetDevice().NativeDevice();
         const auto renderPass = static_cast<VulkanRenderPass*>(graphicsContext->GetPipeline()->GetRenderPass());
         const VkImageView attachments[] = { image.GetView() };
-        const auto [width, height] = graphicsContext->GetSwapChain().GetSwapChainExtent();
+        const auto [width, height] = graphicsContext->GetSwapChain()->GetSwapChainExtent();
 
         VkFramebufferCreateInfo framebufferInfo{};
         framebufferInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;

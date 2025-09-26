@@ -4,6 +4,8 @@
 
 #include "buffers/VulkanImage.h"
 #include "renderer/SwapChain.h"
+#include "sync/VulkanFence.h"
+#include "sync/VulkanSemaphore.h"
 
 namespace Lada {
     class VulkanGraphicsContext;
@@ -18,6 +20,12 @@ namespace Lada {
         VulkanImage& GetImage(const uint32_t imageIndex) { return m_SwapChainImages[imageIndex]; }
 
         uint32_t GetImageCount() const { return m_SwapChainImages.size(); }
+
+        bool AcquireNextImage(uint32_t *imageIndex) override;
+
+        bool SubmitCommandBuffer(CommandBuffer *commandBuffer, uint32_t *imageIndex) override;
+
+        bool Present(uint32_t *imageIndex) override;
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR>& availableFormats);
@@ -33,5 +41,9 @@ namespace Lada {
 
         std::vector<VulkanImage> m_SwapChainImages;
         VkExtent2D m_SwapChainExtent;
+
+        std::unique_ptr<VulkanSemaphore> m_ImageAvailableSemaphore;
+        std::unique_ptr<VulkanSemaphore> m_RenderFinishedSemaphore;
+        std::unique_ptr<VulkanFence> m_InFlightFence;
     };
 }

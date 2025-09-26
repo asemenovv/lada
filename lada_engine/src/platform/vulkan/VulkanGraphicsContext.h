@@ -28,14 +28,14 @@ namespace Lada {
 
         void SetDebugName(const uint64_t handle, const VkObjectType type, const char *name);
 
-        std::unique_ptr<CommandBuffer> BeginSingleTimeCommands() override;
+        std::unique_ptr<CommandBuffer> CreateCommandBuffer() override;
 
         void EndSingleTimeCommands(CommandBuffer *commandBuffer) override;
 
         VulkanPhysicalDevice& GetPhysicalDevice() const { return *m_PhysicalDevice; }
         VulkanSurface& GetSurface() const { return *m_Surface; }
         VulkanDevice& GetDevice() const { return *m_Device; }
-        VulkanSwapChain& GetSwapChain() const { return *m_SwapChain; }
+        VulkanSwapChain* GetSwapChain() const override { return m_SwapChain.get(); }
         Pipeline* GetPipeline() const override { return m_Pipeline.get(); }
 
         VulkanFramebuffer& GetFramebuffer(uint32_t index) const;

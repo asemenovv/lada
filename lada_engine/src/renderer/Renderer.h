@@ -23,11 +23,11 @@ namespace Lada::Render {
 
         void Shutdown();
 
-        void BeginFrame();
+        CommandBuffer* BeginFrame();
 
         void Submit(const std::shared_ptr<Model> &model) const;
 
-        void EndFrame() const;
+        void EndFrame();
 
         void SetClearColor(const glm::vec4 &color) { m_ClearColor = color; }
 
@@ -38,5 +38,6 @@ namespace Lada::Render {
         GraphicsContext* m_GraphicsContext;
         std::shared_ptr<Camera> m_Camera;
         std::unique_ptr<CommandBuffer> m_CommandBuffer;
+        uint32_t m_CurrentImageIndex;
     };
 }

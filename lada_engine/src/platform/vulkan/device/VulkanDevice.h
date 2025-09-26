@@ -12,6 +12,10 @@ namespace Lada {
 
         [[nodiscard]] VkDevice NativeDevice() const { return m_Device; }
 
+        [[nodiscard]] VkQueue GraphicsQueue() const { return m_GraphicsQueue; }
+
+        [[nodiscard]] VkQueue PresentQueue() const { return m_PresentQueue; }
+
         void SetDebugName(uint64_t handle, VkObjectType type, const char* name) const;
     private:
         VkDevice m_Device;

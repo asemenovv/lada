@@ -25,11 +25,14 @@ namespace Lada::App {
         m_GraphicsContext->Init();
 
         m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get());
+        LD_CORE_INFO("Application initialized");
         m_Renderer->BeginFrame();
+        LD_CORE_INFO("On Begin Frame");
         m_Renderer->EndFrame();
+        LD_CORE_INFO("On End Frame");
 
 
-        const VulkanShaderCompiler compiler(true, true);
+        /*const VulkanShaderCompiler compiler(true, true);
         auto result = compiler.CompileString(
             R"EoS(#version 450
 
@@ -38,7 +41,7 @@ layout(location = 0) out vec4 outColor;
 
 void main() {
     outColor = vec4(fragColor, 1.0);
-})EoS", ShaderStage::Fragment);
+})EoS", ShaderStage::Fragment);*/
 
         if (apiFactory.GetAPI() == GraphicAPI::VULKAN) {
             std::exit(0);

@@ -1,0 +1,31 @@
+#include "VulkanFence.h"
+
+#include "app/Logger.h"
+#include "platform/vulkan/VulkanGraphicsContext.h"
+
+namespace Lada {
+    VulkanFence::VulkanFence(VulkanGraphicsContext *graphicsContext, const bool signaled) : m_GraphicsContext(graphicsContext) {
+        VkFenceCreateInfo fenceInfo{};
+        fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+        if (signaled) {
+            fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+        } else {
+            fenceInfo.flags = 0;
+        }
+        LD_VK_ASSERT_SUCCESS(
+            vkCreateFence(m_GraphicsContext->GetDevice().NativeDevice(), &fenceInfo, nullptr, &m_Fence),
+            "Failed to create fence!");
+    }
+
+    VulkanFence::~VulkanFence() {
+        vkDestroyFence(m_GraphicsContext->GetDevice().NativeDevice(), m_Fence, nullptr);
+    }
+
+    void VulkanFence::Wait() {
+        vkWaitForFences(m_GraphicsContext->GetDevice().NativeDevice(), 1, &m_Fence, VK_TRUE, UINT64_MAX);
+    }
+
+    void VulkanFence::Reset() {
+        vkResetFences(m_GraphicsContext->GetDevice().NativeDevice(), 1, &m_Fence);
+    }
+}

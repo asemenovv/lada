@@ -69,6 +69,10 @@ add_library(lada_engine STATIC
         src/renderer/RenderPass.h
         src/renderer/Pipeline.cpp
         src/renderer/Pipeline.h
+        src/platform/vulkan/sync/VulkanSemaphore.cpp
+        src/platform/vulkan/sync/VulkanSemaphore.h
+        src/platform/vulkan/sync/VulkanFence.cpp
+        src/platform/vulkan/sync/VulkanFence.h
 )
 
 target_include_directories(lada_engine

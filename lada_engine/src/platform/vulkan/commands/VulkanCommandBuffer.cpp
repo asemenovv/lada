@@ -20,13 +20,25 @@ namespace Lada {
 
         LD_VK_ASSERT_SUCCESS(vkAllocateCommandBuffers(device, &allocInfo, &m_CommandBuffer),
             "Failed to allocate command buffers");
+    }
 
-        VkCommandBufferBeginInfo beginInfo{};
+    void VulkanCommandBuffer::Draw(const uint32_t vertexCount, const uint32_t instanceCount,
+        const uint32_t firstVertex, const uint32_t firstInstance) {
+        vkCmdDraw(m_CommandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
+    }
+
+    void VulkanCommandBuffer::Reset() {
+        LD_VK_ASSERT_SUCCESS(vkResetCommandBuffer(m_CommandBuffer, 0), "Failed to reset command buffer!")
+    }
+
+    void VulkanCommandBuffer::Begin() {
+        VkCommandBufferBeginInfo beginInfo = {};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
-        beginInfo.flags = 0;
-        beginInfo.pInheritanceInfo = nullptr;
-
         LD_VK_ASSERT_SUCCESS(vkBeginCommandBuffer(m_CommandBuffer, &beginInfo),
             "Failed to begin recording command buffer!");
+    }
+
+    void VulkanCommandBuffer::End() {
+        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(m_CommandBuffer), "Failed to end command buffer!");
     }
 }
