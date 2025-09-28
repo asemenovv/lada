@@ -40,6 +40,8 @@ namespace Lada {
 
         VulkanFramebuffer& GetFramebuffer(uint32_t index) const;
 
+        void RecreateSwapChain() override;
+
         void WaitIdle() override;
     private:
         std::unique_ptr<VulkanInstance> m_VulkanInstance;

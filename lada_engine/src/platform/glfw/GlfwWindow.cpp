@@ -23,7 +23,7 @@ namespace Lada {
 #endif
         } else if (graphicApi == GraphicAPI::VULKAN) {
             glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-            glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+            glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
         }
 
         m_Window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);

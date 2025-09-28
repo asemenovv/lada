@@ -24,5 +24,7 @@ namespace Lada {
         virtual void EndSingleTimeCommands(CommandBuffer *commandBuffer) = 0;
 
         virtual void WaitIdle() = 0;
+
+        virtual void RecreateSwapChain() = 0;
     };
 }

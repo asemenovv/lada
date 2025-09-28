@@ -4,11 +4,12 @@
 #include "GraphicsContext.h"
 #include "RenderPass.h"
 #include "app/Logger.h"
+#include "events/ApplicationEvent.h"
 #include "model/Model.h"
 
 namespace Lada::Render {
-    Renderer::Renderer(const Window &window, GraphicsContext *graphicsContext)
-        : m_GraphicsContext(graphicsContext), m_Camera(nullptr), m_CurrentImageIndex(0), m_CurrentFrameIndex(0) {
+    Renderer::Renderer(const Window &window, GraphicsContext *graphicsContext, EventManager *eventManager)
+        : m_GraphicsContext(graphicsContext), m_Camera(nullptr), m_CurrentImageIndex(0), m_CurrentFrameIndex(0), m_EventManager(eventManager) {
         m_Camera = CameraBuilder()
                 .Screen(45.0, window.GetWidth() / window.GetHeight(), 1.0, 100.0)
                 .Position({0.0, 0.0, 0.0})
@@ -19,6 +20,7 @@ namespace Lada::Render {
         for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
             m_CommandBuffers[i] = m_GraphicsContext->CreateCommandBuffer();
         }
+        m_EventManager->BIND_HANDLER(WindowResizeEvent, Renderer::OnWindowResizeEvent);
     }
 
     void Renderer::Init() {
@@ -30,8 +32,14 @@ namespace Lada::Render {
 
     CommandBuffer *Renderer::BeginFrame() {
         const RenderPass *renderPass = m_GraphicsContext->GetPipeline()->GetRenderPass();
-        if (!m_GraphicsContext->GetSwapChain()->AcquireNextImage(&m_CurrentImageIndex, m_CurrentFrameIndex)) {
+        RenderStatus status = m_GraphicsContext->GetSwapChain()->AcquireNextImage(&m_CurrentImageIndex, m_CurrentFrameIndex);
+        if (status == RenderStatus::FAILED) {
             LD_CORE_ERROR("Failed to acquire image from SwapChain");
+            std::abort();
+        }
+        if (status == RenderStatus::OUT_OF_DATE_SWAP_CHAIN) {
+            m_GraphicsContext->RecreateSwapChain();
+            return nullptr;
         }
         m_CommandBuffers[m_CurrentFrameIndex]->Reset();
         m_CommandBuffers[m_CurrentFrameIndex]->Begin();
@@ -58,9 +66,19 @@ namespace Lada::Render {
                                                                     &m_CurrentImageIndex, m_CurrentFrameIndex)) {
             LD_CORE_ERROR("Failed to submit command buffer");
         }
-        if (!m_GraphicsContext->GetSwapChain()->Present(&m_CurrentImageIndex, m_CurrentFrameIndex)) {
+        RenderStatus status = m_GraphicsContext->GetSwapChain()->Present(&m_CurrentImageIndex, m_CurrentFrameIndex);
+        if (status == RenderStatus::FAILED) {
             LD_CORE_ERROR("Presentation failed");
+            std::abort();
+        }
+        if (status == RenderStatus::OUT_OF_DATE_SWAP_CHAIN || status == RenderStatus::SUBOPTIMAL_SWAP_CHAIN) {
+            m_GraphicsContext->RecreateSwapChain();
         }
         m_CurrentFrameIndex = (m_CurrentFrameIndex + 1) % MAX_FRAMES_IN_FLIGHT;
+    }
+
+    bool Renderer::OnWindowResizeEvent(const WindowResizeEvent &event) const {
+        m_GraphicsContext->RecreateSwapChain();
+        return true;
     }
 }

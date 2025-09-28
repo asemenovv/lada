@@ -12,7 +12,6 @@ namespace Lada
         explicit UUID(const UUID& other);
         ~UUID() = default;
 
-        explicit operator const uint64_t() const;
         explicit operator uint64_t() const;
     private:
         std::uint64_t m_UUID;

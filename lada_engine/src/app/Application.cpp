@@ -23,7 +23,7 @@ namespace Lada::App {
         m_GraphicsContext = apiFactory.CreateContext(*m_Window);
         m_GraphicsContext->Init();
 
-        m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get());
+        m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get(), m_EventManager.get());
         LD_CORE_INFO("Application initialized");
 
 
@@ -44,17 +44,10 @@ void main() {
 
         m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::OnWindowCloseEvent);
         SubscribeLayersOnEvents();
-
-        m_EventManager->BIND_HANDLER(WindowResizeEvent, Application::OnWindowResizeEvent);
     }
 
     bool Application::OnWindowCloseEvent(const WindowCloseEvent &event) {
         this->Shutdown();
-        return true;
-    }
-
-    bool Application::OnWindowResizeEvent(const WindowResizeEvent &event) {
-        glViewport(0, 0, event.GetWidth(), event.GetHeight());
         return true;
     }
 

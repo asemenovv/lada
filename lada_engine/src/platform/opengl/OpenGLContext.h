@@ -19,7 +19,9 @@ namespace Lada {
 
         SwapChain* GetSwapChain() const override;
 
-        void WaitIdle() override {};
+        void WaitIdle() override {}
+
+        void RecreateSwapChain() override {}
 
     private:
         Window& m_Window;

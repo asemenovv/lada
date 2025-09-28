@@ -10,7 +10,8 @@
 #include "GLFW/glfw3.h"
 
 namespace Lada {
-    VulkanSwapChain::VulkanSwapChain(VulkanGraphicsContext *graphicalContext, const VkExtent2D windowExtent)
+    VulkanSwapChain::VulkanSwapChain(VulkanGraphicsContext *graphicalContext,
+        const VkExtent2D windowExtent, VulkanSwapChain *oldSwapChain)
         : m_SwapChain(VK_NULL_HANDLE), m_WindowExtent(windowExtent), m_GraphicsContext(graphicalContext),
           m_SwapChainExtent({}) {
         const VulkanPhysicalDevice &physicalDevice = graphicalContext->GetPhysicalDevice();
@@ -53,7 +54,11 @@ namespace Lada {
         createInfo.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
         createInfo.presentMode = presentMode;
         createInfo.clipped = VK_TRUE;
-        createInfo.oldSwapchain = VK_NULL_HANDLE;
+        if (oldSwapChain) {
+            createInfo.oldSwapchain = oldSwapChain->m_SwapChain;
+        } else {
+            createInfo.oldSwapchain = VK_NULL_HANDLE;
+        }
 
         LD_VK_ASSERT_SUCCESS(vkCreateSwapchainKHR(device.NativeDevice(), &createInfo, nullptr, &m_SwapChain),
                              "Failed to create swap chain!");
@@ -79,12 +84,20 @@ namespace Lada {
         vkDestroySwapchainKHR(device.NativeDevice(), m_SwapChain, nullptr);
     }
 
-    bool VulkanSwapChain::AcquireNextImage(uint32_t *imageIndex, const int frameIndex) {
+    RenderStatus VulkanSwapChain::AcquireNextImage(uint32_t *imageIndex, const int frameIndex) {
         m_InFlightFences[frameIndex]->Wait();
         const VkResult result = vkAcquireNextImageKHR(m_GraphicsContext->GetDevice().NativeDevice(), m_SwapChain,
                                                       UINT64_MAX, m_ImageAvailableSemaphores[frameIndex]->NativeSemaphore(),
                                                       VK_NULL_HANDLE, imageIndex);
-        return result == VK_SUCCESS;
+        switch (result) {
+            case VK_ERROR_OUT_OF_DATE_KHR:
+                return RenderStatus::OUT_OF_DATE_SWAP_CHAIN;
+            case VK_SUCCESS:
+            case VK_SUBOPTIMAL_KHR:
+                return RenderStatus::SUCCESS;
+            default:
+                return RenderStatus::FAILED;
+        }
     }
 
     bool VulkanSwapChain::SubmitCommandBuffer(CommandBuffer *commandBuffer, uint32_t *imageIndex, const int frameIndex) {
@@ -108,7 +121,7 @@ namespace Lada {
         return result == VK_SUCCESS;
     }
 
-    bool VulkanSwapChain::Present(uint32_t *imageIndex, const int frameIndex) {
+    RenderStatus VulkanSwapChain::Present(uint32_t *imageIndex, const int frameIndex) {
         const VkSemaphore renderFinished = m_RenderFinishedPerImage[*imageIndex]->NativeSemaphore();
         VkPresentInfoKHR presentInfo{};
         presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -121,8 +134,16 @@ namespace Lada {
         presentInfo.pSwapchains = swapChains;
         presentInfo.pImageIndices = imageIndex;
         presentInfo.pResults = nullptr;
-        const VkResult result = vkQueuePresentKHR(m_GraphicsContext->GetDevice().PresentQueue(), &presentInfo);
-        return result == VK_SUCCESS;
+        switch (vkQueuePresentKHR(m_GraphicsContext->GetDevice().PresentQueue(), &presentInfo)) {
+            case VK_ERROR_OUT_OF_DATE_KHR:
+                return RenderStatus::OUT_OF_DATE_SWAP_CHAIN;
+            case VK_SUCCESS:
+                return RenderStatus::SUCCESS;
+            case VK_SUBOPTIMAL_KHR:
+                return RenderStatus::SUBOPTIMAL_SWAP_CHAIN;
+            default:
+                return RenderStatus::FAILED;
+        }
     }
 
     VkSurfaceFormatKHR VulkanSwapChain::chooseSwapSurfaceFormat(

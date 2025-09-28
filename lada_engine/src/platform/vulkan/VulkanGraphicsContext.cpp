@@ -31,6 +31,7 @@ namespace Lada {
     }
 
     void VulkanGraphicsContext::crateFrameBuffers() {
+        swapChainFramebuffers.clear();
         swapChainFramebuffers.resize(m_SwapChain->GetImageCount());
         for (size_t i = 0; i < m_SwapChain->GetImageCount(); i++) {
             VulkanImage& image = m_SwapChain->GetImage(i);
@@ -56,6 +57,14 @@ namespace Lada {
 
     VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
         return *swapChainFramebuffers[index];
+    }
+
+    void VulkanGraphicsContext::RecreateSwapChain() {
+        WaitIdle();
+        const auto [width, height] = m_Window.GetPixelsSize();
+        auto extent = VkExtent2D(width, height);
+        m_SwapChain = std::make_unique<VulkanSwapChain>(this, extent, m_SwapChain.get());
+        crateFrameBuffers();
     }
 
     void VulkanGraphicsContext::WaitIdle() {

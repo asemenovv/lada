@@ -5,6 +5,7 @@
 
 #include "Camera.h"
 #include "CommandBuffer.h"
+#include "events/ApplicationEvent.h"
 #include "platform/glfw/GlfwWindow.h"
 #include "glm/vec4.hpp"
 
@@ -17,7 +18,7 @@ namespace Lada::Render {
 
     class Renderer {
     public:
-        explicit Renderer(const Window& window, GraphicsContext* graphicsContext);
+        explicit Renderer(const Window& window, GraphicsContext* graphicsContext, EventManager* eventManager);
 
         void Init();
 
@@ -40,5 +41,8 @@ namespace Lada::Render {
         std::vector<std::unique_ptr<CommandBuffer>> m_CommandBuffers;
         uint32_t m_CurrentImageIndex;
         int m_CurrentFrameIndex;
+        EventManager* m_EventManager;
+
+        bool OnWindowResizeEvent(const WindowResizeEvent& event) const;
     };
 }

@@ -40,6 +40,5 @@ namespace Lada::App {
         void SubscribeLayersOnEvents();
 
         bool OnWindowCloseEvent(const WindowCloseEvent& event);
-        bool OnWindowResizeEvent(const WindowResizeEvent& event);
     };
 }

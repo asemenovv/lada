@@ -16,10 +16,6 @@ namespace Lada{
     UUID::UUID(const UUID& other): m_UUID(other.m_UUID) {
     }
 
-    UUID::operator const uint64_t() const {
-        return m_UUID;
-    }
-
     UUID::operator uint64_t() const
     {
         return m_UUID;

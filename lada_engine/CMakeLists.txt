@@ -77,6 +77,7 @@ add_library(lada_engine STATIC
         src/scene/Scene.h
         src/core/UUID.cpp
         src/core/UUID.h
+        src/renderer/RenderStatus.h
 )
 
 target_include_directories(lada_engine
