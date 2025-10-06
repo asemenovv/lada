@@ -1,4 +1,5 @@
 #include "ldpch.h"
+#define TINYOBJLOADER_IMPLEMENTATION
 #include "AssetManager.h"
 
 
@@ -26,6 +27,24 @@ namespace Lada {
         }
         stream.close();
         return { ss[0].str(), ss[1].str() };
+    }
+
+    AssetID AssetManager::Register(const AssetType type, const std::string &path) {
+        auto id = UUID();
+        switch (type) {
+            case AssetType::Mesh:
+                m_Assets[id] = LoadInternal<Mesh>(path, id);
+                break;
+            default:
+                LD_CORE_CRITICAL("Unsupported Asset Type!");
+                std::abort();
+        }
+        return id;
+    }
+
+    template<typename T>
+    T* AssetManager::Get(AssetID &id) {
+        return m_Assets[id].get();
     }
 
     std::string AssetManager::WorkingDir() {

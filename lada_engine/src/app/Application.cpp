@@ -5,6 +5,8 @@
 #include "events/ApplicationEvent.h"
 #include "platform/vulkan/pipeline/VulkanShaderCompiler.h"
 #include "renderer/GraphicsApiFactory.h"
+#include "scene/Components.h"
+#include "scene/Entity.h"
 
 namespace Lada::App {
     Application *Application::s_Instance = nullptr;
@@ -21,9 +23,13 @@ namespace Lada::App {
         m_EventManager = std::make_unique<EventManager>();
         m_Window = Window::Create(title, width, height, *m_EventManager, GraphicAPI::VULKAN);
         m_GraphicsContext = apiFactory.CreateContext(*m_Window);
+        m_Scene = std::make_unique<Scene>(m_GraphicsContext.get());
+        m_AssetManager = std::make_unique<AssetManager>();
+        loadScene();
         m_GraphicsContext->Init();
 
         m_Renderer = std::make_unique<Render::Renderer>(*m_Window, m_GraphicsContext.get(), m_EventManager.get());
+        m_SceneRenderer  = std::make_unique<SceneRenderer>(m_Scene.get(), m_Renderer.get());
         LD_CORE_INFO("Application initialized");
 
 
@@ -42,13 +48,70 @@ void main() {
             // std::exit(0);
         // }
 
-        m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::OnWindowCloseEvent);
-        SubscribeLayersOnEvents();
+        m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::onWindowCloseEvent);
+        subscribeLayersOnEvents();
     }
 
-    bool Application::OnWindowCloseEvent(const WindowCloseEvent &event) {
+    bool Application::onWindowCloseEvent(const WindowCloseEvent &event) {
         this->Shutdown();
         return true;
+    }
+
+    void Application::loadScene() {
+        auto camera = m_Scene->CreateEntity();
+        camera.AddComponent<IdComponent>(UUID());
+        camera.AddComponent<NameComponent>("Camera");
+        camera.AddComponent<CameraComponent>(CameraComponent{
+            .Type = CameraType::Perspective,
+            .FOVDegrees = 50.0f,
+            .AutoAspectRatio = true,
+            .NearPlane = 0.1f,
+            .FarPlane = 10.0f,
+        });
+        camera.AddComponent<TransformComponent>(
+            glm::vec3{-1.5f, 0.1f, 0.0f},
+            glm::quat{1.0f, 0.0f, 0.0f, 0.0},
+            glm::vec3{1.0f, 1.0f, 1.0f}
+        );
+
+        auto smoothVaseId = m_AssetManager->Register(AssetType::Mesh,
+            "/Users/alexeysemenov/CLionProjects/lada/assets/models/smooth_vase.obj");
+        auto smoothVase = m_Scene->CreateEntity();
+        smoothVase.AddComponent<IdComponent>(UUID());
+        smoothVase.AddComponent<NameComponent>("Smooth Vase");
+        smoothVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        smoothVase.AddComponent<TransformComponent>(
+            glm::vec3{0.0, 0.0, 0.5},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{2.0f, 1.0f, 2.0f}
+        );
+        smoothVase.AddComponent<MeshComponent>(smoothVaseId);
+
+        auto flatVaseId = m_AssetManager->Register(AssetType::Mesh,
+            "/Users/alexeysemenov/CLionProjects/lada/assets/models/flat_vase.obj");
+        auto flatVase = m_Scene->CreateEntity();
+        flatVase.AddComponent<IdComponent>(UUID());
+        flatVase.AddComponent<NameComponent>("Smooth Vase");
+        flatVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        flatVase.AddComponent<TransformComponent>(
+            glm::vec3{0.0, 0.0, -0.5},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{2.0f, 1.0f, 2.0f}
+        );
+        flatVase.AddComponent<MeshComponent>(flatVaseId);
+
+        auto floorId = m_AssetManager->Register(AssetType::Mesh,
+            "/Users/alexeysemenov/CLionProjects/lada/assets/models/quad.obj");
+        auto floor = m_Scene->CreateEntity();
+        floor.AddComponent<IdComponent>(UUID());
+        floor.AddComponent<NameComponent>("Floor");
+        floor.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        floor.AddComponent<TransformComponent>(
+            glm::vec3{0.0},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{3.0f, 1.0f, 3.0f}
+        );
+        floor.AddComponent<MeshComponent>(floorId);
     }
 
     void Application::Run() {
@@ -56,12 +119,13 @@ void main() {
             for (Layer *layer: *m_LayerStack) {
                 layer->OnUpdate(*m_LayerContext);
             }
-            m_Renderer->BeginFrame();
-            m_Renderer->Submit(nullptr);
-            for (Layer *layer: *m_LayerStack) {
-                layer->OnRender(*m_LayerContext, *m_Renderer);
-            }
-            m_Renderer->EndFrame();
+            m_SceneRenderer->DrawScene();
+            // m_Renderer->BeginFrame();
+            // m_Renderer->Submit(nullptr);
+            // for (Layer *layer: *m_LayerStack) {
+            //     layer->OnRender(*m_LayerContext, *m_Renderer);
+            // }
+            // m_Renderer->EndFrame();
             m_Window->OnUpdate();
         }
         m_GraphicsContext->WaitIdle();
@@ -88,7 +152,7 @@ void main() {
         m_LayerStack->PopOverlay(layer);
     }
 
-    void Application::SubscribeLayersOnEvents() {
+    void Application::subscribeLayersOnEvents() {
         m_EventManager->RegisterGlobalHandler([this](Event &event) {
             for (auto it = m_LayerStack->end(); it != m_LayerStack->begin();) {
                 (*--it)->OnEvent(event, *m_LayerContext);

@@ -3,11 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-#include "assets/IAsset.h"
+#include "assets/Asset.h"
 #include "glm/glm.hpp"
 
 namespace Lada {
-    class Shader : public IAsset {
+    class Shader {
         unsigned int m_RendererID;
         std::unordered_map<std::string, int> m_UniformLocationCache;
     public:

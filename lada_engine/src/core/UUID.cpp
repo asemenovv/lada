@@ -20,4 +20,8 @@ namespace Lada{
     {
         return m_UUID;
     }
+
+    bool UUID::operator==(const UUID &other) const {
+        return m_UUID == other.m_UUID;
+    }
 }

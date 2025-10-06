@@ -3,10 +3,10 @@
 
 #include "Shader.h"
 #include "Texture.h"
-#include "assets/IAsset.h"
+#include "assets/Asset.h"
 
 namespace Lada {
-    class Material : public IAsset {
+    class Material {
     public:
         explicit Material(const std::shared_ptr<Shader>& shader);
 

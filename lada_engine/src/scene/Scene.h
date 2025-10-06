@@ -1,46 +1,32 @@
+#pragma once
 
+#include <entt/entt.hpp>
 
-#include <glm/glm.hpp>
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/quaternion.hpp>
-
-#include "core/UUID.h"
-#include "spdlog/fmt/bundled/format.h"
-#include "spdlog/fmt/bundled/ranges.h"
+#include "SceneCamera.h"
+#include "renderer/GraphicsContext.h"
 
 namespace Lada {
+    class Entity;
+
     class Scene {
+        friend class Entity;
+
     public:
+        explicit Scene(GraphicsContext *graphicalContext);
+
+        ~Scene() = default;
+
+        Entity CreateEntity();
+
+        std::unique_ptr<SceneCamera> PrimaryCamera();
+
+        template<typename... Components>
+        auto GetAllEntitiesWith() {
+            return m_Registry.view<Components...>();
+        }
+
     private:
-    };
-
-    struct IdComponent {
-        UUID ID = UUID();
-    };
-
-    struct NameComponent {
-        std::string Name = "UNNAMED";
-
-        NameComponent() = default;
-        NameComponent(const NameComponent& other) = default;
-
-        explicit NameComponent(const std::string& name)
-            : Name(name) {}
-
-        explicit operator std::string& () { return Name; }
-        explicit operator const std::string& () const { return Name; }
-    };
-
-    struct FolderComponent {
-        std::vector<std::string> Path;
-        FolderComponent(): Path({}) {}
-        explicit FolderComponent(const std::vector<std::string>& path): Path(path) {}
-        explicit operator std::string& ();
-    };
-
-    struct TransformComponent {
-        glm::vec3 Translation = glm::vec3(0.0f);
-        glm::vec3 Scale = glm::vec3(1.0f, 1.0f, 1.0f);
-        glm::quat Rotation = { 1.0f, 0.0f, 0.0f, 0.0f };
+        entt::registry m_Registry;
+        GraphicsContext *m_GraphicalContext;
     };
 }

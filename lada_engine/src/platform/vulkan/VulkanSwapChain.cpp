@@ -146,6 +146,13 @@ namespace Lada {
         }
     }
 
+    struct SwapChain::Extent VulkanSwapChain::Extent() {
+        return {
+            .width = m_SwapChainExtent.width,
+            .height = m_SwapChainExtent.height
+        };
+    }
+
     VkSurfaceFormatKHR VulkanSwapChain::chooseSwapSurfaceFormat(
         const std::vector<VkSurfaceFormatKHR> &availableFormats) {
         for (const auto &availableFormat: availableFormats) {

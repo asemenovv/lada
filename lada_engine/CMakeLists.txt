@@ -34,11 +34,6 @@ add_library(lada_engine STATIC
         src/assets/AssetManager.cpp
         src/platform/opengl/OpenGLContext.cpp
         src/app/Window.cpp
-        src/app/ecs/EntityManager.cpp
-        src/app/ecs/ComponentArray.cpp
-        src/app/ecs/ComponentManager.cpp
-        src/app/ecs/SystemManager.cpp
-        src/app/ecs/EcsCoordinator.cpp
         src/platform/vulkan/device/VulkanInstance.cpp
         src/platform/vulkan/device/VulkanPhysicalDevice.cpp
         src/platform/vulkan/VulkanGraphicsContext.cpp
@@ -78,6 +73,20 @@ add_library(lada_engine STATIC
         src/core/UUID.cpp
         src/core/UUID.h
         src/renderer/RenderStatus.h
+        src/assets/Mesh.cpp
+        src/assets/Mesh.h
+        src/scene/Entity.cpp
+        src/scene/Entity.h
+        src/assets/Asset.cpp
+        src/scene/Components.h
+        src/scene/Components.cpp
+        src/scene/SceneCamera.cpp
+        src/scene/SceneCamera.h
+        src/scene/PerspectiveCamera.cpp
+        src/scene/PerspectiveCamera.h
+        src/scene/SceneCamera.cpp
+        src/renderer/SceneRenderer.cpp
+        src/renderer/SceneRenderer.h
 )
 
 target_include_directories(lada_engine
@@ -103,7 +112,9 @@ target_link_libraries(lada_engine
         PUBLIC imgui
         PUBLIC stb_image
         PUBLIC assimp
+        PUBLIC tinyobjloader
         PUBLIC yaml-cpp
         PUBLIC shaderc
+        PUBLIC EnTT::EnTT
 )
 add_dependencies(lada_engine build_shaders)

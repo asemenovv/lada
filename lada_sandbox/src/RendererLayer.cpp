@@ -22,13 +22,13 @@ void RendererLayer::OnAttach(Lada::App::LayerContext& context) {
         2, 3, 0
     };
 
-    auto material = Lada::AssetManager::Load<Lada::Material>("lada_sandbox/res/materials/basic.material.yaml");
+    // auto material = Lada::AssetManager::Load<Lada::Material>("lada_sandbox/res/materials/basic.material.yaml");
 
     // Lada::Render::ModelLoader loader;
     // m_Square = loader.LoadModel(workingDirectory + "/assets/gltf_sample_models/2.0/BoxTextured/glTF/BoxTextured.gltf");
     // m_Square->SetMaterial(m_Material);
 
-    std::shared_ptr<Lada::Render::Mesh> squareMesh = Lada::Render::MeshBuilder(positions, 4 * 5 * sizeof(float))
+    /*std::shared_ptr<Lada::Render::Mesh> squareMesh = Lada::Render::MeshBuilder(positions, 4 * 5 * sizeof(float))
             .PushToLayout<float>(3)
             .PushToLayout<float>(2)
             .FinalizeBuffer()
@@ -39,7 +39,7 @@ void RendererLayer::OnAttach(Lada::App::LayerContext& context) {
             .PushMesh(squareMesh, material)
             .DefaultTransformation()
             .Scale(15)
-            .Build();
+            .Build();*/
 }
 
 void RendererLayer::OnUpdate(Lada::App::LayerContext& context) {

@@ -20,6 +20,7 @@ add_subdirectory(deps/stb_image_wrapper)
 add_subdirectory(deps/GLFW)
 add_subdirectory(deps/GLAD)
 add_subdirectory(deps/assimp)
+add_subdirectory(deps/tinyobjloader)
 add_subdirectory(deps/yaml-cpp)
 
 ################################## Node Editor (Qt) ##################################

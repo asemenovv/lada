@@ -1,11 +1,11 @@
 #pragma once
 
 #include "app/GlCall.h"
-#include "assets/IAsset.h"
+#include "assets/Asset.h"
 #include "yaml-cpp/node/iterator.h"
 
 namespace Lada {
-    class Texture : public IAsset {
+    class Texture {
         unsigned int m_RendererID;
         std::string m_Name;
     public:

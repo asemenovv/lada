@@ -28,6 +28,8 @@ namespace Lada {
 
         RenderStatus Present(uint32_t *imageIndex, int frameIndex) override;
 
+        struct Extent Extent() override;
+
     private:
         static VkSurfaceFormatKHR chooseSwapSurfaceFormat(
             const std::vector<VkSurfaceFormatKHR> &availableFormats);
