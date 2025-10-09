@@ -6,8 +6,45 @@
 #include "platform/vulkan/commands/VulkanCommandBuffer.h"
 
 namespace Lada {
-    VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const std::string &vertPath,
-        const std::string &fragPath): m_GraphicsContext(graphicsContext) {
+    static VkFormat ShaderDataTypeToVulkanFormat(ShaderDataType type) {
+        switch (type.Type) {
+            case GpuElementType::FLOAT: {
+                if (type.ComponentCount == 1) {
+                    return VK_FORMAT_R32_SFLOAT;
+                }
+                if (type.ComponentCount == 2) {
+                    return VK_FORMAT_R32G32_SFLOAT;
+                }
+                if (type.ComponentCount == 3) {
+                    return VK_FORMAT_R32G32B32_SFLOAT;
+                }
+                if (type.ComponentCount == 4) {
+                    return VK_FORMAT_R32G32B32A32_SFLOAT;
+                }
+            }
+            case GpuElementType::INT: {
+                if (type.ComponentCount == 1) {
+                    return VK_FORMAT_R32_SINT;
+                }
+                if (type.ComponentCount == 2) {
+                    return VK_FORMAT_R32G32_SINT;
+                }
+                if (type.ComponentCount == 3) {
+                    return VK_FORMAT_R32G32B32_SINT;
+                }
+                if (type.ComponentCount == 4) {
+                    return VK_FORMAT_R32G32B32A32_SINT;
+                }
+            }
+            default:
+                LD_CORE_CRITICAL("Shader data type {} is not supported.", type.Name);
+                std::abort();
+        }
+    }
+
+    VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const PipelineCreateInfo &createInfo,
+        const std::string &vertPath, const std::string &fragPath)
+        : m_GraphicsContext(graphicsContext), m_CreateInfo(createInfo) {
         m_VertShader = std::make_unique<VulkanShader>(vertPath, graphicsContext);
         m_FragShader = std::make_unique<VulkanShader>(fragPath, graphicsContext);
         m_Layout = std::make_unique<VulkanPipelineLayout>(graphicsContext);
@@ -40,12 +77,28 @@ namespace Lada {
 
         VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
 
+        std::vector<VkVertexInputBindingDescription> vertexInputBindingDescriptions;
+        VkVertexInputBindingDescription& vertexBindingDescription = vertexInputBindingDescriptions.emplace_back();
+        vertexBindingDescription.binding = 0;
+        vertexBindingDescription.stride = m_CreateInfo.Layout.GetStride();
+        vertexBindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+        int location = 0;
+        std::vector<VkVertexInputAttributeDescription> vertexInputAttributes(m_CreateInfo.Layout.GetElementCount());
+        for (auto layoutElement : m_CreateInfo.Layout) {
+            vertexInputAttributes[location].binding = 0;
+            vertexInputAttributes[location].location = location;
+            vertexInputAttributes[location].format = ShaderDataTypeToVulkanFormat(layoutElement.Type);
+            vertexInputAttributes[location].offset = layoutElement.Offset;
+            location++;
+        }
+
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-        vertexInputInfo.vertexBindingDescriptionCount = 0;
-        vertexInputInfo.pVertexBindingDescriptions = nullptr;
-        vertexInputInfo.vertexAttributeDescriptionCount = 0;
-        vertexInputInfo.pVertexAttributeDescriptions = nullptr;
+        vertexInputInfo.vertexBindingDescriptionCount = vertexInputBindingDescriptions.size();
+        vertexInputInfo.pVertexBindingDescriptions = vertexInputBindingDescriptions.data();
+        vertexInputInfo.vertexAttributeDescriptionCount = vertexInputAttributes.size();
+        vertexInputInfo.pVertexAttributeDescriptions = vertexInputAttributes.data();
 
         VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
         inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;

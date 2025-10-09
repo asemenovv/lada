@@ -18,6 +18,8 @@ namespace Lada {
 
     class AssetManager {
     public:
+        explicit AssetManager(GraphicsContext* graphicsContext);
+
         AssetID Register(AssetType type, const std::string &path);
 
         template<typename T>
@@ -27,11 +29,18 @@ namespace Lada {
     private:
         std::unordered_map<AssetID, std::unique_ptr<Asset>> m_Assets;
 
+        GraphicsContext* m_GraphicsContext;
+
         template<typename T>
-        static std::unique_ptr<T> LoadInternal(const std::string &path, AssetID& id);
+        std::unique_ptr<T> LoadInternal(const std::string &path, AssetID& id);
 
         static ShaderProgramSource ParseShader(const std::string &filepath);
     };
+
+    template<typename Mesh>
+    Mesh* AssetManager::Get(AssetID &id) {
+        return static_cast<Mesh*>(m_Assets[id].get());
+    }
 
     // template<typename T>
     // AssetID AssetManager::Load(const std::string &path) {
@@ -49,7 +58,7 @@ namespace Lada {
 
     template<>
     inline std::unique_ptr<Mesh> AssetManager::LoadInternal<Mesh>(const std::string &path, AssetID& id) {
-        std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>(id);
+        std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>(id, m_GraphicsContext);
 
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
@@ -96,6 +105,7 @@ namespace Lada {
                 mesh->AddIndex(uniqueVertices[vertex]);
             }
         }
+        mesh->LoadBuffers();
         LD_CORE_DEBUG("Model file {0} loaded successfully. Vertices count: {1}", path, mesh->VerticesCount());
         return mesh;
     }

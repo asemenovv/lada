@@ -5,6 +5,7 @@
 
 #include "Camera.h"
 #include "CommandBuffer.h"
+#include "assets/Mesh.h"
 #include "events/ApplicationEvent.h"
 #include "platform/glfw/GlfwWindow.h"
 #include "glm/vec4.hpp"
@@ -26,7 +27,7 @@ namespace Lada::Render {
 
         CommandBuffer* BeginFrame();
 
-        void Submit(const std::shared_ptr<Model> &model) const;
+        void Submit(const Mesh* mesh) const;
 
         void EndFrame();
 

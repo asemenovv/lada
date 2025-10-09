@@ -10,7 +10,8 @@
 namespace Lada {
     class VulkanPipeline : public Pipeline {
     public:
-        VulkanPipeline(VulkanGraphicsContext* graphicsContext, const std::string &vertPath,
+        // TODO: Move shader to PipelineCreateInfo
+        VulkanPipeline(VulkanGraphicsContext* graphicsContext, const PipelineCreateInfo &createInfo, const std::string &vertPath,
                        const std::string &fragPath);
         ~VulkanPipeline();
 
@@ -26,5 +27,6 @@ namespace Lada {
         std::unique_ptr<VulkanShader>  m_FragShader;
         std::unique_ptr<VulkanPipelineLayout> m_Layout;
         std::unique_ptr<VulkanRenderPass> m_RenderPass;
+        PipelineCreateInfo m_CreateInfo;
     };
 }

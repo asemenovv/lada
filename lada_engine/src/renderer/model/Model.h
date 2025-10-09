@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer/Mesh.h"
+#include "renderer/DeprecatedMesh.h"
 #include "renderer/material/Material.h"
 
 namespace Lada::Render {
@@ -8,15 +8,15 @@ namespace Lada::Render {
 
     public:
         struct SubMesh {
-            std::shared_ptr<Mesh> mesh;
+            std::shared_ptr<DeprecatedMesh> mesh;
             std::shared_ptr<Material> material;
         };
 
         Model();
 
-        Model(std::shared_ptr<Mesh> &mesh, std::shared_ptr<Material> &material);
+        Model(std::shared_ptr<DeprecatedMesh> &mesh, std::shared_ptr<Material> &material);
 
-        void PushMesh(std::shared_ptr<Mesh> &mesh, std::shared_ptr<Material> &material);
+        void PushMesh(std::shared_ptr<DeprecatedMesh> &mesh, std::shared_ptr<Material> &material);
 
         std::vector<SubMesh>::iterator begin() { return m_SubMeshes.begin(); }
         std::vector<SubMesh>::iterator end() { return m_SubMeshes.end(); }
@@ -33,7 +33,7 @@ namespace Lada::Render {
     public:
         ModelBuilder();
 
-        ModelBuilder &PushMesh(std::shared_ptr<Mesh> &mesh, std::shared_ptr<Material> &material);
+        ModelBuilder &PushMesh(std::shared_ptr<DeprecatedMesh> &mesh, std::shared_ptr<Material> &material);
 
         ModelBuilder &Transform(const glm::mat4 &modelMatrix);
 

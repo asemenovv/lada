@@ -1,9 +1,9 @@
 #pragma once
 
-#include "VertexBuffer.h"
+#include "DeprecatedVertexBuffer.h"
 
 namespace Lada::Render {
-    class VertexBufferLayout;
+    class DepricatedVertexBufferLayout;
 
     class VertexArray {
         unsigned int m_RendererID;
@@ -11,7 +11,7 @@ namespace Lada::Render {
         VertexArray();
         ~VertexArray();
 
-        void AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout);
+        void AddBuffer(const DeprecatedVertexBuffer& vb, const DepricatedVertexBufferLayout& layout);
         void Bind() const;
         void Unbind() const;
     };

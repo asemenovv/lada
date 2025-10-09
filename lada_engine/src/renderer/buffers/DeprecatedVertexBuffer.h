@@ -1,11 +1,11 @@
 #pragma once
 
 namespace Lada::Render {
-    class VertexBuffer {
+    class DeprecatedVertexBuffer {
         unsigned int m_RendererID;
     public:
-        VertexBuffer(const void* data, unsigned int size);
-        ~VertexBuffer();
+        DeprecatedVertexBuffer(const void* data, unsigned int size);
+        ~DeprecatedVertexBuffer();
 
         void Bind() const;
         void Unbind() const;

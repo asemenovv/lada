@@ -7,11 +7,11 @@ namespace Lada::Render {
     Model::Model(): m_ModelMatrix(glm::mat4(1.0f)) {
     }
 
-    Model::Model(std::shared_ptr<Mesh>& mesh, std::shared_ptr<Material>& material): Model() {
+    Model::Model(std::shared_ptr<DeprecatedMesh>& mesh, std::shared_ptr<Material>& material): Model() {
         PushMesh(mesh, material);
     }
 
-    void Model::PushMesh(std::shared_ptr<Mesh>& mesh, std::shared_ptr<Material>& material) {
+    void Model::PushMesh(std::shared_ptr<DeprecatedMesh>& mesh, std::shared_ptr<Material>& material) {
         m_SubMeshes.push_back({ mesh, material });
     }
 
@@ -25,7 +25,7 @@ namespace Lada::Render {
         m_Model = std::make_shared<Model>();
     }
 
-    ModelBuilder & ModelBuilder::PushMesh(std::shared_ptr<Mesh> &mesh, std::shared_ptr<Material> &material) {
+    ModelBuilder & ModelBuilder::PushMesh(std::shared_ptr<DeprecatedMesh> &mesh, std::shared_ptr<Material> &material) {
         m_Model->PushMesh(mesh, material);
         return *this;
     }

@@ -1,56 +1,31 @@
 #pragma once
 
-#include <vector>
-#include "app/GlCall.h"
-#include "renderer/Renderer.h"
+#include "VertexBufferElement.h"
 
-namespace Lada::Render {
-    struct VertexBufferLayoutElement {
-        unsigned int type;
-        unsigned int count;
-        unsigned char normalized;
-
-        static unsigned int GetSizeOfType(const unsigned int type) {
-            switch (type) {
-                case GL_FLOAT: return 4;
-                case GL_UNSIGNED_INT: return 4;
-                case GL_UNSIGNED_BYTE: return 1;
-            }
-            ASSERT(false);
-            return 0;
-        }
-    };
-
+namespace Lada {
     class VertexBufferLayout {
-        std::vector<VertexBufferLayoutElement> m_Elements;
-        unsigned int m_Stride;
     public:
-        VertexBufferLayout()
-            : m_Stride(0) {};
+        VertexBufferLayout() = default;
+        ~VertexBufferLayout() = default;
 
-        template<typename T>
-        void Push(const unsigned int count) {}
+        void AddElement(const ShaderDataType &type, const std::string& name, const bool normalized = false);
 
-        template<>
-        void Push<float>(const unsigned int count) {
-            m_Elements.push_back({ GL_FLOAT, count, GL_FALSE });
-            m_Stride += count * VertexBufferLayoutElement::GetSizeOfType(GL_FLOAT);
-        }
+        uint32_t GetStride() const;
 
-        template<>
-        void Push<unsigned int>(const unsigned int count) {
-            m_Elements.push_back({ GL_UNSIGNED_INT, count, GL_FALSE });
-            m_Stride += count * VertexBufferLayoutElement::GetSizeOfType(GL_UNSIGNED_INT);
-        }
+        uint32_t GetElementCount() const;
 
-        template<>
-        void Push<unsigned char>(const unsigned int count) {
-            m_Elements.push_back({ GL_UNSIGNED_BYTE, count, GL_TRUE });
-            m_Stride += count * VertexBufferLayoutElement::GetSizeOfType(GL_UNSIGNED_BYTE);
-        }
+        [[nodiscard]] std::vector<VertexBufferElement>::iterator begin();
 
-        inline const std::vector<VertexBufferLayoutElement>& GetElements() const { return m_Elements; }
+        [[nodiscard]] std::vector<VertexBufferElement>::iterator end();
 
-        inline unsigned int GetStride() const { return m_Stride; }
+        [[nodiscard]] std::vector<VertexBufferElement>::const_iterator begin() const;
+
+        [[nodiscard]] std::vector<VertexBufferElement>::const_iterator end() const;
+
+    private:
+        std::vector<VertexBufferElement> m_Elements;
+        uint32_t m_Stride = 0;
+
+        void updateOffsetsAndStride();
     };
 }

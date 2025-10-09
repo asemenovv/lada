@@ -5,6 +5,7 @@
 #include "app/Logger.h"
 #include "pipeline/VulkanPipeline.h"
 #include "VulkanFramebuffer.h"
+#include "assets/Mesh.h"
 #include "commands/VulkanCommandBuffer.h"
 
 namespace Lada {
@@ -23,7 +24,10 @@ namespace Lada {
         m_PhysicalDevice = std::make_unique<VulkanPhysicalDevice>(*m_VulkanInstance, *m_Surface);
         m_Device = std::make_unique<VulkanDevice>(*m_VulkanInstance, *m_PhysicalDevice, enableValidationLayers);
         m_SwapChain = std::make_unique<VulkanSwapChain>(this, extent);
-        m_Pipeline = std::make_unique<VulkanPipeline>(this,
+        PipelineCreateInfo createInfo = {
+            .Layout = Mesh::Vertex::Layout()
+        };
+        m_Pipeline = std::make_unique<VulkanPipeline>(this, createInfo,
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert.spv",
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag.spv");
         crateFrameBuffers();

@@ -27,6 +27,11 @@ namespace Lada {
         vkCmdDraw(m_CommandBuffer, vertexCount, instanceCount, firstVertex, firstInstance);
     }
 
+    void VulkanCommandBuffer::DrawIndexed(const uint32_t indexCount, const uint32_t instanceCount,
+        const uint32_t firstIndex, const uint32_t firstVertex, const uint32_t firstInstance) {
+        vkCmdDrawIndexed(m_CommandBuffer, indexCount, instanceCount, firstIndex, firstVertex, firstInstance);
+    }
+
     void VulkanCommandBuffer::Reset() {
         LD_VK_ASSERT_SUCCESS(vkResetCommandBuffer(m_CommandBuffer, 0), "Failed to reset command buffer!")
     }

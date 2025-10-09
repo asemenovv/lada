@@ -1,24 +1,26 @@
 #include "ldpch.h"
-#include "VertexBuffer.h"
+#include "DeprecatedVertexBuffer.h"
 #include "app/GlCall.h"
 #include "renderer/Renderer.h"
 
+#include "VertexBufferElement.h"
+
 namespace Lada::Render {
-    VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
+    DeprecatedVertexBuffer::DeprecatedVertexBuffer(const void *data, unsigned int size) {
         GL_CALL(glGenBuffers(1, &m_RendererID));
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
         GL_CALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
     }
 
-    VertexBuffer::~VertexBuffer() {
+    DeprecatedVertexBuffer::~DeprecatedVertexBuffer() {
         GL_CALL(glDeleteBuffers(1, &m_RendererID));
     }
 
-    void VertexBuffer::Bind() const {
+    void DeprecatedVertexBuffer::Bind() const {
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
     }
 
-    void VertexBuffer::Unbind() const {
+    void DeprecatedVertexBuffer::Unbind() const {
         GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
 }

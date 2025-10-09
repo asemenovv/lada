@@ -29,6 +29,9 @@ namespace Lada {
         return { ss[0].str(), ss[1].str() };
     }
 
+    AssetManager::AssetManager(GraphicsContext *graphicsContext): m_GraphicsContext(graphicsContext) {
+    }
+
     AssetID AssetManager::Register(const AssetType type, const std::string &path) {
         auto id = UUID();
         switch (type) {
@@ -40,11 +43,6 @@ namespace Lada {
                 std::abort();
         }
         return id;
-    }
-
-    template<typename T>
-    T* AssetManager::Get(AssetID &id) {
-        return m_Assets[id].get();
     }
 
     std::string AssetManager::WorkingDir() {

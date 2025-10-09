@@ -6,10 +6,10 @@
 #include <assimp/postprocess.h>
 
 #include "app/Logger.h"
-#include "renderer/Mesh.h"
+#include "renderer/DeprecatedMesh.h"
 
 namespace Lada::Render {
-    std::shared_ptr<Mesh> ModelLoader::LoadModel(const std::string &filePath) {
+    std::shared_ptr<DeprecatedMesh> ModelLoader::LoadModel(const std::string &filePath) {
         Assimp::Importer importer;
 
         const aiScene *scene = importer.ReadFile(

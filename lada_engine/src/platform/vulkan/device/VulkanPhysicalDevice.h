@@ -31,6 +31,8 @@ namespace Lada {
 
         QueueFamilyIndices FindQueueFamilies() const;
 
+        uint32_t FindMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) const;
+
         SwapChainSupportDetails QuerySwapChainSupport() const;
     private:
         void pickPhysicalDevice();

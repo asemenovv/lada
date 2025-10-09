@@ -31,10 +31,10 @@ namespace Lada::App {
     private:
         bool m_Running = true;
         std::unique_ptr<Scene> m_Scene;
-        std::unique_ptr<AssetManager> m_AssetManager;
         std::unique_ptr<Window> m_Window;
-        std::unique_ptr<EventManager> m_EventManager;
         std::unique_ptr<GraphicsContext> m_GraphicsContext;
+        std::unique_ptr<EventManager> m_EventManager;
+        std::unique_ptr<AssetManager> m_AssetManager;
         std::unique_ptr<LayerStack> m_LayerStack;
         std::unique_ptr<LayerContext> m_LayerContext;
         std::unique_ptr<Render::Renderer> m_Renderer;

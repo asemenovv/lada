@@ -50,8 +50,10 @@ namespace Lada::Render {
         return m_CommandBuffers[m_CurrentFrameIndex].get();
     }
 
-    void Renderer::Submit(const std::shared_ptr<Model> &model) const {
-        m_CommandBuffers[m_CurrentFrameIndex]->Draw(3);
+    void Renderer::Submit(const Mesh* mesh) const {
+        mesh->GetVertexBuffer()->Bind(m_CommandBuffers[m_CurrentFrameIndex].get());
+        mesh->GetIndexBuffer()->Bind(m_CommandBuffers[m_CurrentFrameIndex].get());
+        m_CommandBuffers[m_CurrentFrameIndex]->DrawIndexed(mesh->GetIndexCount());
         // for (Model::SubMesh subMesh : *model) {
         // model->BindMaterial(subMesh.material, m_Camera->GetProjectionMatrix(), m_Camera->GetViewMatrix());
         // subMesh.mesh->Draw();

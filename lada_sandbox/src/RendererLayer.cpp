@@ -53,5 +53,5 @@ void RendererLayer::OnUpdate(Lada::App::LayerContext& context) {
 
 void RendererLayer::OnRender(Lada::App::LayerContext& context,
                              Lada::Render::Renderer& renderer) {
-    renderer.Submit(m_Square);
+    // renderer.Submit(m_Square);
 }

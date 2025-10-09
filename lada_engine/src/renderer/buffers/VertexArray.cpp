@@ -2,7 +2,7 @@
 #include "VertexArray.h"
 #include "app/GlCall.h"
 #include "renderer/Renderer.h"
-#include "VertexBufferLayout.h"
+#include "DepricatedVertexBufferLayout.h"
 
 namespace Lada::Render {
     VertexArray::VertexArray() {
@@ -14,7 +14,7 @@ namespace Lada::Render {
         GL_CALL(glDeleteVertexArrays(1, &m_RendererID));
     }
 
-    void VertexArray::AddBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout) {
+    void VertexArray::AddBuffer(const DeprecatedVertexBuffer &vb, const DepricatedVertexBufferLayout &layout) {
         Bind();
         vb.Bind();
         const auto& elements = layout.GetElements();

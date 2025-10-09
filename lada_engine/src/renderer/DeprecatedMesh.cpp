@@ -1,18 +1,18 @@
 #include  "ldpch.h"
-#include  "Mesh.h"
+#include  "DeprecatedMesh.h"
 
 #include "material/Material.h"
 #include "../app/GlCall.h"
 
 namespace Lada::Render {
-    Mesh::Mesh(const std::shared_ptr<VertexBuffer> vertexBuffer,
+    DeprecatedMesh::DeprecatedMesh(const std::shared_ptr<DeprecatedVertexBuffer> vertexBuffer,
                const std::shared_ptr<VertexArray> &vertexArray,
                const std::shared_ptr<IndexBuffer> &indexBuffer)
         : m_VertexBuffer(vertexBuffer), m_VertexArray(vertexArray),
           m_IndexBuffer(indexBuffer) {
     }
 
-    void Mesh::Draw() const {
+    void DeprecatedMesh::Draw() const {
         m_VertexArray->Bind();
         m_IndexBuffer->Bind();
 
@@ -21,8 +21,8 @@ namespace Lada::Render {
 
     MeshBuilder::MeshBuilder(const void *data, unsigned int size) {
         m_VertexArray = std::make_shared<VertexArray>();
-        m_VertexBuffer = std::make_shared<VertexBuffer>(data, size);
-        m_VertexBufferLayout = std::make_unique<VertexBufferLayout>();
+        m_VertexBuffer = std::make_shared<DeprecatedVertexBuffer>(data, size);
+        m_VertexBufferLayout = std::make_unique<DepricatedVertexBufferLayout>();
     }
 
     template<>
@@ -49,8 +49,8 @@ namespace Lada::Render {
         return *this;
     }
 
-    std::shared_ptr<Mesh> MeshBuilder::Build() {
-        auto mesh = std::make_shared<Mesh>(m_VertexBuffer, m_VertexArray, m_IndexBuffer);
+    std::shared_ptr<DeprecatedMesh> MeshBuilder::Build() {
+        auto mesh = std::make_shared<DeprecatedMesh>(m_VertexBuffer, m_VertexArray, m_IndexBuffer);
         return mesh;
     }
 }

@@ -2,21 +2,21 @@
 #include <memory>
 
 #include "buffers/IndexBuffer.h"
-#include "buffers/VertexBuffer.h"
+#include "buffers/DeprecatedVertexBuffer.h"
 #include "buffers/VertexArray.h"
-#include "buffers/VertexBufferLayout.h"
+#include "buffers/DepricatedVertexBufferLayout.h"
 #include "material/Material.h"
 
 namespace Lada::Render {
-    class Mesh {
+    class DeprecatedMesh {
     public:
-        Mesh(std::shared_ptr<VertexBuffer> vertexBuffer, const std::shared_ptr<VertexArray> &vertexArray,
+        DeprecatedMesh(std::shared_ptr<DeprecatedVertexBuffer> vertexBuffer, const std::shared_ptr<VertexArray> &vertexArray,
              const std::shared_ptr<IndexBuffer> &indexBuffer);
 
         void Draw() const;
 
     private:
-        std::shared_ptr<VertexBuffer> m_VertexBuffer;
+        std::shared_ptr<DeprecatedVertexBuffer> m_VertexBuffer;
         std::shared_ptr<VertexArray> m_VertexArray;
         std::shared_ptr<IndexBuffer> m_IndexBuffer;
     };
@@ -40,13 +40,13 @@ namespace Lada::Render {
 
         MeshBuilder &Indices(const unsigned int *data, unsigned int count);
 
-        std::shared_ptr<Mesh> Build();
+        std::shared_ptr<DeprecatedMesh> Build();
 
     private:
-        std::shared_ptr<VertexBuffer> m_VertexBuffer;
+        std::shared_ptr<DeprecatedVertexBuffer> m_VertexBuffer;
         std::shared_ptr<VertexArray> m_VertexArray;
         std::shared_ptr<IndexBuffer> m_IndexBuffer;
         std::shared_ptr<Material> m_Material;
-        std::unique_ptr<VertexBufferLayout> m_VertexBufferLayout;
+        std::unique_ptr<DepricatedVertexBufferLayout> m_VertexBufferLayout;
     };
 }
