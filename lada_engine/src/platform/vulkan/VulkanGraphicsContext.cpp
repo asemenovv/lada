@@ -54,13 +54,27 @@ namespace Lada {
         return std::make_unique<VulkanCommandBuffer>(this, m_CommandPool.get());
     }
 
-    void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer *commandBuffer) {
-        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
-        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->NativeCommandBuffer()), "Failed to record command buffer!");
-    }
-
     VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
         return *swapChainFramebuffers[index];
+    }
+
+    void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer* commandBuffer, const bool singeTime) {
+        const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
+        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->NativeCommandBuffer()), "Failed to record command buffer!");
+
+        if (singeTime) {
+            const VkCommandBuffer nativeCommandBuffer = vulkanCommandBuffer->NativeCommandBuffer();
+
+            VkSubmitInfo submitInfo{};
+            submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+            submitInfo.commandBufferCount = 1;
+            submitInfo.pCommandBuffers = &nativeCommandBuffer;
+
+            vkQueueSubmit(m_Device->GraphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+            vkQueueWaitIdle(m_Device->GraphicsQueue());
+
+            vkFreeCommandBuffers(m_Device->NativeDevice(), m_CommandPool->GetNativePool(), 1, &nativeCommandBuffer);
+        }
     }
 
     void VulkanGraphicsContext::RecreateSwapChain() {

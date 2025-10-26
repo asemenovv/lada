@@ -19,8 +19,9 @@ file(GLOB_RECURSE LADA_ENGINE_HEADERS CONFIGURE_DEPENDS
 )
 
 add_library(lada_engine STATIC ${LADA_ENGINE_SOURCES} ${LADA_ENGINE_HEADERS}
-        src/platform/vulkan/buffers/VulkanIndexBuffer.cpp
-        src/platform/vulkan/buffers/VulkanIndexBuffer.h)
+        src/renderer/buffers/IStagingBuffer.h
+        src/platform/vulkan/buffers/VulkanStagingBuffer.cpp
+        src/platform/vulkan/buffers/VulkanStagingBuffer.h)
 
 target_include_directories(lada_engine
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}

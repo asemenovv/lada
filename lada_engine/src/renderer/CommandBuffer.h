@@ -14,7 +14,7 @@ namespace Lada {
 
         virtual void Reset() = 0;
 
-        virtual void Begin() = 0;
+        virtual void Begin(bool singleTime) = 0;
 
         virtual void End() = 0;
     };

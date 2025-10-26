@@ -30,8 +30,6 @@ namespace Lada {
 
         std::unique_ptr<CommandBuffer> CreateCommandBuffer() override;
 
-        void EndSingleTimeCommands(CommandBuffer *commandBuffer) override;
-
         VulkanPhysicalDevice& GetPhysicalDevice() const { return *m_PhysicalDevice; }
         VulkanSurface& GetSurface() const { return *m_Surface; }
         VulkanDevice& GetDevice() const { return *m_Device; }
@@ -39,6 +37,8 @@ namespace Lada {
         Pipeline* GetPipeline() const override { return m_Pipeline.get(); }
 
         VulkanFramebuffer& GetFramebuffer(uint32_t index) const;
+
+        void EndSingleTimeCommands(CommandBuffer *commandBuffer, bool singeTime) override;
 
         void RecreateSwapChain() override;
 

@@ -36,9 +36,12 @@ namespace Lada {
         LD_VK_ASSERT_SUCCESS(vkResetCommandBuffer(m_CommandBuffer, 0), "Failed to reset command buffer!")
     }
 
-    void VulkanCommandBuffer::Begin() {
+    void VulkanCommandBuffer::Begin(const bool singleTime) {
         VkCommandBufferBeginInfo beginInfo = {};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        if (singleTime) {
+            beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+        }
         LD_VK_ASSERT_SUCCESS(vkBeginCommandBuffer(m_CommandBuffer, &beginInfo),
             "Failed to begin recording command buffer!");
     }

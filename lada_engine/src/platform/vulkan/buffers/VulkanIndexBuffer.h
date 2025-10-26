@@ -5,7 +5,7 @@
 namespace Lada {
     class VulkanIndexBuffer final : public VulkanBuffer, public IIndexBuffer {
     public:
-        VulkanIndexBuffer(VulkanGraphicsContext* graphicsContext, uint64_t instanceSize, uint32_t instanceCount);
+        VulkanIndexBuffer(VulkanGraphicsContext* graphicsContext, uint64_t instanceSize, uint32_t instanceCount, bool withStaging);
 
         void Bind(CommandBuffer* commandBuffer) override;
 

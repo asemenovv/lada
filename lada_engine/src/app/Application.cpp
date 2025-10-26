@@ -74,45 +74,44 @@ void main() {
             glm::vec3{1.0f, 1.0f, 1.0f}
         );
 
-        // auto smoothVaseId = m_AssetManager->Register(AssetType::Mesh,
-        //     "/Users/alexeysemenov/CLionProjects/lada/assets/models/smooth_vase.obj");
-        // auto smoothVase = m_Scene->CreateEntity();
-        // smoothVase.AddComponent<IdComponent>(UUID());
-        // smoothVase.AddComponent<NameComponent>("Smooth Vase");
-        // smoothVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
-        // smoothVase.AddComponent<TransformComponent>(
-        //     glm::vec3{0.0, 0.0, 0.5},
-        //     glm::quat{180.0f, 1.0f, 0.0f, 0.0},
-        //     glm::vec3{2.0f, 1.0f, 2.0f}
-        // );
-        // smoothVase.AddComponent<MeshComponent>(smoothVaseId);
+        auto smoothVaseId = m_AssetManager->Register(AssetType::Mesh,
+        "/Users/alexeysemenov/CLionProjects/lada/assets/models/smooth_vase.obj");
+        auto smoothVase = m_Scene->CreateEntity();
+        smoothVase.AddComponent<IdComponent>(UUID());
+        smoothVase.AddComponent<NameComponent>("Smooth Vase");
+        smoothVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        smoothVase.AddComponent<TransformComponent>(
+            glm::vec3{0.0, 0.0, 0.5},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{2.0f, 1.0f, 2.0f}
+        );
+        smoothVase.AddComponent<MeshComponent>(smoothVaseId);
 
-        // auto flatVaseId = m_AssetManager->Register(AssetType::Mesh,
-        //     "/Users/alexeysemenov/CLionProjects/lada/assets/models/flat_vase.obj");
-        // auto flatVase = m_Scene->CreateEntity();
-        // flatVase.AddComponent<IdComponent>(UUID());
-        // flatVase.AddComponent<NameComponent>("Smooth Vase");
-        // flatVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
-        // flatVase.AddComponent<TransformComponent>(
-        //     glm::vec3{0.0, 0.0, -0.5},
-        //     glm::quat{180.0f, 1.0f, 0.0f, 0.0},
-        //     glm::vec3{2.0f, 1.0f, 2.0f}
-        // );
-        // flatVase.AddComponent<MeshComponent>(flatVaseId);
+        auto flatVaseId = m_AssetManager->Register(AssetType::Mesh,
+        "/Users/alexeysemenov/CLionProjects/lada/assets/models/flat_vase.obj");
+        auto flatVase = m_Scene->CreateEntity();
+        flatVase.AddComponent<IdComponent>(UUID());
+        flatVase.AddComponent<NameComponent>("Smooth Vase");
+        flatVase.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        flatVase.AddComponent<TransformComponent>(
+            glm::vec3{0.0, 0.0, -0.5},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{2.0f, 1.0f, 2.0f}
+        );
+        flatVase.AddComponent<MeshComponent>(flatVaseId);
 
-        // auto floorId = m_AssetManager->Register(AssetType::Mesh,
-        //     "/Users/alexeysemenov/CLionProjects/lada/assets/models/quad.obj");
-        // auto floor = m_Scene->CreateEntity();
-        // floor.AddComponent<IdComponent>(UUID());
-        // floor.AddComponent<NameComponent>("Floor");
-        // floor.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
-        // floor.AddComponent<TransformComponent>(
-        //     glm::vec3{0.0},
-        //     glm::quat{180.0f, 1.0f, 0.0f, 0.0},
-        //     glm::vec3{3.0f, 1.0f, 3.0f}
-        // );
-        // floor.AddComponent<MeshComponent>(floorId);auto floorId = m_AssetManager->Register(AssetType::Mesh,
-        //     "/Users/alexeysemenov/CLionProjects/lada/assets/models/quad.obj");
+        auto floorId = m_AssetManager->Register(AssetType::Mesh,
+        "/Users/alexeysemenov/CLionProjects/lada/assets/models/quad.obj");
+        auto floor = m_Scene->CreateEntity();
+        floor.AddComponent<IdComponent>(UUID());
+        floor.AddComponent<NameComponent>("Floor");
+        floor.AddComponent<FolderComponent>(std::vector<std::string>{"Room"});
+        floor.AddComponent<TransformComponent>(
+            glm::vec3{0.0},
+            glm::quat{180.0f, 1.0f, 0.0f, 0.0},
+            glm::vec3{3.0f, 1.0f, 3.0f}
+        );
+        floor.AddComponent<MeshComponent>(floorId);
 
         auto triangleId = m_AssetManager->Register(AssetType::Mesh,
         "/Users/alexeysemenov/CLionProjects/lada/assets/models/triangle.obj");

@@ -5,7 +5,7 @@
 namespace Lada {
     class VulkanVertexBuffer final : public VulkanBuffer, public IVertexBuffer {
     public:
-        VulkanVertexBuffer(VulkanGraphicsContext* graphicsContext, uint64_t instanceSize, uint32_t instanceCount);
+        VulkanVertexBuffer(VulkanGraphicsContext* graphicsContext, uint64_t instanceSize, uint32_t instanceCount, bool withStaging);
 
         void Bind(CommandBuffer* commandBuffer) override;
 

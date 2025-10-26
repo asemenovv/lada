@@ -15,7 +15,7 @@ namespace Lada {
 
         std::unique_ptr<CommandBuffer> CreateCommandBuffer() override { return nullptr; }
 
-        void EndSingleTimeCommands(CommandBuffer *commandBuffer) override {}
+        void EndSingleTimeCommands(CommandBuffer *commandBuffer, bool singleTime) override {}
 
         SwapChain* GetSwapChain() const override;
 

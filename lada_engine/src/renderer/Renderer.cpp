@@ -42,7 +42,7 @@ namespace Lada::Render {
             return nullptr;
         }
         m_CommandBuffers[m_CurrentFrameIndex]->Reset();
-        m_CommandBuffers[m_CurrentFrameIndex]->Begin();
+        m_CommandBuffers[m_CurrentFrameIndex]->Begin(false);
         renderPass->Begin(m_CommandBuffers[m_CurrentFrameIndex].get(), m_CurrentImageIndex, m_ClearColor);
         m_GraphicsContext->GetPipeline()->Bind(m_CommandBuffers[m_CurrentFrameIndex].get());
         renderPass->SetViewportAndScissor(m_CommandBuffers[m_CurrentFrameIndex].get(), m_Camera->GetViewport(),

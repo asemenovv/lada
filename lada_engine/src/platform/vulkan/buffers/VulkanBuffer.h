@@ -15,6 +15,8 @@ namespace Lada {
 
         virtual ~VulkanBuffer();
 
+        VkBuffer GetNativeBuffer() const { return m_Buffer; }
+
     protected:
         void map(uint64_t size = VK_WHOLE_SIZE, uint64_t offset = 0);
 
@@ -22,7 +24,7 @@ namespace Lada {
 
         void writeToBuffer(const void* data, uint64_t size = VK_WHOLE_SIZE, uint64_t offset = 0) const;
 
-        [[nodiscard]] VkBuffer GetNativeBuffer() const { return m_Buffer; }
+        void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) const;
     private:
         VkBuffer m_Buffer;
         VkDeviceMemory m_BufferMemory;

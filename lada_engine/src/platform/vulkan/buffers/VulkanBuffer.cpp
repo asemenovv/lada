@@ -62,6 +62,23 @@ namespace Lada {
         }
     }
 
+    void VulkanBuffer::copyBuffer(const VkBuffer srcBuffer, const VkBuffer dstBuffer, const uint64_t size) const {
+        const std::unique_ptr<CommandBuffer> commandBuffer = m_GraphicsContext->CreateCommandBuffer();
+        const auto cmdBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer.get());
+        commandBuffer->Begin(true);
+        VkBufferCopy copyRegion{};
+        copyRegion.srcOffset = 0; // Optional
+        copyRegion.dstOffset = 0; // Optional
+        if (size == VK_WHOLE_SIZE) {
+            copyRegion.size = m_BufferSize;
+        } else {
+            copyRegion.size = size;
+        }
+        vkCmdCopyBuffer(cmdBuffer->NativeCommandBuffer(), srcBuffer, dstBuffer, 1, &copyRegion);
+
+        m_GraphicsContext->EndSingleTimeCommands(cmdBuffer, true);
+    }
+
     VkDeviceSize VulkanBuffer::getAlignment(const uint64_t instanceSize, const uint64_t minOffsetAlignment) {
         if (minOffsetAlignment > 0) {
             return (instanceSize + minOffsetAlignment - 1) & ~(minOffsetAlignment - 1);

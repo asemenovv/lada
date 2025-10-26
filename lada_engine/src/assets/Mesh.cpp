@@ -1,6 +1,7 @@
 #include "Mesh.h"
 
 #include "platform/vulkan/buffers/VulkanIndexBuffer.h"
+#include "platform/vulkan/buffers/VulkanStagingBuffer.h"
 #include "platform/vulkan/buffers/VulkanVertexBuffer.h"
 
 namespace Lada {
@@ -24,12 +25,17 @@ namespace Lada {
         constexpr uint32_t vertexSize = sizeof(m_Vertices[0]);
         constexpr uint32_t indexSize = sizeof(m_Indices[0]);
         auto vulkanContext = reinterpret_cast<VulkanGraphicsContext*>(m_GraphicsContext);
-        m_VertexBuffer = std::make_unique<VulkanVertexBuffer>(vulkanContext, vertexSize, m_Vertices.size());
-        m_VertexBuffer->Map();
-        m_VertexBuffer->WriteToBuffer(m_Vertices.data());
 
-        m_IndexBuffer = std::make_unique<VulkanIndexBuffer>(vulkanContext, indexSize, m_Indices.size());
-        m_IndexBuffer->Map();
-        m_IndexBuffer->WriteToBuffer(m_Indices.data());
+        auto stagingVertexBuffer = VulkanStagingBuffer(vulkanContext, vertexSize, m_Vertices.size());
+        stagingVertexBuffer.Map();
+        stagingVertexBuffer.WriteToBuffer(m_Vertices.data());
+        m_VertexBuffer = std::make_unique<VulkanVertexBuffer>(vulkanContext, vertexSize, m_Vertices.size(), true);
+        stagingVertexBuffer.CopyToBuffer(dynamic_cast<VulkanBuffer*>(m_VertexBuffer.get()));
+
+        auto stagingIndexBuffer = VulkanStagingBuffer(vulkanContext, indexSize, m_Indices.size());
+        stagingIndexBuffer.Map();
+        stagingIndexBuffer.WriteToBuffer(m_Indices.data());
+        m_IndexBuffer = std::make_unique<VulkanIndexBuffer>(vulkanContext, indexSize, m_Indices.size(), true);
+        stagingIndexBuffer.CopyToBuffer(dynamic_cast<VulkanBuffer*>(m_IndexBuffer.get()));
     }
 }

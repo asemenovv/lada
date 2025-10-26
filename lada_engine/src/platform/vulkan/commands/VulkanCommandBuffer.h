@@ -5,7 +5,7 @@
 #include "renderer/CommandBuffer.h"
 
 namespace Lada {
-    class VulkanCommandBuffer : public CommandBuffer {
+    class VulkanCommandBuffer final : public CommandBuffer {
     public:
         explicit VulkanCommandBuffer(VulkanGraphicsContext *graphicsContext, const VulkanCommandPool *pool);
 
@@ -18,7 +18,7 @@ namespace Lada {
 
         void Reset() override;
 
-        void Begin() override;
+        void Begin(bool singleTime) override;
 
         void End() override;
     private:

@@ -21,7 +21,7 @@ namespace Lada {
 
         virtual std::unique_ptr<CommandBuffer> CreateCommandBuffer() = 0;
 
-        virtual void EndSingleTimeCommands(CommandBuffer *commandBuffer) = 0;
+        virtual void EndSingleTimeCommands(CommandBuffer *commandBuffer, bool singeTime) = 0;
 
         virtual void WaitIdle() = 0;
 
