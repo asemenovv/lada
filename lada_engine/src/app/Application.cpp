@@ -32,22 +32,6 @@ namespace Lada::App {
         m_SceneRenderer  = std::make_unique<SceneRenderer>(m_Scene.get(), m_Renderer.get(), m_AssetManager.get());
         LD_CORE_INFO("Application initialized");
 
-
-        /*const VulkanShaderCompiler compiler(true, true);
-        auto result = compiler.CompileString(
-            R"EoS(#version 450
-
-layout(location = 0) in vec3 fragColor;
-layout(location = 0) out vec4 outColor;
-
-void main() {
-    outColor = vec4(fragColor, 1.0);
-})EoS", ShaderStage::Fragment);*/
-
-        // if (apiFactory.GetAPI() == GraphicAPI::VULKAN) {
-            // std::exit(0);
-        // }
-
         m_EventManager->BIND_HANDLER(WindowCloseEvent, Application::onWindowCloseEvent);
         subscribeLayersOnEvents();
     }

@@ -2,23 +2,31 @@
 
 #include <vulkan/vulkan.h>
 
+#include "VulkanShaderCompiler.h"
+
 namespace Lada {
     class VulkanGraphicsContext;
 
     class VulkanShader {
     public:
-        VulkanShader(const std::string &shaderPath, VulkanGraphicsContext* graphicsContext);
+        VulkanShader(const std::string &shaderPath, VulkanGraphicsContext* graphicsContext, ShaderStage stage);
 
         ~VulkanShader();
 
         [[nodiscard]] VkShaderModule NativeShader() const { return m_ShaderModule; }
 
+        std::string GetEntryPointName() const { return m_EntryPoint; }
+
     private:
-        void createShaderModule(const std::vector<char> &code);
+        void createShaderModule(const CompileResult &code);
 
-        static std::vector<char> readFile(const std::string &filePath);
+        void createDescriptors(const CompileResult& code);
 
+        static std::string readFile(const std::string &filePath);
+
+        ShaderStage m_ShaderStage;
         VkShaderModule m_ShaderModule;
         VulkanGraphicsContext* m_GraphicsContext;
+        std::string m_EntryPoint = "main";
     };
 }

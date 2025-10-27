@@ -45,8 +45,8 @@ namespace Lada {
     VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const PipelineCreateInfo &createInfo,
         const std::string &vertPath, const std::string &fragPath)
         : m_GraphicsContext(graphicsContext), m_CreateInfo(createInfo) {
-        m_VertShader = std::make_unique<VulkanShader>(vertPath, graphicsContext);
-        m_FragShader = std::make_unique<VulkanShader>(fragPath, graphicsContext);
+        m_VertShader = std::make_unique<VulkanShader>(vertPath, graphicsContext, ShaderStage::Vertex);
+        m_FragShader = std::make_unique<VulkanShader>(fragPath, graphicsContext, ShaderStage::Fragment);
         m_Layout = std::make_unique<VulkanPipelineLayout>(graphicsContext);
         m_RenderPass = std::make_unique<VulkanRenderPass>(graphicsContext);
         createGraphicsPipeline();
@@ -67,13 +67,13 @@ namespace Lada {
         vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
         vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
         vertShaderStageInfo.module = m_VertShader->NativeShader();
-        vertShaderStageInfo.pName = "main";
+        vertShaderStageInfo.pName = m_VertShader->GetEntryPointName().c_str();
 
         VkPipelineShaderStageCreateInfo fragShaderStageInfo = {};
         fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
         fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
         fragShaderStageInfo.module = m_FragShader->NativeShader();
-        fragShaderStageInfo.pName = "main";
+        fragShaderStageInfo.pName = m_FragShader->GetEntryPointName().c_str();
 
         VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
 

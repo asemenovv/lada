@@ -39,3 +39,5 @@ set(SHADERC_ENABLE_TESTS   OFF CACHE BOOL "" FORCE)
 set(SHADERC_SKIP_EXAMPLES  ON CACHE BOOL "" FORCE)
 add_subdirectory(deps/shaderc)
 ####################################### shaderc #######################################
+set(SPIRV_REFLECT_STATIC_LIB ON CACHE BOOL "" FORCE)
+add_subdirectory(deps/spirv-reflect)

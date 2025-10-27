@@ -28,8 +28,8 @@ namespace Lada {
             .Layout = Mesh::Vertex::Layout()
         };
         m_Pipeline = std::make_unique<VulkanPipeline>(this, createInfo,
-            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert.spv",
-            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag.spv");
+            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert",
+            "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag");
         crateFrameBuffers();
         m_CommandPool = std::make_unique<VulkanCommandPool>(this);
     }
