@@ -42,12 +42,9 @@ namespace Lada {
         }
     }
 
-    VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const PipelineCreateInfo &createInfo,
-        const std::string &vertPath, const std::string &fragPath)
+    VulkanPipeline::VulkanPipeline(VulkanGraphicsContext *graphicsContext, const PipelineCreateInfo &createInfo)
         : m_GraphicsContext(graphicsContext), m_CreateInfo(createInfo) {
-        m_VertShader = std::make_unique<VulkanShader>(vertPath, graphicsContext, ShaderStage::Vertex);
-        m_FragShader = std::make_unique<VulkanShader>(fragPath, graphicsContext, ShaderStage::Fragment);
-        m_Layout = std::make_unique<VulkanPipelineLayout>(graphicsContext);
+        m_Layout = std::make_unique<VulkanPipelineLayout>(graphicsContext, m_CreateInfo.ShaderCollection);
         m_RenderPass = std::make_unique<VulkanRenderPass>(graphicsContext);
         createGraphicsPipeline();
     }
@@ -66,14 +63,16 @@ namespace Lada {
         VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
         vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
         vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
-        vertShaderStageInfo.module = m_VertShader->NativeShader();
-        vertShaderStageInfo.pName = m_VertShader->GetEntryPointName().c_str();
+        vertShaderStageInfo.module = m_CreateInfo.ShaderCollection->GetShader(ShaderStage::Vertex)->NativeShader();
+        vertShaderStageInfo.pName = m_CreateInfo.ShaderCollection->GetShader(ShaderStage::Vertex)
+                    ->GetEntryPointName().c_str();
 
         VkPipelineShaderStageCreateInfo fragShaderStageInfo = {};
         fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
         fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-        fragShaderStageInfo.module = m_FragShader->NativeShader();
-        fragShaderStageInfo.pName = m_FragShader->GetEntryPointName().c_str();
+        fragShaderStageInfo.module = m_CreateInfo.ShaderCollection->GetShader(ShaderStage::Fragment)->NativeShader();
+        fragShaderStageInfo.pName = m_CreateInfo.ShaderCollection->GetShader(ShaderStage::Fragment)
+                    ->GetEntryPointName().c_str();
 
         VkPipelineShaderStageCreateInfo shaderStages[] = {vertShaderStageInfo, fragShaderStageInfo};
 

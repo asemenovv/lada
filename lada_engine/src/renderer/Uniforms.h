@@ -1,0 +1,9 @@
+#pragma once
+
+#include <glm/glm.hpp>
+
+struct GlobalUbo {
+    glm::mat4 model{1.f};
+    glm::mat4 view{1.f};
+    glm::mat4 proj{1.f};
+};

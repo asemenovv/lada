@@ -19,10 +19,13 @@ file(GLOB_RECURSE LADA_ENGINE_HEADERS CONFIGURE_DEPENDS
 )
 
 add_library(lada_engine STATIC ${LADA_ENGINE_SOURCES} ${LADA_ENGINE_HEADERS}
-        src/renderer/buffers/IStagingBuffer.h
-        src/platform/vulkan/buffers/VulkanStagingBuffer.cpp
-        src/platform/vulkan/buffers/VulkanStagingBuffer.h
-        src/renderer/GlobalUBO.h)
+        src/platform/vulkan/buffers/VulkanDescriptors.h
+        src/platform/vulkan/pipeline/VulkanShaderCollection.cpp
+        src/platform/vulkan/pipeline/VulkanShaderCollection.h
+        src/renderer/buffers/IUniformBuffer.h
+        src/platform/vulkan/buffers/VulkanUniformBuffer.cpp
+        src/platform/vulkan/buffers/VulkanUniformBuffer.h
+        src/renderer/Uniforms.h)
 
 target_include_directories(lada_engine
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}

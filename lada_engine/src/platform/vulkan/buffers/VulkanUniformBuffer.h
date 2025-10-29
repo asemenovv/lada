@@ -1,13 +1,14 @@
 #pragma once
 #include "VulkanBuffer.h"
+#include "renderer/buffers/IUniformBuffer.h"
 #include "renderer/buffers/IVertexBuffer.h"
 
 namespace Lada {
-    class VulkanVertexBuffer final : public VulkanBuffer, public IVertexBuffer {
-    public:
-        VulkanVertexBuffer(VulkanGraphicsContext* graphicsContext, uint64_t instanceSize, uint32_t instanceCount, bool withStaging);
+    class GraphicsContext;
 
-        void Bind(CommandBuffer* commandBuffer) override;
+    class VulkanUniformBuffer final : public VulkanBuffer, public IUniformBuffer {
+    public:
+        VulkanUniformBuffer(GraphicsContext* graphicsContext, uint64_t instanceSize);
 
         void Map(uint64_t size = LD_BUFFER_WHOLE_SIZE, uint64_t offset = 0) override;
 

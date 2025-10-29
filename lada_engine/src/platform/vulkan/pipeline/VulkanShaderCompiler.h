@@ -27,7 +27,14 @@ namespace Lada {
     //       читать файл, угадывать стадию по расширению и вызывать CompileString.
 
     enum class ShaderStage {
-        Vertex, Fragment, Compute, Geometry, TessControl, TessEval
+        Vertex = 0x00000001,
+        Fragment = 0x00000010,
+        Compute = 0x00000020,
+        Geometry = 0x00000008,
+        TessControl = 0x00000002,
+        TessEvaluation = 0x00000004,
+        AllGraphics = 0x0000001F,
+        All = 0x7FFFFFFF,
     };
 
     struct CompileResult {

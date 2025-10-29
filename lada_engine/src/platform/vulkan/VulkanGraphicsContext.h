@@ -50,6 +50,7 @@ namespace Lada {
         std::unique_ptr<VulkanDevice> m_Device;
         std::unique_ptr<VulkanSwapChain> m_SwapChain;
         std::vector<std::unique_ptr<VulkanFramebuffer>> swapChainFramebuffers;
+        std::unique_ptr<ShaderCollection> m_ShaderCollection;
         std::unique_ptr<VulkanPipeline> m_Pipeline;
         std::unique_ptr<VulkanCommandPool> m_CommandPool;
         Window& m_Window;

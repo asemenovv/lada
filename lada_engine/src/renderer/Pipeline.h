@@ -3,10 +3,12 @@
 #include "CommandBuffer.h"
 #include "RenderPass.h"
 #include "buffers/VertexBufferLayout.h"
+#include "platform/vulkan/pipeline/VulkanShaderCollection.h"
 
 namespace Lada {
     struct PipelineCreateInfo {
         VertexBufferLayout Layout = VertexBufferLayout();
+        ShaderCollection* ShaderCollection;
     };
 
     class Pipeline {

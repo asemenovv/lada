@@ -3,8 +3,10 @@
 #include "renderer/Renderer.h"
 #include "Logger.h"
 #include "events/ApplicationEvent.h"
+#include "platform/vulkan/buffers/VulkanUniformBuffer.h"
 #include "platform/vulkan/pipeline/VulkanShaderCompiler.h"
 #include "renderer/GraphicsApiFactory.h"
+#include "renderer/Uniforms.h"
 #include "scene/Components.h"
 #include "scene/Entity.h"
 
@@ -124,6 +126,7 @@ namespace Lada::App {
             // }
             // m_Renderer->EndFrame();
             m_Window->OnUpdate();
+            m_Renderer->Update();
         }
         m_GraphicsContext->WaitIdle();
     }

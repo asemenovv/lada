@@ -5,6 +5,7 @@
 #include "VulkanShaderCompiler.h"
 #include "app/Logger.h"
 #include "platform/vulkan/VulkanGraphicsContext.h"
+#include "platform/vulkan/buffers/VulkanDescriptors.h"
 
 namespace Lada {
     VulkanShader::VulkanShader(const std::string &shaderPath, VulkanGraphicsContext* graphicsContext, const ShaderStage stage)
@@ -43,17 +44,19 @@ namespace Lada {
         spvReflectEnumerateDescriptorBindings(&module, &count, nullptr);
         std::vector<SpvReflectDescriptorBinding*> bindings(count);
         spvReflectEnumerateDescriptorBindings(&module, &count, bindings.data());
-        for (const auto* b : bindings) {
-            if (b->descriptor_type == SPV_REFLECT_DESCRIPTOR_TYPE_UNIFORM_BUFFER) {
-                std::cout << "UBO " << b->name
-                          << " binding=" << b->binding
-                          << " set=" << b->set
-                          << " size=" << b->block.size << "\n";
-                for (uint32_t i = 0; i < b->block.member_count; ++i) {
-                    const auto& m = b->block.members[i];
-                    std::cout << "  " << m.name << " offset=" << m.offset << "\n";
-                }
+        for (const auto* vkBinding : bindings) {
+            m_DescriptorSetLayoutBindings[vkBinding->binding] = {};
+            m_DescriptorSetLayoutBindings[vkBinding->binding].Name = vkBinding->name;
+            m_DescriptorSetLayoutBindings[vkBinding->binding].Set = vkBinding->set;
+            m_DescriptorSetLayoutBindings[vkBinding->binding].Binding = vkBinding->binding;
+            m_DescriptorSetLayoutBindings[vkBinding->binding].DataSize = vkBinding->block.size;
+            if (vkBinding->descriptor_type == SPV_REFLECT_DESCRIPTOR_TYPE_UNIFORM_BUFFER) {
+                m_DescriptorSetLayoutBindings[vkBinding->binding].DescriptorType = DescriptorType::UniformBuffer;
             }
+            // for (uint32_t i = 0; i < vkBinding->block.member_count; ++i) {
+            //     const auto& m = vkBinding->block.members[i];
+            //     std::cout << "  " << m.name << " offset=" << m.offset << "\n";
+            // }
         }
         spvReflectDestroyShaderModule(&module);
     }

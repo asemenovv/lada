@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "CommandBuffer.h"
 #include "assets/Mesh.h"
+#include "buffers/IUniformBuffer.h"
 #include "events/ApplicationEvent.h"
 #include "platform/glfw/GlfwWindow.h"
 #include "glm/vec4.hpp"
@@ -29,6 +30,8 @@ namespace Lada::Render {
 
         void Submit(const Mesh* mesh) const;
 
+        void Update() const;
+
         void EndFrame();
 
         void SetClearColor(const glm::vec4 &color) { m_ClearColor = color; }
@@ -43,6 +46,7 @@ namespace Lada::Render {
         uint32_t m_CurrentImageIndex;
         int m_CurrentFrameIndex;
         EventManager* m_EventManager;
+        std::vector<std::unique_ptr<IUniformBuffer>> m_UniformBuffers{};
 
         bool OnWindowResizeEvent(const WindowResizeEvent& event) const;
     };

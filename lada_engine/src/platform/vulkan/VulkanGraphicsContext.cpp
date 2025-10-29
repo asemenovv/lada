@@ -9,7 +9,7 @@
 #include "commands/VulkanCommandBuffer.h"
 
 namespace Lada {
-    VulkanGraphicsContext::VulkanGraphicsContext(Window& window): m_Window(window) {
+    VulkanGraphicsContext::VulkanGraphicsContext(Window &window) : m_Window(window) {
     }
 
     VulkanGraphicsContext::~VulkanGraphicsContext() {
@@ -24,12 +24,14 @@ namespace Lada {
         m_PhysicalDevice = std::make_unique<VulkanPhysicalDevice>(*m_VulkanInstance, *m_Surface);
         m_Device = std::make_unique<VulkanDevice>(*m_VulkanInstance, *m_PhysicalDevice, enableValidationLayers);
         m_SwapChain = std::make_unique<VulkanSwapChain>(this, extent);
-        PipelineCreateInfo createInfo = {
-            .Layout = Mesh::Vertex::Layout()
-        };
-        m_Pipeline = std::make_unique<VulkanPipeline>(this, createInfo,
+        m_ShaderCollection = std::make_unique<ShaderCollection>(this,
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.vert",
             "/Users/alexeysemenov/CLionProjects/lada/assets/shaders/simple_shader.frag");
+        PipelineCreateInfo createInfo = {
+            .Layout = Mesh::Vertex::Layout(),
+            .ShaderCollection = m_ShaderCollection.get()
+        };
+        m_Pipeline = std::make_unique<VulkanPipeline>(this, createInfo);
         crateFrameBuffers();
         m_CommandPool = std::make_unique<VulkanCommandPool>(this);
     }
@@ -38,7 +40,7 @@ namespace Lada {
         swapChainFramebuffers.clear();
         swapChainFramebuffers.resize(m_SwapChain->GetImageCount());
         for (size_t i = 0; i < m_SwapChain->GetImageCount(); i++) {
-            VulkanImage& image = m_SwapChain->GetImage(i);
+            VulkanImage &image = m_SwapChain->GetImage(i);
             swapChainFramebuffers[i] = std::make_unique<VulkanFramebuffer>(this, image);
         }
     }
@@ -54,13 +56,14 @@ namespace Lada {
         return std::make_unique<VulkanCommandBuffer>(this, m_CommandPool.get());
     }
 
-    VulkanFramebuffer& VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
+    VulkanFramebuffer &VulkanGraphicsContext::GetFramebuffer(const uint32_t index) const {
         return *swapChainFramebuffers[index];
     }
 
-    void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer* commandBuffer, const bool singeTime) {
+    void VulkanGraphicsContext::EndSingleTimeCommands(CommandBuffer *commandBuffer, const bool singeTime) {
         const auto vulkanCommandBuffer = static_cast<VulkanCommandBuffer *>(commandBuffer);
-        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->NativeCommandBuffer()), "Failed to record command buffer!");
+        LD_VK_ASSERT_SUCCESS(vkEndCommandBuffer(vulkanCommandBuffer->NativeCommandBuffer()),
+                             "Failed to record command buffer!");
 
         if (singeTime) {
             const VkCommandBuffer nativeCommandBuffer = vulkanCommandBuffer->NativeCommandBuffer();

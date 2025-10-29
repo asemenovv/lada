@@ -65,7 +65,7 @@ namespace Lada {
         if (p.ends_with(".comp") || p.ends_with(".cs")) return ShaderStage::Compute;
         if (p.ends_with(".geom") || p.ends_with(".gs")) return ShaderStage::Geometry;
         if (p.ends_with(".tesc")) return ShaderStage::TessControl;
-        if (p.ends_with(".tese")) return ShaderStage::TessEval;
+        if (p.ends_with(".tese")) return ShaderStage::TessEvaluation;
         return std::nullopt;
     }
 
@@ -76,7 +76,7 @@ namespace Lada {
             case ShaderStage::Compute: return shaderc_glsl_compute_shader;
             case ShaderStage::Geometry: return shaderc_glsl_geometry_shader;
             case ShaderStage::TessControl: return shaderc_glsl_tess_control_shader;
-            case ShaderStage::TessEval: return shaderc_glsl_tess_evaluation_shader;
+            case ShaderStage::TessEvaluation: return shaderc_glsl_tess_evaluation_shader;
         }
         return shaderc_glsl_infer_from_source;
     }
